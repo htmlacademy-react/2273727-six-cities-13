@@ -1,7 +1,19 @@
 import PlaceCard from '../placeCard/placeCard';
 
+type MainProps = {
+  cardsCount: number;
+}
 
-function MainPage(): JSX.Element {
+const renderCards = (cardsCount: number) => {
+  const cards = [];
+  for (let i = 0; i < cardsCount; i++) {
+    cards.push(<PlaceCard />);
+  }
+  return cards;
+};
+
+
+function MainPage({cardsCount}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -93,11 +105,7 @@ function MainPage(): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
+                {renderCards(cardsCount)}
 
               </div>
             </section>
