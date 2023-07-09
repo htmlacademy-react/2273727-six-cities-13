@@ -1,4 +1,4 @@
-import PlaceCard from '../placeCard/placeCard';
+import PlaceCard from '../../placeCard/place-card';
 
 type MainProps = {
   cardsCount: number;
