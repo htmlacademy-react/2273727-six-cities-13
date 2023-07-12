@@ -1,4 +1,10 @@
+import { useParams } from 'react-router-dom';
+
 function Offer(): JSX.Element {
+  const params = useParams();
+  // eslint-disable-next-line no-console
+  console.log(params);
+
   return (
     <div className="page">
       <header className="header">
