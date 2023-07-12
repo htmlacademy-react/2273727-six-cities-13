@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import MainPage from '../../pages/main/main';
-import Favorites from '../../pages/favorites/favorites';
+import {MainPage} from '../../pages/main/main';
+import {Favorites} from '../../pages/favorites/favorites';
 // import FavoritesEmpty from '../../pages/favorites/favorites-empty';
-import Login from '../../pages/login/login';
-import Offer from '../../pages/offer/offer';
+import {Login} from '../../pages/login/login';
+import {Offer} from '../../pages/offer/offer';
 // import OfferNotLogged from '../../pages/offer/offer-not-logged';
 import { NotFound } from '../../pages/404/404';
 

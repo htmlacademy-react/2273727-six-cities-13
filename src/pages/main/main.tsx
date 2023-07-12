@@ -110,4 +110,4 @@ function MainPage({cardsCount}: MainProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export {MainPage};

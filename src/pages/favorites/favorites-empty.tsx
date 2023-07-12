@@ -50,4 +50,4 @@ function FavoritesEmpty(): JSX.Element {
   );
 }
 
-export default FavoritesEmpty;
+export {FavoritesEmpty};

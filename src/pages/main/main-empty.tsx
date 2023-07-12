@@ -84,4 +84,4 @@ function MainEmptyPage(): JSX.Element {
   );
 }
 
-export default MainEmptyPage;
+export {MainEmptyPage};

@@ -349,4 +349,4 @@ function OfferNotLogged(): JSX.Element {
   );
 }
 
-export default OfferNotLogged;
+export {OfferNotLogged};
