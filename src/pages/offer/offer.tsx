@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 function Offer(): JSX.Element {
   const params = useParams();
@@ -7,6 +8,9 @@ function Offer(): JSX.Element {
 
   return (
     <div className="page">
+      <Helmet>
+        <title>Offer</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
