@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
-function Favorites(): JSX.Element {
+export function Favorites() {
   return (
     <div className="page">
       <Helmet>
@@ -173,5 +173,3 @@ function Favorites(): JSX.Element {
     </div>
   );
 }
-
-export {Favorites};

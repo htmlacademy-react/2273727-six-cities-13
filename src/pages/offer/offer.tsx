@@ -1,11 +1,7 @@
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-function Offer(): JSX.Element {
-  const params = useParams();
-  // eslint-disable-next-line no-console
-  console.log(params);
-
+export function Offer() {
   return (
     <div className="page">
       <Helmet>
@@ -473,6 +469,3 @@ function Offer(): JSX.Element {
     </div>
   );
 }
-
-export {Offer};
-

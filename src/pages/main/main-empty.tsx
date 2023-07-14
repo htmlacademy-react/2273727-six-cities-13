@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function MainEmptyPage(): JSX.Element {
+export function MainEmptyPage() {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -85,5 +85,3 @@ function MainEmptyPage(): JSX.Element {
     </div>
   );
 }
-
-export {MainEmptyPage};
