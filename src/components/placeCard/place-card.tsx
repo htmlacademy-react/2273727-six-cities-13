@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
-
-function PlaceCard(): JSX.Element {
+export function PlaceCard() {
   return (
     <article className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/:id`}>
           <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -35,5 +36,3 @@ function PlaceCard(): JSX.Element {
     </article>
   );
 }
-
-export default PlaceCard;
