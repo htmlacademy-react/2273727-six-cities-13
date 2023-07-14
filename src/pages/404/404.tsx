@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-export function NotFound(): JSX.Element {
+export function NotFound() {
   return (
     <>
       <Helmet>
