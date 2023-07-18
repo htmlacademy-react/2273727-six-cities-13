@@ -1,8 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
+import { FullOfferType } from '../../components/types/full-offer';
 
-export function Offer() {
+
+type OfferProps = {
+  fullOffers: FullOfferType[];
+}
+
+export function Offer({ fullOffers } : OfferProps) {
+  const idContainer = useParams();
+  const offer = fullOffers.find((item) => item.id === idContainer.id);
+  console.log(offer);
+
   return (
     <div className="page">
       <Helmet>
@@ -15,6 +25,9 @@ export function Offer() {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
+
+              {Array.from({ length: 6 }, (_, i) => <PlaceCard key={i} offer={offers[i]} />)} // короче здесь должна быть отдельная функция для создания блока картинок, мб вынести в отдельный элемент?
+
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
@@ -66,7 +79,7 @@ export function Offer() {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {offer?.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -85,10 +98,10 @@ export function Offer() {
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">Apartment</li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
+                  {offer?.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  Max {offer?.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">

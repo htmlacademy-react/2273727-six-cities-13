@@ -1,5 +1,5 @@
 export const Settings = {
-  CardsCount: 5,
+  CardsCount: 4,
 } as const;
 
 export const AppRoute = {

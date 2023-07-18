@@ -1,13 +1,15 @@
-import { PlaceCard } from '../../components/place-card/place-card';
+import { OffersList } from '../../components/offers-list/offers-list';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
+import { OfferType } from '../../components/types/offer';
 
 type MainProps = {
   cardsCount: number;
+  offers: OfferType[];
 }
 
-export function MainPage({ cardsCount }: MainProps) {
+export function MainPage({ cardsCount, offers }: MainProps) {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -74,11 +76,7 @@ export function MainPage({ cardsCount }: MainProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-
-                {Array.from({ length: cardsCount }, (_, i) => <PlaceCard key={i} />)}
-
-              </div>
+              <OffersList cardsCount={cardsCount} offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
