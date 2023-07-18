@@ -7,13 +7,15 @@ import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../private-route/private-route';
+import { OfferType } from '../types/offer';
 
 
 type AppProps = {
   cardsCount: number;
+  offers: OfferType[];
 }
 
-export function App({ cardsCount }: AppProps) {
+export function App({ cardsCount, offers }: AppProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>
