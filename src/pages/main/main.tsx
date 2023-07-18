@@ -1,4 +1,4 @@
-import { PlaceCard } from '../../components/placeCard/place-card';
+import { Offer } from '../../components/offer/offer';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
@@ -76,7 +76,7 @@ export function MainPage({ cardsCount }: MainProps) {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {Array.from({ length: cardsCount }, (_, i) => <PlaceCard key={i} />)}
+                {Array.from({ length: cardsCount }, (_, i) => <Offer key={i} />)}
 
               </div>
             </section>
