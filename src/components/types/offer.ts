@@ -1,13 +1,13 @@
-import { City, Location } from './full-offer';
+import { TCity, TLocation } from './full-offer';
 
-export type OfferType = {
+export type TOffer = {
   id: string;
   title: string;
   type: string;
   price: number;
   previewImage: string;
-  city: City;
-  location: Location;
+  city: TCity;
+  location: TLocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;

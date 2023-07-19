@@ -1,6 +1,6 @@
-import { FullOfferType } from '../components/types/full-offer';
+import { TFullOffer } from '../components/types/full-offer';
 
-export const fullOffers: FullOfferType[] = [
+export const fullOffers: TFullOffer[] = [
   {
     id: 'cc86c284-5f68-4393-94f1-888b054e31d2',
     title: 'The Joshua Tree House',

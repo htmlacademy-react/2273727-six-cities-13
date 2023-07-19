@@ -7,14 +7,14 @@ import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../private-route/private-route';
-import { OfferType } from '../types/offer';
-import { FullOfferType } from '../types/full-offer';
+import { TOffer } from '../types/offer';
+import { TFullOffer } from '../types/full-offer';
 
 
 type AppProps = {
   cardsCount: number;
-  offers: OfferType[];
-  fullOffers: FullOfferType[];
+  offers: TOffer[];
+  fullOffers: TFullOffer[];
 }
 
 export function App({ cardsCount, offers, fullOffers }: AppProps) {
@@ -34,7 +34,7 @@ export function App({ cardsCount, offers, fullOffers }: AppProps) {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
                 <Favorites />
               </PrivateRoute>
             }

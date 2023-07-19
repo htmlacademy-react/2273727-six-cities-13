@@ -1,9 +1,9 @@
 import { PlaceCard } from '../place-card/place-card';
-import { OfferType } from '../types/offer';
+import { TOffer } from '../types/offer';
 
 type OffersListProps = {
   cardsCount: number;
-  offers: OfferType[];
+  offers: TOffer[];
 }
 
 export function OffersList({ cardsCount, offers }: OffersListProps) {

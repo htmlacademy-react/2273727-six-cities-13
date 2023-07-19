@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { OfferType } from '../types/offer';
+import { TOffer } from '../types/offer';
 
 type PlaceCardProps = {
-  offer: OfferType;
+  offer: TOffer;
 }
 
 export function PlaceCard({ offer }: PlaceCardProps) {
 
   return (
     <article className="cities__card place-card">
+      <div className={`place-card__mark ${offer.isPremium ? '' : 'visually-hidden'}`}>
+        <span>Premium</span>
+      </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
