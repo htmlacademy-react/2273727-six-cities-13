@@ -1,15 +1,23 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { TOffer } from '../types/offer';
+import { useState } from 'react';
 
 type PlaceCardProps = {
   offer: TOffer;
 }
 
 export function PlaceCard({ offer }: PlaceCardProps) {
+  const [state, setState] = useState('');
+
+
+  const handleMouseOver = () => {
+    setState(offer.id);
+    console.log(state);
+  };
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={handleMouseOver}>
       <div className={`place-card__mark ${offer.isPremium ? '' : 'visually-hidden'}`}>
         <span>Premium</span>
       </div>
