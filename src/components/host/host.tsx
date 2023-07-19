@@ -1,7 +1,7 @@
-import { TFullOffer } from '../types/full-offer';
+import { FullOfferType } from '../types/full-offer';
 
 type HostProps = {
-  offer: TFullOffer;
+  offer: FullOfferType;
 }
 
 export function Host({ offer }: HostProps) {

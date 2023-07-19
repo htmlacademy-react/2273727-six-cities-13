@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
-import { TFullOffer } from '../../components/types/full-offer';
+import { FullOfferType } from '../../components/types/full-offer';
 import { ImgContainer } from '../../components/img-container/img-container';
 import { NotFound } from '../404/404';
 import { Goods } from '../../components/goods/goods';
@@ -10,7 +10,7 @@ import { Reviews } from '../../components/reviews/reviews';
 
 
 type OfferProps = {
-  fullOffers: TFullOffer[];
+  fullOffers: FullOfferType[];
 }
 
 export function Offer({ fullOffers }: OfferProps) {

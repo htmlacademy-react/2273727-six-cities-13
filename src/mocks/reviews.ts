@@ -1,6 +1,6 @@
-import { TReview } from '../components/types/review';
+import { TReview as ReviewType } from '../components/types/review';
 
-export const reviews: TReview[][] = [
+export const reviews: ReviewType[][] = [
   [
     {
       id: 'b041999e-e959-4452-aea1-06561bcd78e3',

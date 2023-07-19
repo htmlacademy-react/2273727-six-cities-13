@@ -7,7 +7,9 @@ const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
     ? {
       cursor: 'default',
     }
-    : {};
+    : {
+      cursor: 'pointer',
+    };
 
 export function Header() {
   return (

@@ -7,14 +7,14 @@ import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../private-route/private-route';
-import { TOffer } from '../types/offer';
-import { TFullOffer } from '../types/full-offer';
+import { OfferType } from '../types/offer';
+import { FullOfferType } from '../types/full-offer';
 
 
 type AppProps = {
   cardsCount: number;
-  offers: TOffer[];
-  fullOffers: TFullOffer[];
+  offers: OfferType[];
+  fullOffers: FullOfferType[];
 }
 
 export function App({ cardsCount, offers, fullOffers }: AppProps) {

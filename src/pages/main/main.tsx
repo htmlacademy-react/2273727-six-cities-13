@@ -2,11 +2,11 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
-import { TOffer } from '../../components/types/offer';
+import { OfferType } from '../../components/types/offer';
 
 type MainProps = {
   cardsCount: number;
-  offers: TOffer[];
+  offers: OfferType[];
 }
 
 export function MainPage({ cardsCount, offers }: MainProps) {

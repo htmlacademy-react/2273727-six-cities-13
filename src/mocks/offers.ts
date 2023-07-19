@@ -1,7 +1,7 @@
-import { TOffer } from '../components/types/offer';
+import { OfferType } from '../components/types/offer';
 
 
-export const offers: TOffer[] = [
+export const offers: OfferType[] = [
   {
     id: 'cc86c284-5f68-4393-94f1-888b054e31d2',
     title: 'The Joshua Tree House',
