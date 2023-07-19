@@ -2,8 +2,19 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../const';
+import { TOffer } from '../../components/types/offer';
 
-export function Favorites() {
+type FavoritesProps = {
+  offers: TOffer[];
+}
+
+export function Favorites({offers}: FavoritesProps) {
+  const favorites = offers.filter((offer) => offer.isFavorite);
+
+
+  // if (favorites[i].city.name)
+
+
   return (
     <div className="page">
       <Helmet>
