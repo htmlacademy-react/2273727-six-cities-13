@@ -1,4 +1,14 @@
+import { useState } from 'react';
+import { ChangeEvent } from 'react';
+
 export function CommentForm() {
+  const [, setState] = useState('');
+
+
+  const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    setState(evt.target.value);
+  };
+
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">
@@ -91,6 +101,7 @@ export function CommentForm() {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        onChange={handleTextareaChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

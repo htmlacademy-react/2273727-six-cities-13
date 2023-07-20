@@ -87,8 +87,8 @@ export const fullOffers: FullOfferType[] = [
       'Air conditioning'
     ],
     host: {
-      isPro: true,
-      name: 'Angelina',
+      isPro: false,
+      name: 'Maximus',
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     isPremium: true,

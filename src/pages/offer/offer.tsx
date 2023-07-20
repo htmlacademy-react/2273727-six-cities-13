@@ -7,6 +7,7 @@ import { NotFound } from '../404/404';
 import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
+import { reviews } from '../../mocks/reviews';
 
 
 type OfferProps = {
@@ -37,9 +38,11 @@ export function Offer({ fullOffers }: OfferProps) {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className={`offer__mark ${offer.isPremium ? '' : 'visually-hidden'}`} >
-                <span>Premium</span>
-              </div>
+              {offer.isPremium ? (
+                <div className="offer__mark" >
+                  <span>Premium</span>
+                </div>) : null}
+
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   {offer.title}
@@ -72,11 +75,11 @@ export function Offer({ fullOffers }: OfferProps) {
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
 
-              <Goods goods={offer.goods}/>
+              <Goods goods={offer.goods} />
 
               <Host offer={offer} />
 
-              <Reviews />
+              <Reviews reviews={reviews} />
 
             </div>
           </div>

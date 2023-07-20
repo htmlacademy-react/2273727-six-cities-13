@@ -19,7 +19,7 @@ export function Host({ offer }: HostProps) {
           />
         </div>
         <span className="offer__user-name">{offer.host.name}</span>
-        <span className={`offer__user-status ${offer.host.isPro ? '' : 'visually-hidden'}`}>Pro</span>
+        {offer.host.isPro ? (<span className="offer__user-status">Pro</span>) : null}
       </div>
       <div className="offer__description">
         <p className="offer__text">

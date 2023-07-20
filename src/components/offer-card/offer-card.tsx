@@ -3,11 +3,11 @@ import { AppRoute } from '../../const';
 import { OfferType } from '../types/offer';
 import { useState } from 'react';
 
-type PlaceCardProps = {
+type OfferCardProps = {
   offer: OfferType;
 }
 
-export function PlaceCard({ offer }: PlaceCardProps) {
+export function OfferCard({ offer }: OfferCardProps) {
   const [, setState] = useState('');
 
 
