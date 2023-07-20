@@ -1,14 +1,13 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
 import { FullOfferType } from '../../components/types/full-offer';
 import { ImgContainer } from '../../components/img-container/img-container';
-import { NotFound } from '../404/404';
 import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { reviews } from '../../mocks/reviews';
-
+import { AppRoute } from '../../const';
 
 type OfferProps = {
   fullOffers: FullOfferType[];
@@ -18,7 +17,7 @@ export function Offer({ fullOffers }: OfferProps) {
   const idContainer = useParams();
   const offer = fullOffers.find((item) => item.id === idContainer.id);
   if (offer === undefined) {
-    return <NotFound />;
+    return <Navigate to={AppRoute.NotFound} />;
   }
 
   return (

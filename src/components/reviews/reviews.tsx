@@ -15,10 +15,10 @@ export function Reviews({ reviews }: ReviewsProps) {
       <ul className="reviews__list">
         {Array.from({ length: reviews.length }, (_, i) => {
           const {comment, date, id, rating, user} = reviews[i];
-          const {avatarUrl, isPro, name } = user;
+          const {avatarUrl, name } = user;
 
           return (
-            <li className="reviews__item" key={i}>
+            <li className="reviews__item" key={id}>
               <div className="reviews__user user">
                 <div className="reviews__avatar-wrapper  user__avatar-wrapper">
                   <img

@@ -7,6 +7,7 @@ export const AppRoute = {
   Favorites: '/favorites',
   Login: '/login',
   Offer: '/offer',
+  NotFound: '/404',
 } as const;
 
 export enum AuthorizationStatus {
