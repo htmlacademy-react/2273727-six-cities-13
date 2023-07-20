@@ -1,5 +1,7 @@
 import { FavoritePlaceCard } from '../favorite-place-card/favorite-place-card';
 import { OfferType } from '../types/offer';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type FavoritesListType = {
   favorites: OfferType[];
@@ -20,9 +22,9 @@ export function FavoritesList({ favorites }: FavoritesListType) {
         <li className="favorites__locations-items" key={favorites[i].id}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to={AppRoute.Root}>
                 <span>{cityName}</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="favorites__places">
