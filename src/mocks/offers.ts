@@ -44,7 +44,7 @@ export const offers: OfferType[] = [
       longitude: 6.961974,
       zoom: 16
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 4.5
   },
@@ -67,7 +67,7 @@ export const offers: OfferType[] = [
       longitude: 4.364697,
       zoom: 16
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 3.4
   },

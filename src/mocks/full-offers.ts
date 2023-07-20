@@ -92,7 +92,7 @@ export const fullOffers: FullOfferType[] = [
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: false,
+    isFavorite: true,
     rating: 4.5,
     bedrooms: 2,
     maxAdults: 9
@@ -138,7 +138,7 @@ export const fullOffers: FullOfferType[] = [
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: false,
+    isFavorite: true,
     rating: 3.4,
     bedrooms: 2,
     maxAdults: 1
