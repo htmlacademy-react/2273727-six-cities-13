@@ -2,7 +2,7 @@ import { NearPlaceCard } from '../near-place-card/near-place-card';
 import { OfferType } from '../types/offer';
 
 type NearPlacesListProps = {
-  id: string;
+  id: string | undefined;
   cityName: string;
   offers: OfferType[];
 }

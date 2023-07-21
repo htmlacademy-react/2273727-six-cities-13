@@ -12,7 +12,6 @@ type FavoritesProps = {
 
 export function Favorites({offers}: FavoritesProps) {
   const favorites = offers.filter((offer) => offer.isFavorite);
-  console.log(favorites);
   if (favorites === null) {
     return (<NotFound />);
   }
