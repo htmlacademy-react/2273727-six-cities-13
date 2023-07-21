@@ -20,6 +20,14 @@ export function Offer({ fullOffers }: OfferProps) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
+  const {bedrooms, description, goods, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type} = offer;
+
+  const getFavoriteStyles = (isFav: boolean) => {
+    if (isFav) {
+      return {fill: '#4481c3', stroke: '#4481c3'};
+    }
+  };
+
   return (
     <div className="page">
       <Helmet>
@@ -32,22 +40,22 @@ export function Offer({ fullOffers }: OfferProps) {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <ImgContainer images={offer.images} />
+              <ImgContainer images={images} />
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {offer.isPremium ? (
+              {isPremium ? (
                 <div className="offer__mark" >
                   <span>Premium</span>
                 </div>) : null}
 
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {offer.title}
+                  {title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
+                  <svg className="offer__bookmark-icon" width={31} height={33} style={getFavoriteStyles(isFavorite)}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -55,28 +63,28 @@ export function Offer({ fullOffers }: OfferProps) {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${offer.rating * 20}%` }} />
+                  <span style={{ width: `${rating * 20}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
+                <span className="offer__rating-value rating__value">{rating}</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{offer.type.charAt(0).toUpperCase() + offer.type.slice(1)}</li>
+                <li className="offer__feature offer__feature--entire">{type.charAt(0).toUpperCase() + type.slice(1)}</li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">€{offer.price}</b>
+                <b className="offer__price-value">€{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
 
-              <Goods goods={offer.goods} />
+              <Goods goods={goods} />
 
-              <Host offer={offer} />
+              <Host host={host} description={description} />
 
               <Reviews reviews={reviews} />
 

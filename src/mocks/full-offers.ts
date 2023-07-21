@@ -138,7 +138,7 @@ export const fullOffers: FullOfferType[] = [
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: true,
+    isFavorite: false,
     rating: 3.4,
     bedrooms: 2,
     maxAdults: 1
@@ -177,7 +177,7 @@ export const fullOffers: FullOfferType[] = [
     ],
     host: {
       isPro: true,
-      name: 'Angelina',
+      name: 'Oliver Conner',
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
