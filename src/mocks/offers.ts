@@ -32,7 +32,7 @@ export const offers: OfferType[] = [
     price: 460,
     previewImage: 'https://13.design.pages.academy/static/hotel/15.jpg',
     city: {
-      name: 'Cologne',
+      name: 'Amsterdam',
       location: {
         latitude: 50.938361,
         longitude: 6.959974,
@@ -55,7 +55,7 @@ export const offers: OfferType[] = [
     price: 728,
     previewImage: 'https://13.design.pages.academy/static/hotel/14.jpg',
     city: {
-      name: 'Brussels',
+      name: 'Cologne',
       location: {
         latitude: 50.846557,
         longitude: 4.351697,
@@ -68,7 +68,7 @@ export const offers: OfferType[] = [
       zoom: 16
     },
     isFavorite: false,
-    isPremium: true,
+    isPremium: false,
     rating: 3.4
   },
   {

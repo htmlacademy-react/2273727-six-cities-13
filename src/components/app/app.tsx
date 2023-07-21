@@ -45,7 +45,7 @@ export function App({ cardsCount, offers, fullOffers }: AppProps) {
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<Offer fullOffers={fullOffers} />}
+            element={<Offer fullOffers={fullOffers} offers={offers} />}
           />
           <Route
             path="*"

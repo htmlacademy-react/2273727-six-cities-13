@@ -61,7 +61,7 @@ export const fullOffers: FullOfferType[] = [
       'https://13.design.pages.academy/static/hotel/16.jpg'
     ],
     city: {
-      name: 'Cologne',
+      name: 'Amsterdam',
       location: {
         latitude: 50.938361,
         longitude: 6.959974,
@@ -112,7 +112,7 @@ export const fullOffers: FullOfferType[] = [
       'https://13.design.pages.academy/static/hotel/1.jpg'
     ],
     city: {
-      name: 'Brussels',
+      name: 'Cologne',
       location: {
         latitude: 50.846557,
         longitude: 4.351697,
@@ -137,7 +137,7 @@ export const fullOffers: FullOfferType[] = [
       name: 'Angelina',
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
-    isPremium: true,
+    isPremium: false,
     isFavorite: false,
     rating: 3.4,
     bedrooms: 2,
