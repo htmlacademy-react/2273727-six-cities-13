@@ -25,6 +25,7 @@ export function OffersList({ offers, onCardHover }: OffersListProps) {
           key={offer.id}
           id={offer.id}
           isFavorite={offer.isFavorite}
+          isMain
           isPremium={offer.isPremium}
           price={offer.price}
           previewImage={offer.previewImage}

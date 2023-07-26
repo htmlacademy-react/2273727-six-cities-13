@@ -1,4 +1,4 @@
-import { NearPlaceCard } from '../near-place-card/near-place-card';
+import { OfferCard } from '../offer-card/offer-card';
 import { OfferType } from '../types/offer';
 import { MouseEvent } from 'react';
 
@@ -32,10 +32,11 @@ export function NearPlacesList({ id, cityName, offers, onCardHover }: NearPlaces
       </h2>
       <div className="near-places__list places__list">
         {filteredOffers.map((filteredOffer) => (
-          <NearPlaceCard
+          <OfferCard
             key={filteredOffer.id}
             id={filteredOffer.id}
             isFavorite={filteredOffer.isFavorite}
+            isMain={false}
             isPremium={filteredOffer.isPremium}
             price={filteredOffer.price}
             previewImage={filteredOffer.previewImage}
