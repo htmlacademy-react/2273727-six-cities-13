@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useState } from 'react';
 
 type OfferCardProps = {
   id: string;
@@ -11,6 +10,7 @@ type OfferCardProps = {
   rating: number;
   title: string;
   type: string;
+  handleMouseEnter: any;
 }
 
 export function OfferCard(
@@ -23,17 +23,9 @@ export function OfferCard(
     rating,
     title,
     type,
+    handleMouseEnter,
   }: OfferCardProps) {
-  const [, setState] = useState('');
 
-
-  const handleMouseEnter = () => {
-    setState(id);
-  };
-
-  const handleMouseLeave = () => {
-    setState('');
-  };
 
   const getFavoriteStyles = (isFav: boolean) => {
     if (isFav) {
@@ -42,7 +34,7 @@ export function OfferCard(
   };
 
   return (
-    <article className="cities__card place-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article className="cities__card place-card" id={id} onMouseEnter={handleMouseEnter}>
       <div className={`place-card__mark ${isPremium ? '' : 'visually-hidden'}`}>
         <span>Premium</span>
       </div>

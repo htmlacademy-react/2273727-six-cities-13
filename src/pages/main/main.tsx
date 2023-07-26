@@ -3,13 +3,23 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { OfferType } from '../../components/types/offer';
+import { Map } from '../../components/map/map';
+import { CITY } from '../../const';
+import { useState } from 'react';
 
 type MainProps = {
-  cardsCount: number;
   offers: OfferType[];
 }
 
-export function MainPage({ cardsCount, offers }: MainProps) {
+export function MainPage({ offers }: MainProps) {
+  const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+
+  const handleCardHover = (id: string) => {
+    const currentCard = offers.find((offer) => offer.id === id);
+
+    setSelectedCard(currentCard);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -76,10 +86,10 @@ export function MainPage({ cardsCount, offers }: MainProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList cardsCount={cardsCount} offers={offers} />
+              <OffersList offers={offers} onCardHover={handleCardHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={CITY} offers={offers} selectedCard={selectedCard} />
             </div>
           </div>
         </div>
