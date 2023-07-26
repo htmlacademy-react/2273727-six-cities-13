@@ -14,9 +14,11 @@ type MainProps = {
 export function MainPage({ offers }: MainProps) {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
 
-  const handleCardHover = (id: string) => {
+  const handleCardHover = (id: string | undefined) => {
+    if (!id) {
+      setSelectedCard(undefined);
+    }
     const currentCard = offers.find((offer) => offer.id === id);
-
     setSelectedCard(currentCard);
   };
 

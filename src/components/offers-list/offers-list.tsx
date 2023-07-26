@@ -4,13 +4,18 @@ import { MouseEvent } from 'react';
 
 type OffersListProps = {
   offers: OfferType[];
-  onCardHover: (id: string) => void;
+  onCardHover: (id: string | undefined) => void;
 }
 
 export function OffersList({ offers, onCardHover }: OffersListProps) {
-  const handleCardHover = (event: MouseEvent<HTMLLIElement>) => {
+  const handleCardEnter = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     onCardHover(event.currentTarget.id);
+  };
+
+  const handleCardLeave = (event: MouseEvent<HTMLLIElement>) => {
+    event.preventDefault();
+    onCardHover(undefined);
   };
 
   return (
@@ -26,7 +31,8 @@ export function OffersList({ offers, onCardHover }: OffersListProps) {
           rating={offer.rating}
           title={offer.title}
           type={offer.type}
-          handleMouseEnter={handleCardHover}
+          handleCardEnter={handleCardEnter}
+          handleCardLeave={handleCardLeave}
         />
       )
       )}
