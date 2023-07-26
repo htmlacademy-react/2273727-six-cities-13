@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useState } from 'react';
+import { MouseEvent } from 'react';
 
 type OfferCardProps = {
   id: string;
@@ -11,6 +11,8 @@ type OfferCardProps = {
   rating: number;
   title: string;
   type: string;
+  handleCardEnter: (event: MouseEvent<HTMLLIElement>) => void;
+  handleCardLeave: (event: MouseEvent<HTMLLIElement>) => void;
 }
 
 export function OfferCard(
@@ -23,26 +25,19 @@ export function OfferCard(
     rating,
     title,
     type,
+    handleCardEnter,
+    handleCardLeave,
   }: OfferCardProps) {
-  const [, setState] = useState('');
 
-
-  const handleMouseEnter = () => {
-    setState(id);
-  };
-
-  const handleMouseLeave = () => {
-    setState('');
-  };
 
   const getFavoriteStyles = (isFav: boolean) => {
     if (isFav) {
-      return {fill: '#4481c3', stroke: '#4481c3'};
+      return { fill: '#4481c3', stroke: '#4481c3' };
     }
   };
 
   return (
-    <article className="cities__card place-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article className="cities__card place-card" id={id} onMouseEnter={handleCardEnter} onMouseLeave={handleCardLeave}>
       <div className={`place-card__mark ${isPremium ? '' : 'visually-hidden'}`}>
         <span>Premium</span>
       </div>

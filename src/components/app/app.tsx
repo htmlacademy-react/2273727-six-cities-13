@@ -12,12 +12,11 @@ import { FullOfferType } from '../types/full-offer';
 
 
 type AppProps = {
-  cardsCount: number;
   offers: OfferType[];
   fullOffers: FullOfferType[];
 }
 
-export function App({ cardsCount, offers, fullOffers }: AppProps) {
+export function App({ offers, fullOffers }: AppProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -26,7 +25,6 @@ export function App({ cardsCount, offers, fullOffers }: AppProps) {
             path={AppRoute.Root}
             element={
               <MainPage
-                cardsCount={cardsCount}
                 offers={offers}
               />
             }
