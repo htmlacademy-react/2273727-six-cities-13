@@ -9,7 +9,7 @@ import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { reviews } from '../../mocks/reviews';
 import { AppRoute, CITY } from '../../const';
-import { NearPlacesList } from '../../components/near-places-list/near-places-list';
+import { OffersList } from '../../components/offers-list/offers-list';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 
@@ -112,7 +112,12 @@ export function Offer({ fullOffers, offers }: OfferProps) {
 
         </section>
         <div className="container">
-          <NearPlacesList id={idContainer.id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
+          <section className="near-places places">
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <OffersList id={idContainer.id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
+          </section>
         </div>
       </main>
     </div>
