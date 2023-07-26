@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
@@ -7,9 +8,10 @@ import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { reviews } from '../../mocks/reviews';
-import { AppRoute } from '../../const';
+import { AppRoute, CITY } from '../../const';
 import { NearPlacesList } from '../../components/near-places-list/near-places-list';
 import { OfferType } from '../../components/types/offer';
+import { Map } from '../../components/map/map';
 
 type OfferProps = {
   fullOffers: FullOfferType[];
@@ -17,19 +19,31 @@ type OfferProps = {
 }
 
 export function Offer({ fullOffers, offers }: OfferProps) {
+  const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+
+  const handleCardHover = (id: string | undefined) => {
+    if (!id) {
+      setSelectedCard(undefined);
+    }
+    const currentCard = offers.find((offer) => offer.id === id);
+    setSelectedCard(currentCard);
+  };
+
   const idContainer = useParams();
   const offer = fullOffers.find((item) => item.id === idContainer.id);
   if (offer === undefined) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  const { bedrooms, city, description, goods, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
+  const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
 
   const getFavoriteStyles = (isFav: boolean) => {
     if (isFav) {
       return { fill: '#4481c3', stroke: '#4481c3' };
     }
   };
+
+  const filteredOffers = offers.filter((filteredOffer) => filteredOffer.city.name === city.name && filteredOffer.id !== id);
 
   return (
     <div className="page">
@@ -93,10 +107,12 @@ export function Offer({ fullOffers, offers }: OfferProps) {
 
             </div>
           </div>
-          <section className="offer__map map" />
+
+          <Map isMain={false} city={CITY} offers={filteredOffers} selectedCard={selectedCard} />
+
         </section>
         <div className="container">
-          <NearPlacesList id={idContainer.id} cityName={city.name} offers={offers} />
+          <NearPlacesList id={idContainer.id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
         </div>
       </main>
     </div>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { getFavoriteStyles } from '../../utils';
+import { MouseEvent } from 'react';
 
 type NearPlaceCardProps = {
   id: string;
@@ -11,6 +12,8 @@ type NearPlaceCardProps = {
   rating: number;
   title: string;
   type: string;
+  handleCardEnter: (event: MouseEvent<HTMLLIElement>) => void;
+  handleCardLeave: (event: MouseEvent<HTMLLIElement>) => void;
 }
 
 export function NearPlaceCard(
@@ -23,9 +26,11 @@ export function NearPlaceCard(
     rating,
     title,
     type,
+    handleCardEnter,
+    handleCardLeave,
   }: NearPlaceCardProps) {
   return (
-    <article className="near-places__card place-card">
+    <article className="near-places__card place-card" id={id} onMouseEnter={handleCardEnter} onMouseLeave={handleCardLeave} >
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>

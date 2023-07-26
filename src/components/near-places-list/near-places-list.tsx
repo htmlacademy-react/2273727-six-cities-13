@@ -1,17 +1,30 @@
 import { NearPlaceCard } from '../near-place-card/near-place-card';
 import { OfferType } from '../types/offer';
+import { MouseEvent } from 'react';
 
 type NearPlacesListProps = {
   id: string | undefined;
   cityName: string;
   offers: OfferType[];
+  onCardHover: (id: string | undefined) => void;
 }
 
-export function NearPlacesList({ id, cityName, offers }: NearPlacesListProps) {
+export function NearPlacesList({ id, cityName, offers, onCardHover }: NearPlacesListProps) {
+  const handleCardEnter = (event: MouseEvent<HTMLLIElement>) => {
+    event.preventDefault();
+    onCardHover(event.currentTarget.id);
+  };
+
+  const handleCardLeave = (event: MouseEvent<HTMLLIElement>) => {
+    event.preventDefault();
+    onCardHover(undefined);
+  };
+
   const filteredOffers = offers.filter((offer) => offer.city.name === cityName && offer.id !== id);
   if (filteredOffers.length === 0) {
     return;
   }
+
   return (
     <section className="near-places places">
       <h2 className="near-places__title">
@@ -29,6 +42,8 @@ export function NearPlacesList({ id, cityName, offers }: NearPlacesListProps) {
             rating={filteredOffer.rating}
             title={filteredOffer.title}
             type={filteredOffer.type}
+            handleCardEnter={handleCardEnter}
+            handleCardLeave={handleCardLeave}
           />
         )
         )}
