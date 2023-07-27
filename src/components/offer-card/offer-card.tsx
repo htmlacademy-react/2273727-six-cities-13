@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { MouseEvent } from 'react';
+import { getFavoriteStyles } from '../../utils';
 
 type OfferCardProps = {
   id: string;
   isFavorite: boolean;
+  isMain: boolean;
   isPremium: boolean;
   previewImage: string;
   price: number;
@@ -19,6 +21,7 @@ export function OfferCard(
   {
     id,
     isFavorite,
+    isMain,
     isPremium,
     previewImage,
     price,
@@ -29,19 +32,12 @@ export function OfferCard(
     handleCardLeave,
   }: OfferCardProps) {
 
-
-  const getFavoriteStyles = (isFav: boolean) => {
-    if (isFav) {
-      return { fill: '#4481c3', stroke: '#4481c3' };
-    }
-  };
-
   return (
-    <article className="cities__card place-card" id={id} onMouseEnter={handleCardEnter} onMouseLeave={handleCardLeave}>
+    <article className={isMain ? 'cities__card place-card' : 'near-places__card place-card'} id={id} onMouseEnter={handleCardEnter} onMouseLeave={handleCardLeave}>
       <div className={`place-card__mark ${isPremium ? '' : 'visually-hidden'}`}>
         <span>Premium</span>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={isMain ? 'cities__image-wrapper place-card__image-wrapper' : 'near-places__image-wrapper place-card__image-wrapper'} >
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>

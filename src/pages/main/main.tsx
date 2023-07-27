@@ -91,7 +91,7 @@ export function MainPage({ offers }: MainProps) {
               <OffersList offers={offers} onCardHover={handleCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map city={CITY} offers={offers} selectedCard={selectedCard} />
+              <Map isMain city={CITY} offers={offers} selectedCard={selectedCard} />
             </div>
           </div>
         </div>

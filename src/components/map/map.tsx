@@ -7,6 +7,7 @@ import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 import { OfferType } from '../types/offer';
 
 type MapProps = {
+  isMain: boolean;
   city: CityType;
   offers: OfferType[];
   selectedCard: OfferType | undefined;
@@ -24,7 +25,13 @@ const currentIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-export function Map({ city, offers, selectedCard }: MapProps) {
+const offersMapStyle = {
+  width: '1144px',
+  height: '579px',
+  margin: '0px auto 50px',
+};
+
+export function Map({ isMain, city, offers, selectedCard }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -53,8 +60,9 @@ export function Map({ city, offers, selectedCard }: MapProps) {
 
   return (
     <section
-      className="cities__map map"
+      className={isMain ? 'cities__map map' : 'offer__map map'}
       ref={mapRef}
+      style={isMain ? {} : offersMapStyle}
     >
     </section>
   );
