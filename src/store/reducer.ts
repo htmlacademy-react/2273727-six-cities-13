@@ -14,10 +14,12 @@ const initialState: InitialStateType = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state) => {
-      state.city = changeCity.payload;
+    .addCase(changeCity, (state, action) => {
+      const {city} = action.payload;
+      state.city = city;
     })
-    .addCase(getOffers, (state) => {
-      state.offers = getOffers.payload;
+    .addCase(getOffers, (state, action) => {
+      const {offers} = action.payload;
+      state.offers = offers;
     });
 });
