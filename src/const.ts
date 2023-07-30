@@ -1,7 +1,3 @@
-export const Settings = {
-  CardsCount: 4,
-} as const;
-
 export const AppRoute = {
   Root: '/',
   Favorites: '/favorites',
