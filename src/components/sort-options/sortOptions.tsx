@@ -1,11 +1,15 @@
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setOffers, setSortType } from '../../store/action';
+import { useState } from 'react';
+import { MouseEvent } from 'react';
 import { offers } from '../../mocks/offers';
 
 const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 export function SortOptions() {
+  const [isOpened, setIsOpened] = useState(false);
+
   const activeSortType = useAppSelector((state) => state.activeSortType);
   const stateOffers = useAppSelector((state) => state.offers);
   const defaultOffers = [...offers];
@@ -35,19 +39,33 @@ export function SortOptions() {
     }
   };
 
+  const handleSpanClick = (evt: MouseEvent<HTMLFormElement>) => {
+    evt.stopPropagation();
+    setIsOpened((prevIsOpened) => !prevIsOpened);
+  };
+
   return (
-    <ul className="places__options places__options--custom places__options--opened">
-      {
-        OPTIONS_NAMES.map((item) => (
-          <li className={`places__option ${item === activeSortType ? 'places__option--active' : ''}`}
-            tabIndex={0}
-            key={item}
-            onClick={() => handleClick(item)}
-          >
-            {item}
-          </li>
-        ))
-      }
-    </ul>
+    <form className="places__sorting" action="#" method="get" onClick={handleSpanClick} >
+      <span className="places__sorting-caption">Sort by </span>
+      <span className="places__sorting-type" tabIndex={0}>
+        {activeSortType}
+        <svg className="places__sorting-arrow" width="7" height="4">
+          <use xlinkHref="#icon-arrow-select"></use>
+        </svg>
+      </span>
+      <ul className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : ''}`}>
+        {
+          OPTIONS_NAMES.map((item) => (
+            <li className={`places__option ${item === activeSortType ? 'places__option--active' : ''}`}
+              tabIndex={0}
+              key={item}
+              onClick={() => handleClick(item)}
+            >
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </form>
   );
 }
