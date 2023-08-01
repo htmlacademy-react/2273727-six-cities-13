@@ -1,18 +1,19 @@
 import { OffersList } from '../../components/offers-list/offers-list';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { CITY } from '../../const';
 import { useState } from 'react';
+import { CititesList } from '../../components/cities-list/cities-list';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 
-type MainProps = {
-  offers: OfferType[];
-}
-
-export function MainPage({ offers }: MainProps) {
+export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+
+  const activeCityName = useAppSelector((state) => state.activeCity);
+  const offers: OfferType[] = useAppSelector((state) => state.offers);
+  const offersByCity = offers.filter((item) => item.city.name === activeCityName);
 
   const handleCardHover = (id: string | undefined) => {
     if (!id) {
@@ -34,45 +35,14 @@ export function MainPage({ offers }: MainProps) {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="#">
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="#">
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="#">
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item tabs__item--active" to="#">
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="#">
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="#">
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
+            <CititesList />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersByCity.length} places to stay in {activeCityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -88,10 +58,10 @@ export function MainPage({ offers }: MainProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} onCardHover={handleCardHover} />
+              <OffersList offers={offersByCity} onCardHover={handleCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map isMain city={CITY} offers={offers} selectedCard={selectedCard} />
+              <Map isMain city={CITY} offers={offersByCity} selectedCard={selectedCard} />
             </div>
           </div>
         </div>
