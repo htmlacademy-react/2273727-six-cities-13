@@ -6,13 +6,14 @@ import { Map } from '../../components/map/map';
 import { CITY } from '../../const';
 import { useState } from 'react';
 import { CititesList } from '../../components/cities-list/cities-list';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 
-type MainProps = {
-  offers: OfferType[];
-}
-
-export function MainPage({ offers }: MainProps) {
+export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+
+  const activeCityName = useAppSelector((state) => state.activeCity);
+  const offers: OfferType[] = useAppSelector((state) => state.offers);
+  const offersByCity = offers.filter((item) => item.city.name === activeCityName);
 
   const handleCardHover = (id: string | undefined) => {
     if (!id) {
@@ -41,7 +42,7 @@ export function MainPage({ offers }: MainProps) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersByCity.length} places to stay in {activeCityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -57,10 +58,10 @@ export function MainPage({ offers }: MainProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} onCardHover={handleCardHover} />
+              <OffersList offers={offersByCity} onCardHover={handleCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map isMain city={CITY} offers={offers} selectedCard={selectedCard} />
+              <Map isMain city={CITY} offers={offersByCity} selectedCard={selectedCard} />
             </div>
           </div>
         </div>

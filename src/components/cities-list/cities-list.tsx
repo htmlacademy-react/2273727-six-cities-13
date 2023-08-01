@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { changeCity } from '../../store/action';
 
 export function CititesList() {
-  const cityName = useAppSelector((state) => state.city);
+  const cityName = useAppSelector((state) => state.activeCity);
   const dispatch = useAppDispatch();
 
   const handleCityClick = (evt: MouseEvent<HTMLLIElement>) => {
