@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
-import { FullOfferType } from '../../components/types/full-offer';
 import { ImgContainer } from '../../components/img-container/img-container';
 import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
@@ -12,14 +11,13 @@ import { AppRoute, CITY } from '../../const';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 
-type OfferProps = {
-  fullOffers: FullOfferType[];
-  offers: OfferType[];
-}
-
-export function Offer({ fullOffers, offers }: OfferProps) {
+export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+
+  const offers = useAppSelector((state) => state.offers);
+  const fullOffers = useAppSelector((state) => state.fullOffers);
 
   const handleCardHover = (id: string | undefined) => {
     if (!id) {

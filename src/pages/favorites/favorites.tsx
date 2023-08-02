@@ -1,16 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../const';
-import { OfferType } from '../../components/types/offer';
 import { FavoritesList } from '../../components/favorites-list/favorites-list';
 import { NotFound } from '../404/404';
 
-type FavoritesProps = {
-  offers: OfferType[];
-}
-
-export function Favorites({offers}: FavoritesProps) {
+export function Favorites() {
+  const offers = useAppSelector((state) => state.offers);
   const favorites = offers.filter((offer) => offer.isFavorite);
   if (favorites === null) {
     return (<NotFound />);

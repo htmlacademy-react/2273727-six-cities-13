@@ -13,7 +13,7 @@ export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
 
   const activeCityName = useAppSelector((state) => state.activeCity);
-  const offers: OfferType[] = useAppSelector((state) => state.offers);
+  const offers = useAppSelector((state) => state.offers);
   const offersByCity = offers.filter((item) => item.city.name === activeCityName);
 
   const handleCardHover = (id: string | undefined) => {
