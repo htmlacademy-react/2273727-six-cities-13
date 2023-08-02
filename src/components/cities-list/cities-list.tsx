@@ -3,7 +3,7 @@ import { CitiesNames } from '../../const';
 import { MouseEvent } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { changeCity } from '../../store/action';
+import { setActiveCity } from '../../store/action';
 
 export function CititesList() {
   const cityName = useAppSelector((state) => state.activeCity);
@@ -12,7 +12,7 @@ export function CititesList() {
   const handleCityClick = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
     const city = evt.currentTarget.dataset.city;
-    dispatch(changeCity(city));
+    dispatch(setActiveCity(city));
   };
 
   return (
