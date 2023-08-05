@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setOffers, setSortType } from '../../store/action';
 import { useState } from 'react';
 import { MouseEvent } from 'react';
-import { offers } from '../../mocks/offers';
+import { fetchOffersAction } from '../../store/api-actions';
 
 const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
@@ -12,7 +12,7 @@ export function SortOptions() {
 
   const activeSortType = useAppSelector((state) => state.activeSortType);
   const stateOffers = useAppSelector((state) => state.offers);
-  const defaultOffers = [...offers];
+  const defaultOffers = [...stateOffers];
   const lowPriceSortedOffers = [...stateOffers].sort((a, b) => a.price - b.price);
   const highPriceSortedOffers = [...stateOffers].sort((a, b) => b.price - a.price);
   const ratingSortedOffers = [...stateOffers].sort((a, b) => b.rating - a.rating);
@@ -21,6 +21,7 @@ export function SortOptions() {
   const handleClick = (item: string) => {
     switch (item) {
       case 'Popular':
+        dispatch(fetchOffersAction());
         dispatch(setSortType('Popular'));
         dispatch(setOffers(defaultOffers));
         break;

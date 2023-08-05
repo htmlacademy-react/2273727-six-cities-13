@@ -24,6 +24,8 @@ export function MainPage() {
     setSelectedCard(currentCard);
   };
 
+  // const currentCity = offersByCity[0].city;
+
   return (
     <div className="page page--gray page--main">
       <Helmet>

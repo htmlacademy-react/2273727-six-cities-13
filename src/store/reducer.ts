@@ -1,25 +1,27 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveCity, setSortType, setOffers, setFullOffers, loadOffers, requireAuthorization } from './action';
+import { setActiveCity, setSortType, setOffers, setFullOffer, loadOffers, loadOffer, requireAuthorization, setActiveId, setOfferLoadingStatus } from './action';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { offers } from '../mocks/offers';
-import { fullOffers } from '../mocks/full-offers';
 import { AuthorizationStatus } from '../const';
 
 export type InitialStateType = {
   activeCity: string | undefined;
   offers: OfferType[];
-  fullOffers: FullOfferType[];
+  fullOffer: FullOfferType | null;
+  activeId: string | null;
   activeSortType: string;
   authorizationStatus: AuthorizationStatus;
+  isOfferLoading: boolean;
 }
 
 const initialState: InitialStateType = {
   activeCity: 'Paris',
-  offers: offers,
-  fullOffers: fullOffers,
+  offers: [],
+  fullOffer: null,
+  activeId: null,
   activeSortType: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
+  isOfferLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -33,13 +35,22 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(setFullOffers, (state, action) => {
-      state.fullOffers = action.payload;
+    .addCase(setFullOffer, (state, action) => {
+      state.fullOffer = action.payload;
+    })
+    .addCase(setActiveId, (state, action) => {
+      state.activeId = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
+    .addCase(loadOffer, (state, action) => {
+      state.fullOffer = action.payload;
+    })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setOfferLoadingStatus, (state, action) => {
+      state.isOfferLoading = action.payload;
     });
 });

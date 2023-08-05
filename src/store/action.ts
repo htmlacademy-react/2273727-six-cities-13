@@ -7,10 +7,16 @@ export const setActiveCity = createAction('setActiveCity', (city: string | undef
 
 export const setSortType = createAction('setSortType', (sortType: string) => ({ payload: sortType }));
 
-export const setOffers = createAction('getOffers', (offers: OfferType[]) => ({ payload: offers }));
+export const setOffers = createAction('setOffers', (offers: OfferType[]) => ({ payload: offers }));
 
-export const setFullOffers = createAction('getFullOffers', (fullOffers: FullOfferType[]) => ({ payload: fullOffers }));
+export const setFullOffer = createAction('setFullOffer', (fullOffer: FullOfferType) => ({ payload: fullOffer }));
+
+export const setActiveId = createAction('setActiveId', (activeId: string) => ({ payload: activeId }));
 
 export const loadOffers = createAction('loadOffers', (offers: OfferType[]) => ({ payload: offers }));
 
+export const loadOffer = createAction('loadOffer', (offer: FullOfferType | null) => ({ payload: offer }));
+
 export const requireAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
+
+export const setOfferLoadingStatus = createAction('setOfferLoadingStatus', (status: boolean) => ({ payload: status }));

@@ -34,53 +34,8 @@ export const URL_MARKER_DEFAULT =
 export const URL_MARKER_CURRENT =
   '../img/pin-active.svg';
 
-export const CitiesMap = [
-  {
-    name: 'Paris',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Cologne',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Brussels',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Amsterdam',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Hamburg',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Dusseldorf',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-];
+export const APIRoute = {
+  Offers: '/offers',
+  Login: '/login',
+  Logout: '/logout',
+};

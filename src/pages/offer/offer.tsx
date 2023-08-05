@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
 import { ImgContainer } from '../../components/img-container/img-container';
@@ -7,30 +7,38 @@ import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { reviews } from '../../mocks/reviews';
-import { AppRoute, CITY } from '../../const';
+import { CITY } from '../../const';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { fetchOfferAction } from '../../store/api-actions';
+import {useEffect} from 'react';
+import { LoadingScreen } from '../loading-screen/loading-screen';
+
 
 export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+  const dispatch = useAppDispatch();
+  const offerId = useParams().id;
+
+
+  useEffect(() => {
+    dispatch(fetchOfferAction({id: offerId}));
+  }, [offerId, dispatch]
+  );
 
   const offers = useAppSelector((state) => state.offers);
-  const fullOffers = useAppSelector((state) => state.fullOffers);
 
-  const handleCardHover = (id: string | undefined) => {
-    if (!id) {
-      setSelectedCard(undefined);
-    }
-    const currentCard = offers.find((offer) => offer.id === id);
-    setSelectedCard(currentCard);
-  };
+  const offer = useAppSelector((state) => state.fullOffer);
 
-  const idContainer = useParams();
-  const offer = fullOffers.find((item) => item.id === idContainer.id);
-  if (offer === undefined) {
-    return <Navigate to={AppRoute.NotFound} />;
+  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+
+  if (isOfferLoading || offer === null) {
+    return (
+      <LoadingScreen />
+    );
   }
 
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
@@ -42,6 +50,14 @@ export function Offer() {
   };
 
   const filteredOffers = offers.filter((filteredOffer) => filteredOffer.city.name === city.name && filteredOffer.id !== id);
+
+  const handleCardHover = (ids: string | undefined) => {
+    if (!ids) {
+      setSelectedCard(undefined);
+    }
+    const currentCard = offers.find((item) => item.id === id);
+    setSelectedCard(currentCard);
+  };
 
   return (
     <div className="page">
@@ -114,7 +130,7 @@ export function Offer() {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersList id={idContainer.id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
+            <OffersList id={id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
           </section>
         </div>
       </main>
