@@ -34,6 +34,14 @@ const offersMapStyle = {
 export function Map({ isMain, city, offers, selectedCard }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const cityLocation = city.location;
+
+  useEffect(() => {
+    if (map) {
+      const { latitude, longitude, zoom } = cityLocation;
+      map.flyTo([latitude, longitude], zoom);
+    }
+  }, [map, cityLocation]);
 
   useEffect(() => {
     if (map) {

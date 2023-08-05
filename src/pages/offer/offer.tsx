@@ -35,7 +35,7 @@ export function Offer() {
 
   const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
 
-  if (isOfferLoading || offer === null) {
+  if (isOfferLoading || offer === null || offers === null) {
     return (
       <LoadingScreen />
     );
