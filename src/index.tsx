@@ -5,7 +5,12 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { fetchOffers } from './store/api-actions';
 
-store.dispatch(fetchOffers());
+store.dispatch(fetchOffers()).then(() => {
+  const offers = store.getState().offers;
+  if (offers) {
+    localStorage.setItem('offers', JSON.stringify(offers));
+  }
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,41 +1,38 @@
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { setOffers, setSortType } from '../../store/action';
+import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/action';
 import { useState } from 'react';
 import { MouseEvent } from 'react';
-import { fetchOffers } from '../../store/api-actions';
+import { OfferType } from '../types/offer';
 
 const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 export function SortOptions() {
   const [isOpened, setIsOpened] = useState(false);
-
   const activeSortType = useAppSelector((state) => state.activeSortType);
-  const stateOffers = useAppSelector((state) => state.offers);
-  const defaultOffers = [...stateOffers];
-  const lowPriceSortedOffers = [...stateOffers].sort((a, b) => a.price - b.price);
-  const highPriceSortedOffers = [...stateOffers].sort((a, b) => b.price - a.price);
-  const ratingSortedOffers = [...stateOffers].sort((a, b) => b.rating - a.rating);
   const dispatch = useAppDispatch();
+  const originalOffers = localStorage.getItem('offers');
 
   const handleClick = (item: string) => {
     switch (item) {
       case 'Popular':
-        dispatch(fetchOffers());
-        dispatch(setSortType('Popular'));
-        dispatch(setOffers(defaultOffers));
+        if (originalOffers) {
+          const parsedOffers = JSON.parse(originalOffers) as OfferType[];
+          dispatch(setSortType('Popular'));
+          dispatch(setOffers(parsedOffers));
+        }
         break;
       case 'Price: low to high':
         dispatch(setSortType('Price: low to high'));
-        dispatch(setOffers(lowPriceSortedOffers));
+        dispatch(sortOffersByLowPrice());
         break;
       case 'Price: high to low':
         dispatch(setSortType('Price: high to low'));
-        dispatch(setOffers(highPriceSortedOffers));
+        dispatch(sortOffersByHighPrice());
         break;
       case 'Top rated first':
         dispatch(setSortType('Top rated first'));
-        dispatch(setOffers(ratingSortedOffers));
+        dispatch(sortOffersByTopRated());
         break;
     }
   };

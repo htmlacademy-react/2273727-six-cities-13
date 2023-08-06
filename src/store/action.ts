@@ -29,3 +29,9 @@ export const setNearbyOffersLoadStatus = createAction('setNearbyOffersLoadingSta
 export const loadReviews = createAction('loadReviews', (reviews: ReviewType[]) => ({ payload: reviews }));
 
 export const setReviewsLoadStatus = createAction('setReviewsLoadStatus', (status: boolean) => ({ payload: status}));
+
+export const sortOffersByLowPrice = createAction('sortOffersByLowPrice');
+
+export const sortOffersByHighPrice = createAction('sortOffersByHighPrice');
+
+export const sortOffersByTopRated = createAction('sortOffersByTopRated');

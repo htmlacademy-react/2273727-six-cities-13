@@ -6,13 +6,12 @@ import { ImgContainer } from '../../components/img-container/img-container';
 import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
-import { reviews } from '../../mocks/reviews';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { fetchNearbyOffers, fetchOffer } from '../../store/api-actions';
+import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
 import {useEffect} from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 
@@ -26,6 +25,7 @@ export function Offer() {
   useEffect(() => {
     dispatch(fetchOffer({id: offerId}));
     dispatch(fetchNearbyOffers({id: offerId}));
+    dispatch(fetchReviews({id: offerId}));
   }, [offerId, dispatch]
   );
 
@@ -33,11 +33,13 @@ export function Offer() {
 
   const offer = useAppSelector((state) => state.fullOffer);
   const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  const reviews = useAppSelector((state) => state.reviews);
 
+  const isReviewsLoading = useAppSelector((state) => state.isReviewsLoading);
   const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
   const isNearbyOfferLoading = useAppSelector((state) => state.isNearbyOffersLoading);
 
-  if (isOfferLoading || isNearbyOfferLoading || offer === null || offers === null || nearbyOffers === null) {
+  if (isOfferLoading || isNearbyOfferLoading || isReviewsLoading || offer === null || offers === null || nearbyOffers === null || reviews === null) {
     return (
       <LoadingScreen />
     );

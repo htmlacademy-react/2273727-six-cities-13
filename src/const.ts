@@ -27,6 +27,7 @@ export const URL_MARKER_CURRENT =
 
 export const APIRoute = {
   Offers: '/offers',
+  Comments: '/comments',
   Login: '/login',
   Logout: '/logout',
 };

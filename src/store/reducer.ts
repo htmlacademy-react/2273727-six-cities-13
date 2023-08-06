@@ -1,8 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveCity, setSortType, setOffers, loadOffers, loadOffer, requireAuthorization, setActiveId, setOfferLoadStatus, setOffersLoadStatus, loadNearbyOffers, loadReviews, setNearbyOffersLoadStatus, setReviewsLoadStatus } from './action';
+import { setActiveCity, setSortType, setOffers, loadOffers, loadOffer, requireAuthorization,
+  setActiveId, setOfferLoadStatus, setOffersLoadStatus, loadNearbyOffers,
+  loadReviews, setNearbyOffersLoadStatus, setReviewsLoadStatus, sortOffersByHighPrice,
+  sortOffersByLowPrice, sortOffersByTopRated } from './action';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { AuthorizationStatus } from '../const';
+import { ReviewType } from '../components/types/review';
 
 export type InitialStateType = {
   activeCity: string | undefined;
@@ -15,7 +19,7 @@ export type InitialStateType = {
   isOffersLoading: boolean;
   nearbyOffers: OfferType[] | null;
   isNearbyOffersLoading: boolean;
-  reviews: null;
+  reviews: ReviewType[] | null;
   isReviewsLoading: boolean;
 }
 
@@ -68,5 +72,29 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setNearbyOffersLoadStatus, (state, action) => {
       state.isNearbyOffersLoading = action.payload;
+    })
+    .addCase(sortOffersByLowPrice, (state) => {
+      if (state.offers === null) {
+        return;
+      }
+      state.offers = state.offers.sort((a, b) => a.price - b.price);
+    })
+    .addCase(sortOffersByHighPrice, (state) => {
+      if (state.offers === null) {
+        return;
+      }
+      state.offers = state.offers.sort((a, b) => b.price - a.price);
+    })
+    .addCase(sortOffersByTopRated, (state) => {
+      if (state.offers === null) {
+        return;
+      }
+      state.offers = state.offers.sort((a, b) => b.rating - a.rating);
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(setReviewsLoadStatus, (state, action) => {
+      state.isReviewsLoading = action.payload;
     });
 });
