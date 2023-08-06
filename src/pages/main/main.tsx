@@ -4,7 +4,6 @@ import { Header } from '../../components/header/header';
 import { SortOptions } from '../../components/sort-options/sortOptions';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
-import { CITY } from '../../const';
 import { useState } from 'react';
 import { CititesList } from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';

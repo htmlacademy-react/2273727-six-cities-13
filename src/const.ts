@@ -17,15 +17,6 @@ export enum AuthorizationStatus {
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 140;
 
-export const CITY = {
-  name: 'Amsterdam',
-  location: {
-    latitude: 52.38,
-    longitude: 4.9,
-    zoom: 12
-  }
-} as const;
-
 export const CitiesNames = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
 
 export const URL_MARKER_DEFAULT =

@@ -7,13 +7,12 @@ import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { reviews } from '../../mocks/reviews';
-import { CITY } from '../../const';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { fetchOfferAction } from '../../store/api-actions';
+import { fetchNearbyOffers, fetchOffer } from '../../store/api-actions';
 import {useEffect} from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 
@@ -25,17 +24,20 @@ export function Offer() {
 
 
   useEffect(() => {
-    dispatch(fetchOfferAction({id: offerId}));
+    dispatch(fetchOffer({id: offerId}));
+    dispatch(fetchNearbyOffers({id: offerId}));
   }, [offerId, dispatch]
   );
 
   const offers = useAppSelector((state) => state.offers);
 
   const offer = useAppSelector((state) => state.fullOffer);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
 
   const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+  const isNearbyOfferLoading = useAppSelector((state) => state.isNearbyOffersLoading);
 
-  if (isOfferLoading || offer === null || offers === null) {
+  if (isOfferLoading || isNearbyOfferLoading || offer === null || offers === null || nearbyOffers === null) {
     return (
       <LoadingScreen />
     );
@@ -49,13 +51,13 @@ export function Offer() {
     }
   };
 
-  const filteredOffers = offers.filter((filteredOffer) => filteredOffer.city.name === city.name && filteredOffer.id !== id);
+  const currentCity = nearbyOffers[0].city;
 
   const handleCardHover = (ids: string | undefined) => {
     if (!ids) {
       setSelectedCard(undefined);
     }
-    const currentCard = offers.find((item) => item.id === id);
+    const currentCard = offers.find((item) => item.id === ids);
     setSelectedCard(currentCard);
   };
 
@@ -122,7 +124,7 @@ export function Offer() {
             </div>
           </div>
 
-          <Map isMain={false} city={CITY} offers={filteredOffers} selectedCard={selectedCard} />
+          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedCard={selectedCard} />
 
         </section>
         <div className="container">
@@ -130,7 +132,7 @@ export function Offer() {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersList id={id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
+            <OffersList id={id} cityName={city.name} offers={nearbyOffers} onCardHover={handleCardHover} />
           </section>
         </div>
       </main>

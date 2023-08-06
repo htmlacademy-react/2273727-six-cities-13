@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setOffers, setSortType } from '../../store/action';
 import { useState } from 'react';
 import { MouseEvent } from 'react';
-import { fetchOffersAction } from '../../store/api-actions';
+import { fetchOffers } from '../../store/api-actions';
 
 const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
@@ -21,7 +21,7 @@ export function SortOptions() {
   const handleClick = (item: string) => {
     switch (item) {
       case 'Popular':
-        dispatch(fetchOffersAction());
+        dispatch(fetchOffers());
         dispatch(setSortType('Popular'));
         dispatch(setOffers(defaultOffers));
         break;
