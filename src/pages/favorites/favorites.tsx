@@ -5,13 +5,17 @@ import { Header } from '../../components/header/header';
 import { AppRoute } from '../../const';
 import { FavoritesList } from '../../components/favorites-list/favorites-list';
 import { NotFound } from '../404/404';
+import * as selectors from '../../store/selectors';
 
 export function Favorites() {
-  const offers = useAppSelector((state) => state.offers);
-  const favorites = offers.filter((offer) => offer.isFavorite);
-  if (favorites === null) {
+  const offers = useAppSelector(selectors.offers);
+
+  if (offers === null) {
     return (<NotFound />);
   }
+
+  const favorites = offers.filter((offer) => offer.isFavorite);
+
   return (
     <div className="page">
       <Helmet>

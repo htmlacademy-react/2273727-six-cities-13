@@ -14,7 +14,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
 import {useEffect} from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
-
+import * as selectors from '../../store/selectors';
 
 export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
@@ -29,17 +29,20 @@ export function Offer() {
   }, [offerId, dispatch]
   );
 
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(selectors.offers);
 
-  const offer = useAppSelector((state) => state.fullOffer);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
-  const reviews = useAppSelector((state) => state.reviews);
+  const offer = useAppSelector(selectors.fullOffer);
+  const nearbyOffers = useAppSelector(selectors.nearbyOffers);
+  const reviews = useAppSelector(selectors.reviews);
 
-  const isReviewsLoading = useAppSelector((state) => state.isReviewsLoading);
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
-  const isNearbyOfferLoading = useAppSelector((state) => state.isNearbyOffersLoading);
+  const isOfferLoading = useAppSelector(selectors.isOfferLoading);
+  const isNearbyOfferLoading = useAppSelector(selectors.isNearbyOffersLoading);
+  const isReviewsLoading = useAppSelector(selectors.isReviewsLoading);
 
-  if (isOfferLoading || isNearbyOfferLoading || isReviewsLoading || offer === null || offers === null || nearbyOffers === null || reviews === null) {
+  const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
+  const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
+
+  if (isPageLoading || isSomethingMissingFromServer) {
     return (
       <LoadingScreen />
     );

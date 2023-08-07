@@ -4,12 +4,13 @@ import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, so
 import { useState } from 'react';
 import { MouseEvent } from 'react';
 import { OfferType } from '../types/offer';
+import * as selectors from '../../store/selectors';
 
 const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 export function SortOptions() {
   const [isOpened, setIsOpened] = useState(false);
-  const activeSortType = useAppSelector((state) => state.activeSortType);
+  const activeSortType = useAppSelector(selectors.activeSortType);
   const dispatch = useAppDispatch();
   const originalOffers = localStorage.getItem('offers');
 

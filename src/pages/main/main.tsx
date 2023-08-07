@@ -8,13 +8,14 @@ import { useState } from 'react';
 import { CititesList } from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { LoadingScreen } from '../loading-screen/loading-screen';
+import * as selectors from '../../store/selectors';
 
 export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
 
-  const activeCityName = useAppSelector((state) => state.activeCity);
-  const offers = useAppSelector((state) => state.offers);
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const activeCityName = useAppSelector(selectors.activeCity);
+  const offers = useAppSelector(selectors.offers);
+  const isOffersLoading = useAppSelector(selectors.isOfferLoading);
 
   if (isOffersLoading || offers === null) {
     return (
