@@ -9,7 +9,7 @@ import { AuthorizationStatus } from '../const';
 import { ReviewType } from '../components/types/review';
 
 export type InitialStateType = {
-  activeCity: string | undefined;
+  activeCity: string;
   offers: OfferType[] | null;
   fullOffer: FullOfferType | null;
   activeId: string | null;

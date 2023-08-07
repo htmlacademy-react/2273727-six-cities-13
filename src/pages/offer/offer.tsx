@@ -12,7 +12,7 @@ import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
 
@@ -23,9 +23,9 @@ export function Offer() {
 
 
   useEffect(() => {
-    dispatch(fetchOffer({id: offerId}));
-    dispatch(fetchNearbyOffers({id: offerId}));
-    dispatch(fetchReviews({id: offerId}));
+    dispatch(fetchOffer({ id: offerId }));
+    dispatch(fetchNearbyOffers({ id: offerId }));
+    dispatch(fetchReviews({ id: offerId }));
   }, [offerId, dispatch]
   );
 

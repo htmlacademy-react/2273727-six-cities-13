@@ -12,7 +12,7 @@ export function CititesList() {
 
   const handleCityClick = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    const city = evt.currentTarget.dataset.city;
+    const city = evt.currentTarget.dataset.city as string;
     dispatch(setActiveCity(city));
   };
 

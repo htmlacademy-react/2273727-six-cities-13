@@ -4,7 +4,7 @@ import { FullOfferType } from '../components/types/full-offer';
 import { AuthorizationStatus } from '../const';
 import { ReviewType } from '../components/types/review';
 
-export const setActiveCity = createAction('setActiveCity', (city: string | undefined) => ({ payload: city }));
+export const setActiveCity = createAction('setActiveCity', (city: string) => ({ payload: city }));
 
 export const setSortType = createAction('setSortType', (sortType: string) => ({ payload: sortType }));
 
