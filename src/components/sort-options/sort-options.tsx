@@ -1,40 +1,39 @@
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { setOffers, setSortType } from '../../store/action';
+import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/action';
 import { useState } from 'react';
 import { MouseEvent } from 'react';
-import { offers } from '../../mocks/offers';
-
-const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+import { OfferType } from '../types/offer';
+import { SortType } from '../../const';
+import { OPTIONS_NAMES } from '../../const';
+import * as selectors from '../../store/selectors';
 
 export function SortOptions() {
   const [isOpened, setIsOpened] = useState(false);
-
-  const activeSortType = useAppSelector((state) => state.activeSortType);
-  const stateOffers = useAppSelector((state) => state.offers);
-  const defaultOffers = [...offers];
-  const lowPriceSortedOffers = [...stateOffers].sort((a, b) => a.price - b.price);
-  const highPriceSortedOffers = [...stateOffers].sort((a, b) => b.price - a.price);
-  const ratingSortedOffers = [...stateOffers].sort((a, b) => b.rating - a.rating);
+  const activeSortType = useAppSelector(selectors.activeSortType);
   const dispatch = useAppDispatch();
+  const originalOffers = localStorage.getItem('offers');
 
   const handleClick = (item: string) => {
     switch (item) {
-      case 'Popular':
-        dispatch(setSortType('Popular'));
-        dispatch(setOffers(defaultOffers));
+      case SortType.Popular:
+        if (originalOffers) {
+          const parsedOffers = JSON.parse(originalOffers) as OfferType[];
+          dispatch(setSortType(SortType.Popular));
+          dispatch(setOffers(parsedOffers));
+        }
         break;
-      case 'Price: low to high':
-        dispatch(setSortType('Price: low to high'));
-        dispatch(setOffers(lowPriceSortedOffers));
+      case SortType.PriceToHigh:
+        dispatch(setSortType(SortType.PriceToHigh));
+        dispatch(sortOffersByLowPrice());
         break;
-      case 'Price: high to low':
-        dispatch(setSortType('Price: high to low'));
-        dispatch(setOffers(highPriceSortedOffers));
+      case SortType.PriceToLow:
+        dispatch(setSortType(SortType.PriceToLow));
+        dispatch(sortOffersByHighPrice());
         break;
-      case 'Top rated first':
-        dispatch(setSortType('Top rated first'));
-        dispatch(setOffers(ratingSortedOffers));
+      case SortType.TopRated:
+        dispatch(setSortType(SortType.TopRated));
+        dispatch(sortOffersByTopRated());
         break;
     }
   };

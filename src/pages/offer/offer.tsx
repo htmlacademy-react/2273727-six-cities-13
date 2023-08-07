@@ -1,38 +1,51 @@
 import { useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
-import { FullOfferType } from '../../components/types/full-offer';
 import { ImgContainer } from '../../components/img-container/img-container';
 import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
-import { reviews } from '../../mocks/reviews';
-import { AppRoute, CITY } from '../../const';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
+import { useEffect } from 'react';
+import { LoadingScreen } from '../loading-screen/loading-screen';
+import * as selectors from '../../store/selectors';
 
-type OfferProps = {
-  fullOffers: FullOfferType[];
-  offers: OfferType[];
-}
-
-export function Offer({ fullOffers, offers }: OfferProps) {
+export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+  const dispatch = useAppDispatch();
+  const offerId = useParams().id;
 
-  const handleCardHover = (id: string | undefined) => {
-    if (!id) {
-      setSelectedCard(undefined);
-    }
-    const currentCard = offers.find((offer) => offer.id === id);
-    setSelectedCard(currentCard);
-  };
 
-  const idContainer = useParams();
-  const offer = fullOffers.find((item) => item.id === idContainer.id);
-  if (offer === undefined) {
-    return <Navigate to={AppRoute.NotFound} />;
+  useEffect(() => {
+    dispatch(fetchOffer({ id: offerId }));
+    dispatch(fetchNearbyOffers({ id: offerId }));
+    dispatch(fetchReviews({ id: offerId }));
+  }, [offerId, dispatch]
+  );
+
+  const offers = useAppSelector(selectors.offers);
+
+  const offer = useAppSelector(selectors.fullOffer);
+  const nearbyOffers = useAppSelector(selectors.nearbyOffers);
+  const reviews = useAppSelector(selectors.reviews);
+
+  const isOfferLoading = useAppSelector(selectors.isOfferLoading);
+  const isNearbyOfferLoading = useAppSelector(selectors.isNearbyOffersLoading);
+  const isReviewsLoading = useAppSelector(selectors.isReviewsLoading);
+
+  const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
+  const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
+
+  if (isPageLoading || isSomethingMissingFromServer) {
+    return (
+      <LoadingScreen />
+    );
   }
 
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
@@ -43,7 +56,15 @@ export function Offer({ fullOffers, offers }: OfferProps) {
     }
   };
 
-  const filteredOffers = offers.filter((filteredOffer) => filteredOffer.city.name === city.name && filteredOffer.id !== id);
+  const currentCity = nearbyOffers[0].city;
+
+  const handleCardHover = (ids: string | undefined) => {
+    if (!ids) {
+      setSelectedCard(undefined);
+    }
+    const currentCard = offers.find((item) => item.id === ids);
+    setSelectedCard(currentCard);
+  };
 
   return (
     <div className="page">
@@ -108,7 +129,7 @@ export function Offer({ fullOffers, offers }: OfferProps) {
             </div>
           </div>
 
-          <Map isMain={false} city={CITY} offers={filteredOffers} selectedCard={selectedCard} />
+          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedCard={selectedCard} />
 
         </section>
         <div className="container">
@@ -116,7 +137,7 @@ export function Offer({ fullOffers, offers }: OfferProps) {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersList id={idContainer.id} cityName={city.name} offers={offers} onCardHover={handleCardHover} />
+            <OffersList id={id} cityName={city.name} offers={nearbyOffers} onCardHover={handleCardHover} />
           </section>
         </div>
       </main>

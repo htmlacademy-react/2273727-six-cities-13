@@ -31,7 +31,7 @@ export function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [mapRef, city.name, city]);
 
   return map;
 }

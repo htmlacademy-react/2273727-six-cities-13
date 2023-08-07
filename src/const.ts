@@ -1,5 +1,3 @@
-
-
 export const AppRoute = {
   Root: '/',
   Favorites: '/favorites',
@@ -17,15 +15,6 @@ export enum AuthorizationStatus {
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 140;
 
-export const CITY = {
-  name: 'Amsterdam',
-  location: {
-    latitude: 52.38,
-    longitude: 4.9,
-    zoom: 12
-  }
-} as const;
-
 export const CitiesNames = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
 
 export const URL_MARKER_DEFAULT =
@@ -34,53 +23,18 @@ export const URL_MARKER_DEFAULT =
 export const URL_MARKER_CURRENT =
   '../img/pin-active.svg';
 
-export const CitiesMap = [
-  {
-    name: 'Paris',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Cologne',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Brussels',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Amsterdam',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Hamburg',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  {
-    name: 'Dusseldorf',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-];
+export const APIRoute = {
+  Offers: '/offers',
+  Comments: '/comments',
+  Login: '/login',
+  Logout: '/logout',
+} as const;
+
+export const SortType = {
+  Popular: 'Popular',
+  PriceToHigh: 'Price: low to high',
+  PriceToLow: 'Price: high to low',
+  TopRated: 'Top rated first'
+} as const;
+
+export const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];

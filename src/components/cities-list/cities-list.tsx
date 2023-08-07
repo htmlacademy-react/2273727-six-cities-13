@@ -4,14 +4,15 @@ import { MouseEvent } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setActiveCity } from '../../store/action';
+import * as selectors from '../../store/selectors';
 
 export function CititesList() {
-  const cityName = useAppSelector((state) => state.activeCity);
+  const cityName = useAppSelector(selectors.activeCity);
   const dispatch = useAppDispatch();
 
   const handleCityClick = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    const city = evt.currentTarget.dataset.city;
+    const city = evt.currentTarget.dataset.city as string;
     dispatch(setActiveCity(city));
   };
 
