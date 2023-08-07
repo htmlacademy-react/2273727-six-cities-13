@@ -7,6 +7,15 @@ import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../private-route/private-route';
+import { store } from '../../store';
+import { fetchOffers } from '../../store/api-actions';
+
+store.dispatch(fetchOffers()).then(() => {
+  const offers = store.getState().offers;
+  if (offers) {
+    localStorage.setItem('offers', JSON.stringify(offers));
+  }
+});
 
 export function App() {
   return (

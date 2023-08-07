@@ -1,5 +1,3 @@
-
-
 export const AppRoute = {
   Root: '/',
   Favorites: '/favorites',
@@ -8,11 +6,11 @@ export const AppRoute = {
   NotFound: '/404',
 } as const;
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}
+export const AuthorizationStatus = {
+  Auth: 'AUTH',
+  NoAuth: 'NO_AUTH',
+  Unknown: 'UNKNOWN',
+} as const;
 
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 140;
@@ -30,4 +28,13 @@ export const APIRoute = {
   Comments: '/comments',
   Login: '/login',
   Logout: '/logout',
-};
+} as const;
+
+export const SortType = {
+  Popular: 'Popular',
+  PriceToHigh: 'Price: low to high',
+  PriceToLow: 'Price: high to low',
+  TopRated: 'Top rated first'
+} as const;
+
+export const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];

@@ -4,9 +4,9 @@ import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, so
 import { useState } from 'react';
 import { MouseEvent } from 'react';
 import { OfferType } from '../types/offer';
+import { SortType } from '../../const';
+import { OPTIONS_NAMES } from '../../const';
 import * as selectors from '../../store/selectors';
-
-const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 export function SortOptions() {
   const [isOpened, setIsOpened] = useState(false);
@@ -16,23 +16,23 @@ export function SortOptions() {
 
   const handleClick = (item: string) => {
     switch (item) {
-      case 'Popular':
+      case SortType.Popular:
         if (originalOffers) {
           const parsedOffers = JSON.parse(originalOffers) as OfferType[];
-          dispatch(setSortType('Popular'));
+          dispatch(setSortType(SortType.Popular));
           dispatch(setOffers(parsedOffers));
         }
         break;
-      case 'Price: low to high':
-        dispatch(setSortType('Price: low to high'));
+      case SortType.PriceToHigh:
+        dispatch(setSortType(SortType.PriceToHigh));
         dispatch(sortOffersByLowPrice());
         break;
-      case 'Price: high to low':
-        dispatch(setSortType('Price: high to low'));
+      case SortType.PriceToLow:
+        dispatch(setSortType(SortType.PriceToLow));
         dispatch(sortOffersByHighPrice());
         break;
-      case 'Top rated first':
-        dispatch(setSortType('Top rated first'));
+      case SortType.TopRated:
+        dispatch(setSortType(SortType.TopRated));
         dispatch(sortOffersByTopRated());
         break;
     }
