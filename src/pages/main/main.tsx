@@ -9,6 +9,7 @@ import { CititesList } from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
+import { createSelector } from '@reduxjs/toolkit';
 
 export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
@@ -16,13 +17,14 @@ export function MainPage() {
   const activeCityName = useAppSelector(selectors.activeCity);
   const offers = useAppSelector(selectors.offers);
   const isOffersLoading = useAppSelector(selectors.isOfferLoading);
+  const filteredOffers = createSelector(selectors.offers, (state) => state?.filter((offer) => offer.city.name === activeCityName));
+  const offersByCity = useAppSelector(filteredOffers) as OfferType[];
 
   if (isOffersLoading || offers === null) {
     return (
       <LoadingScreen />
     );
   }
-  const offersByCity = offers.filter((item) => item.city.name === activeCityName);
 
   const handleCardHover = (id: string | undefined) => {
     if (!id) {
