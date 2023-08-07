@@ -4,15 +4,42 @@ import { AppDispatch } from '../hooks/useAppDispatch/useAppDispatch';
 import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus, setNearbyOffersLoadStatus, loadNearbyOffers, setReviewsLoadStatus, loadReviews } from './action';
-import { APIRoute } from '../const';
+import { loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
+  setNearbyOffersLoadStatus, loadNearbyOffers, setError,
+  setReviewsLoadStatus, loadReviews, requireAuthorization } from './action';
+import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { ReviewType } from '../components/types/review';
+import { saveToken, dropToken } from '../services/token';
+import { store } from '.';
 
-export const fetchOffers = createAsyncThunk<void, undefined, {
+export const clearError = createAsyncThunk(
+  'clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError(null)),
+      TIMEOUT_SHOW_ERROR,
+    );
+  }
+);
+
+type thunkObjType = {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>(
+}
+
+export type AuthData = {
+  login: string;
+  password: string;
+};
+
+export type UserData = {
+  id: number;
+  email: string;
+  token: string;
+};
+
+export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
   'fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
     dispatch(setOffersLoadStatus(true));
@@ -22,11 +49,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, {
   }
 );
 
-export const fetchOffer = createAsyncThunk<void, { id: string | undefined }, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const fetchOffer = createAsyncThunk<void, { id: string | undefined }, thunkObjType>(
   'fetchOffer',
   async ({ id }, { dispatch, extra: api }) => {
     dispatch(setOfferLoadStatus(true));
@@ -37,11 +60,7 @@ export const fetchOffer = createAsyncThunk<void, { id: string | undefined }, {
   }
 );
 
-export const fetchNearbyOffers = createAsyncThunk<void, { id: string | undefined }, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const fetchNearbyOffers = createAsyncThunk<void, { id: string | undefined }, thunkObjType>(
   'fetchNearbyOffers',
   async ({ id }, { dispatch, extra: api }) => {
     dispatch(setNearbyOffersLoadStatus(true));
@@ -52,11 +71,7 @@ export const fetchNearbyOffers = createAsyncThunk<void, { id: string | undefined
   }
 );
 
-export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, thunkObjType>(
   'fetchReviews',
   async ({ id }, { dispatch, extra: api }) => {
     dispatch(setReviewsLoadStatus(true));
@@ -64,5 +79,35 @@ export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, {
     const { data } = await api.get<ReviewType[]>(url);
     dispatch(loadReviews(data));
     dispatch(setReviewsLoadStatus(false));
+  }
+);
+
+export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
+  'checkAuth',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  }
+);
+
+export const login = createAsyncThunk<void, AuthData, thunkObjType>(
+  'login',
+  async ({login: email, password}, {dispatch, extra: api}) => {
+    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(token);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  }
+);
+
+export const logout = createAsyncThunk<void, undefined, thunkObjType>(
+  'logout',
+  async (_arg, {dispatch, extra: api}) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   }
 );
