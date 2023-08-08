@@ -21,16 +21,18 @@ export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
-
+  const offers = useAppSelector(selectors.offers);
+  const isIdExist = offers?.some((offer) => offer.id === offerId);
 
   useEffect(() => {
+    if (!isIdExist) {
+      return;
+    }
     dispatch(fetchOffer({ id: offerId }));
     dispatch(fetchNearbyOffers({ id: offerId }));
     dispatch(fetchReviews({ id: offerId }));
-  }, [offerId, dispatch]
+  }, [isIdExist, offerId, dispatch]
   );
-
-  const offers = useAppSelector(selectors.offers);
 
   const offer = useAppSelector(selectors.fullOffer);
   const nearbyOffers = useAppSelector(selectors.nearbyOffers);
@@ -43,15 +45,9 @@ export function Offer() {
   const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
   const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
 
-  if (isPageLoading) {
+  if (isPageLoading || isSomethingMissingFromServer) {
     return (
       <LoadingScreen />
-    );
-  }
-
-  if (isSomethingMissingFromServer) {
-    return (
-      <NotFound />
     );
   }
 
@@ -73,7 +69,7 @@ export function Offer() {
     setSelectedCard(currentCard);
   };
 
-  return (
+  return !isIdExist ? <NotFound /> : (
     <div className="page">
       <Helmet>
         <title>Offer</title>

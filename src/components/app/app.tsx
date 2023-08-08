@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
 import { MainPage } from '../../pages/main/main';
@@ -12,6 +12,8 @@ import { fetchOffers } from '../../store/api-actions';
 import { checkAuth } from '../../store/api-actions';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import * as selectors from '../../store/selectors';
+import { HistoryRouter } from '../history-route/history-route';
+import { browserHistory } from '../../browser-history';
 
 store.dispatch(checkAuth());
 store.dispatch(fetchOffers()).then(() => {
@@ -26,7 +28,7 @@ export function App() {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Root}
@@ -55,7 +57,7 @@ export function App() {
             element={<NotFound />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

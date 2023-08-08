@@ -6,8 +6,8 @@ import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
   setNearbyOffersLoadStatus, loadNearbyOffers, setError,
-  setReviewsLoadStatus, loadReviews, setAuthorization } from './action';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+  setReviewsLoadStatus, loadReviews, setAuthorization, redirectToRoute } from './actions';
+import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, AppRoute } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
 import { store } from '.';
@@ -100,6 +100,7 @@ export const login = createAsyncThunk<void, AuthData, thunkObjType>(
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(setAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Root));
   }
 );
 

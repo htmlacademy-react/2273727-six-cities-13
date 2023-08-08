@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { ReviewType } from '../components/types/review';
 
 export const setActiveCity = createAction('setActiveCity', (city: string) => ({ payload: city }));
@@ -37,3 +37,5 @@ export const sortOffersByHighPrice = createAction('sortOffersByHighPrice');
 export const sortOffersByTopRated = createAction('sortOffersByTopRated');
 
 export const setError = createAction('setError', (error: string | null) => ({ payload: error }));
+
+export const redirectToRoute = createAction('redirectToRoute', (route: AppRoute) => ({payload: route}));

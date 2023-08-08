@@ -3,7 +3,7 @@ import { CitiesNames } from '../../const';
 import { MouseEvent } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { setActiveCity } from '../../store/action';
+import { setActiveCity } from '../../store/actions';
 import * as selectors from '../../store/selectors';
 
 export function CititesList() {

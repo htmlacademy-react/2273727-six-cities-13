@@ -3,13 +3,13 @@ export const MAX_COMMENT_LENGTH = 140;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export const AppRoute = {
-  Root: '/',
-  Favorites: '/favorites',
-  Login: '/login',
-  Offer: '/offer',
-  NotFound: '/404',
-} as const;
+export enum AppRoute {
+  Root = '/',
+  Favorites = '/favorites',
+  Login = '/login',
+  Offer = '/offer',
+  NotFound = '/404',
+}
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
