@@ -15,6 +15,7 @@ import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-act
 import { useEffect } from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
+import { NotFound } from '../404/404';
 
 export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
@@ -42,9 +43,15 @@ export function Offer() {
   const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
   const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
 
-  if (isPageLoading || isSomethingMissingFromServer) {
+  if (isPageLoading) {
     return (
       <LoadingScreen />
+    );
+  }
+
+  if (isSomethingMissingFromServer) {
+    return (
+      <NotFound />
     );
   }
 

@@ -9,7 +9,11 @@ import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../private-route/private-route';
 import { store } from '../../store';
 import { fetchOffers } from '../../store/api-actions';
+import { checkAuth } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import * as selectors from '../../store/selectors';
 
+store.dispatch(checkAuth());
 store.dispatch(fetchOffers()).then(() => {
   const offers = store.getState().offers;
   if (offers) {
@@ -18,6 +22,8 @@ store.dispatch(fetchOffers()).then(() => {
 });
 
 export function App() {
+  const authStatus = useAppSelector(selectors.authorizationStatus);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -31,7 +37,7 @@ export function App() {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authorizationStatus={authStatus}>
                 <Favorites />
               </PrivateRoute>
             }
