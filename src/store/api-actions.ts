@@ -6,7 +6,7 @@ import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
   setNearbyOffersLoadStatus, loadNearbyOffers, setError,
-  setReviewsLoadStatus, loadReviews, requireAuthorization } from './action';
+  setReviewsLoadStatus, loadReviews, setAuthorization } from './action';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
@@ -87,27 +87,27 @@ export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
   async (_arg, {dispatch, extra: api}) => {
     try {
       await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthorization(AuthorizationStatus.Auth));
     } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(setAuthorization(AuthorizationStatus.NoAuth));
     }
   }
 );
 
 export const login = createAsyncThunk<void, AuthData, thunkObjType>(
-  'login',
+  'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setAuthorization(AuthorizationStatus.Auth));
   }
 );
 
 export const logout = createAsyncThunk<void, undefined, thunkObjType>(
-  'logout',
+  'user/logout',
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(setAuthorization(AuthorizationStatus.NoAuth));
   }
 );

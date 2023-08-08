@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { AppRoute } from '../../const';
-
+import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { logout } from '../../store/api-actions';
 
 const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
   isActive
@@ -12,6 +13,8 @@ const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
     };
 
 export function Header() {
+  const dispatch = useAppDispatch();
+
   return (
     <header className="header">
       <div className="container">
@@ -43,7 +46,14 @@ export function Header() {
                 </NavLink>
               </li>
               <li className="header__nav-item">
-                <Link className="header__nav-link" to={AppRoute.Login}>
+                <Link
+                  className="header__nav-link"
+                  to={AppRoute.Root}
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    dispatch(logout());
+                  }}
+                >
                   <span className="header__signout">Sign out</span>
                 </Link>
               </li>

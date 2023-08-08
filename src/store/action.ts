@@ -16,7 +16,7 @@ export const loadOffers = createAction('loadOffers', (offers: OfferType[]) => ({
 
 export const loadOffer = createAction('loadOffer', (offer: FullOfferType | null) => ({ payload: offer }));
 
-export const requireAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
+export const setAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
 
 export const setOfferLoadStatus = createAction('setOfferLoadingStatus', (status: boolean) => ({ payload: status }));
 
