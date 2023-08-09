@@ -14,3 +14,12 @@ export const getFavoriteStyles = (isFav: boolean) => {
     return {fill: '#4481c3', stroke: '#4481c3'};
   }
 };
+
+export const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
+  isActive
+    ? {
+      cursor: 'default',
+    }
+    : {
+      cursor: 'pointer',
+    };
