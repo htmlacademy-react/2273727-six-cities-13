@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
 import { NotFound } from '../404/404';
+import { RATING_COEFFICIENT } from '../../const';
 
 export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
@@ -111,7 +112,7 @@ export function Offer() {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${rating * 20}%` }} />
+                  <span style={{ width: `${rating * RATING_COEFFICIENT}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>

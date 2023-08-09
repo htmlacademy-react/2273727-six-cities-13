@@ -3,6 +3,8 @@ export const MAX_COMMENT_LENGTH = 140;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
+export const RATING_COEFFICIENT = 20;
+
 export enum AppRoute {
   Root = '/',
   Favorites = '/favorites',

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { MouseEvent } from 'react';
 import { getFavoriteStyles } from '../../utils';
+import { RATING_COEFFICIENT } from '../../const';
 
 type OfferCardProps = {
   id: string;
@@ -57,7 +58,7 @@ export function OfferCard(
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }}></span>
+            <span style={{ width: `${rating * RATING_COEFFICIENT}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
