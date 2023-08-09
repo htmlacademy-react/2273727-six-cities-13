@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { ReviewType } from '../components/types/review';
 
 export const setActiveCity = createAction('setActiveCity', (city: string) => ({ payload: city }));
@@ -16,7 +16,7 @@ export const loadOffers = createAction('loadOffers', (offers: OfferType[]) => ({
 
 export const loadOffer = createAction('loadOffer', (offer: FullOfferType | null) => ({ payload: offer }));
 
-export const requireAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
+export const setAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
 
 export const setOfferLoadStatus = createAction('setOfferLoadingStatus', (status: boolean) => ({ payload: status }));
 
@@ -28,10 +28,12 @@ export const setNearbyOffersLoadStatus = createAction('setNearbyOffersLoadingSta
 
 export const loadReviews = createAction('loadReviews', (reviews: ReviewType[]) => ({ payload: reviews }));
 
-export const setReviewsLoadStatus = createAction('setReviewsLoadStatus', (status: boolean) => ({ payload: status}));
+export const setReviewsLoadStatus = createAction('setReviewsLoadStatus', (status: boolean) => ({ payload: status }));
 
 export const sortOffersByLowPrice = createAction('sortOffersByLowPrice');
 
 export const sortOffersByHighPrice = createAction('sortOffersByHighPrice');
 
 export const sortOffersByTopRated = createAction('sortOffersByTopRated');
+
+export const redirectToRoute = createAction('redirectToRoute', (route: AppRoute) => ({payload: route}));

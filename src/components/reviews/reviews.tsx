@@ -1,12 +1,18 @@
 import { CommentForm } from '../comment-form/comment-form';
 import { ReviewType } from '../types/review';
 import { formatDateToHuman, formatDateToServer } from '../../utils';
+import * as selectors from '../../store/selectors';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import { AuthorizationStatus } from '../../const';
+import { RATING_COEFFICIENT } from '../../const';
 
 type ReviewsProps = {
   reviews: ReviewType[];
 }
 
 export function Reviews({ reviews }: ReviewsProps) {
+  const authStatus = useAppSelector(selectors.authorizationStatus);
+
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
@@ -34,7 +40,7 @@ export function Reviews({ reviews }: ReviewsProps) {
               <div className="reviews__info">
                 <div className="reviews__rating rating">
                   <div className="reviews__stars rating__stars">
-                    <span style={{ width: `${rating * 20}%` }} />
+                    <span style={{ width: `${rating * RATING_COEFFICIENT}%` }} />
                     <span className="visually-hidden">Rating</span>
                   </div>
                 </div>
@@ -50,7 +56,7 @@ export function Reviews({ reviews }: ReviewsProps) {
         }
         )}
       </ul>
-      <CommentForm />
+      {authStatus === AuthorizationStatus.Auth && <CommentForm />}
     </section>
   );
 }

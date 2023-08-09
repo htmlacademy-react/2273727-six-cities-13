@@ -1,17 +1,15 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AppRoute } from '../../const';
-
-
-const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
-  isActive
-    ? {
-      cursor: 'default',
-    }
-    : {
-      cursor: 'pointer',
-    };
+import * as selectors from '../../store/selectors';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import { AuthorizationStatus } from '../../const';
+import { getStyleForNavLink } from '../../utils';
+import { AuthElement } from '../auth-elements/auth-element/auth-element';
+import { NoAuthElement } from '../auth-elements/no-auth-element/no-auth-element';
 
 export function Header() {
+  const authStatus = useAppSelector(selectors.authorizationStatus);
+
   return (
     <header className="header">
       <div className="container">
@@ -27,28 +25,8 @@ export function Header() {
               />
             </NavLink>
           </div>
-          <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <NavLink
-                  className="header__nav-link header__nav-link--profile"
-                  to={AppRoute.Favorites}
-                  style={getStyleForNavLink}
-                >
-                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__user-name user__name">
-                    Oliver.conner@gmail.com
-                  </span>
-                  <span className="header__favorite-count">3</span>
-                </NavLink>
-              </li>
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to={AppRoute.Login}>
-                  <span className="header__signout">Sign out</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {authStatus === AuthorizationStatus.Auth ? <AuthElement /> : <NoAuthElement />}
+
         </div>
       </div>
     </header>

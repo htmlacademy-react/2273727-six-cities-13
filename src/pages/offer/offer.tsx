@@ -15,21 +15,26 @@ import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-act
 import { useEffect } from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
+import { NotFound } from '../404/404';
+import { RATING_COEFFICIENT } from '../../const';
 
 export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
-
+  const offers = useAppSelector(selectors.offers);
+  const isOffersLoading = useAppSelector(selectors.isOffersLoading);
+  const isIdExist = offers?.some((offer) => offer.id === offerId);
 
   useEffect(() => {
+    if (!isIdExist) {
+      return;
+    }
     dispatch(fetchOffer({ id: offerId }));
     dispatch(fetchNearbyOffers({ id: offerId }));
     dispatch(fetchReviews({ id: offerId }));
-  }, [offerId, dispatch]
+  }, [isIdExist, offerId, dispatch]
   );
-
-  const offers = useAppSelector(selectors.offers);
 
   const offer = useAppSelector(selectors.fullOffer);
   const nearbyOffers = useAppSelector(selectors.nearbyOffers);
@@ -41,6 +46,12 @@ export function Offer() {
 
   const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
   const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
+
+  if (!isIdExist && !isOffersLoading) {
+    return (
+      <NotFound />
+    );
+  }
 
   if (isPageLoading || isSomethingMissingFromServer) {
     return (
@@ -101,7 +112,7 @@ export function Offer() {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${rating * 20}%` }} />
+                  <span style={{ width: `${rating * RATING_COEFFICIENT}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>
