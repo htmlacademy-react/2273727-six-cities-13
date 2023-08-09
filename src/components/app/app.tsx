@@ -6,7 +6,8 @@ import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
-import { PrivateRoute } from '../private-route/private-route';
+import { PrivateRouteForFavorites } from '../private-routes/private-route-for-favorites';
+import { PrivateRouteForLogin } from '../private-routes/private-route-for-login';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import * as selectors from '../../store/selectors';
 import { HistoryRouter } from '../history-route/history-route';
@@ -28,14 +29,18 @@ export function App() {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={authStatus}>
+              <PrivateRouteForFavorites authorizationStatus={authStatus}>
                 <Favorites />
-              </PrivateRoute>
+              </PrivateRouteForFavorites>
             }
           />
           <Route
             path={AppRoute.Login}
-            element={<Login />}
+            element={
+              <PrivateRouteForLogin authorizationStatus={authStatus}>
+                <Login />
+              </PrivateRouteForLogin>
+            }
           />
           <Route
             path={`${AppRoute.Offer}/:id`}

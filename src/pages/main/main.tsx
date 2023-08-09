@@ -11,7 +11,6 @@ import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
 import { createSelector } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../const';
-import { NotFound } from '../404/404';
 
 export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
@@ -23,14 +22,9 @@ export function MainPage() {
   const offersByCity = useAppSelector(filteredOffers) as OfferType[];
   const authStatus = useAppSelector(selectors.authorizationStatus);
 
-  if (isOffersLoading || authStatus === AuthorizationStatus.Unknown) {
+  if (isOffersLoading || authStatus === AuthorizationStatus.Unknown || offers === null) {
     return (
       <LoadingScreen />
-    );
-  }
-  if (offers === null) {
-    return (
-      <NotFound />
     );
   }
 
