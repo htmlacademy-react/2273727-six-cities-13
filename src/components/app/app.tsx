@@ -7,21 +7,10 @@ import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRoute } from '../private-route/private-route';
-import { store } from '../../store';
-import { fetchOffers } from '../../store/api-actions';
-import { checkAuth } from '../../store/api-actions';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import * as selectors from '../../store/selectors';
 import { HistoryRouter } from '../history-route/history-route';
 import { browserHistory } from '../../browser-history';
-
-store.dispatch(checkAuth());
-store.dispatch(fetchOffers()).then(() => {
-  const offers = store.getState().offers;
-  if (offers) {
-    localStorage.setItem('offers', JSON.stringify(offers));
-  }
-});
 
 export function App() {
   const authStatus = useAppSelector(selectors.authorizationStatus);
