@@ -36,6 +36,4 @@ export const sortOffersByHighPrice = createAction('sortOffersByHighPrice');
 
 export const sortOffersByTopRated = createAction('sortOffersByTopRated');
 
-export const setError = createAction('setError', (error: string | null) => ({ payload: error }));
-
 export const redirectToRoute = createAction('redirectToRoute', (route: AppRoute) => ({payload: route}));

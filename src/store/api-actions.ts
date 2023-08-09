@@ -5,22 +5,11 @@ import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
-  setNearbyOffersLoadStatus, loadNearbyOffers, setError,
-  setReviewsLoadStatus, loadReviews, setAuthorization, redirectToRoute } from './actions';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, AppRoute } from '../const';
+  setNearbyOffersLoadStatus, loadNearbyOffers, setReviewsLoadStatus,
+  loadReviews, setAuthorization, redirectToRoute } from './actions';
+import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
-import { store } from '.';
-
-export const clearError = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  }
-);
 
 type thunkObjType = {
   dispatch: AppDispatch;
