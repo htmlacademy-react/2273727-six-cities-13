@@ -3,7 +3,7 @@ import {
   setActiveCity, setSortType, setOffers, loadOffers, loadOffer, setAuthorization,
   setActiveId, setOfferLoadStatus, setOffersLoadStatus, loadNearbyOffers,
   loadReviews, setNearbyOffersLoadStatus, setReviewsLoadStatus, sortOffersByHighPrice,
-  sortOffersByLowPrice, sortOffersByTopRated
+  sortOffersByLowPrice, sortOffersByTopRated, setCommentPostStatus
 } from './actions';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
@@ -23,6 +23,7 @@ export type InitialStateType = {
   isNearbyOffersLoading: boolean;
   reviews: ReviewType[] | null;
   isReviewsLoading: boolean;
+  isCommentPosting: boolean;
 }
 
 const initialState: InitialStateType = {
@@ -38,6 +39,7 @@ const initialState: InitialStateType = {
   isNearbyOffersLoading: false,
   reviews: null,
   isReviewsLoading: false,
+  isCommentPosting: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -98,5 +100,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setReviewsLoadStatus, (state, action) => {
       state.isReviewsLoading = action.payload;
+    })
+    .addCase(setCommentPostStatus, (state, action) => {
+      state.isCommentPosting = action.payload;
     });
 });

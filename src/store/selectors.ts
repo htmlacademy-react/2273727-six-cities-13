@@ -23,3 +23,5 @@ export const isNearbyOffersLoading = (state: InitialStateType) => state.isNearby
 export const reviews = (state: InitialStateType) => state.reviews;
 
 export const isReviewsLoading = (state: InitialStateType) => state.isReviewsLoading;
+
+export const isCommentPosting = (state: InitialStateType) => state.isCommentPosting;
