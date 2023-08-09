@@ -21,7 +21,7 @@ export function Login() {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(login({
-        login: loginRef.current.value,
+        email: loginRef.current.value,
         password: passwordRef.current.value,
       }));
     }

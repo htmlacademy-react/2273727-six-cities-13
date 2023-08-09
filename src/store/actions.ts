@@ -10,7 +10,7 @@ export const setSortType = createAction('setSortType', (sortType: string) => ({ 
 
 export const setOffers = createAction('setOffers', (offers: OfferType[]) => ({ payload: offers }));
 
-export const setActiveId = createAction('setActiveId', (activeId: string) => ({ payload: activeId }));
+export const setActiveId = createAction('setActiveId', (activeId: string | null) => ({ payload: activeId }));
 
 export const loadOffers = createAction('loadOffers', (offers: OfferType[]) => ({ payload: offers }));
 
@@ -36,4 +36,6 @@ export const sortOffersByHighPrice = createAction('sortOffersByHighPrice');
 
 export const sortOffersByTopRated = createAction('sortOffersByTopRated');
 
-export const redirectToRoute = createAction('redirectToRoute', (route: AppRoute) => ({payload: route}));
+export const redirectToRoute = createAction('redirectToRoute', (route: AppRoute | string) => ({payload: route}));
+
+export const setCommentPostStatus = createAction('setCommentPostStatus', (status: boolean) => ({ payload: status }));

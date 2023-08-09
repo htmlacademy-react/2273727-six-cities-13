@@ -4,9 +4,11 @@ import { AppDispatch } from '../hooks/useAppDispatch/useAppDispatch';
 import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
+import {
+  loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
   setNearbyOffersLoadStatus, loadNearbyOffers, setReviewsLoadStatus,
-  loadReviews, setAuthorization, redirectToRoute } from './actions';
+  loadReviews, setAuthorization, redirectToRoute, setCommentPostStatus
+} from './actions';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
@@ -18,12 +20,19 @@ type thunkObjType = {
 }
 
 export type AuthData = {
-  login: string;
+  email: string;
   password: string;
 };
 
+export type CommentData = {
+  id: string;
+  comment: string;
+  rating: number;
+};
+
+
 export type UserData = {
-  id: number;
+  password: string;
   email: string;
   token: string;
 };
@@ -73,7 +82,7 @@ export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, t
 
 export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
   'checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, { dispatch, extra: api }) => {
     try {
       await api.get(APIRoute.Login);
       dispatch(setAuthorization(AuthorizationStatus.Auth));
@@ -85,8 +94,8 @@ export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
 
 export const login = createAsyncThunk<void, AuthData, thunkObjType>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+  async ({ email, password }, { dispatch, extra: api }) => {
+    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(setAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Root));
@@ -95,9 +104,19 @@ export const login = createAsyncThunk<void, AuthData, thunkObjType>(
 
 export const logout = createAsyncThunk<void, undefined, thunkObjType>(
   'user/logout',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setAuthorization(AuthorizationStatus.NoAuth));
+  }
+);
+
+export const postComment = createAsyncThunk<void, CommentData, thunkObjType>(
+  'comment',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    dispatch(setCommentPostStatus(true));
+    const url = `${APIRoute.Comments}/${id}`;
+    await api.post<CommentData>(url, { comment, rating });
+    dispatch(setCommentPostStatus(false));
   }
 );

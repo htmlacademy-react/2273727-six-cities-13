@@ -17,14 +17,16 @@ import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
 import { NotFound } from '../404/404';
 import { RATING_COEFFICIENT } from '../../const';
+import { setActiveId } from '../../store/actions';
 
 export function Offer() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
   const dispatch = useAppDispatch();
-  const offerId = useParams().id;
+  const offerId = useParams().id as string;
   const offers = useAppSelector(selectors.offers);
   const isOffersLoading = useAppSelector(selectors.isOffersLoading);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
+  const isCommentPosting = useAppSelector(selectors.isCommentPosting);
 
   useEffect(() => {
     if (!isIdExist) {
@@ -33,7 +35,8 @@ export function Offer() {
     dispatch(fetchOffer({ id: offerId }));
     dispatch(fetchNearbyOffers({ id: offerId }));
     dispatch(fetchReviews({ id: offerId }));
-  }, [isIdExist, offerId, dispatch]
+    dispatch(setActiveId(offerId));
+  }, [isIdExist, offerId, dispatch, isCommentPosting]
   );
 
   const offer = useAppSelector(selectors.fullOffer);
