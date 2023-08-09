@@ -4,8 +4,8 @@ import * as selectors from '../../store/selectors';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { AuthorizationStatus } from '../../const';
 import { getStyleForNavLink } from '../../utils';
-import { AuthElement } from '../log-elements/auth-element/auth-element';
-import { NoAuthElement } from '../log-elements/no-auth-element/no-auth-element';
+import { AuthElement } from '../auth-elements/auth-element/auth-element';
+import { NoAuthElement } from '../auth-elements/no-auth-element/no-auth-element';
 
 export function Header() {
   const authStatus = useAppSelector(selectors.authorizationStatus);

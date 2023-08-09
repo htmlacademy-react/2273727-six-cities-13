@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { login } from '../../store/api-actions';
 import { AppRoute } from '../../const';
+import { CitiesNames } from '../../const';
+import { getRandomValueFromArray } from '../../utils';
+import { setActiveCity } from '../../store/actions';
 
 export function Login() {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -26,9 +29,12 @@ export function Login() {
 
   const handleButtonClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-
+    const city = evt.currentTarget.dataset.city as string;
+    dispatch(setActiveCity(city));
     navigate(AppRoute.Root);
   };
+
+  const randomCity = getRandomValueFromArray(CitiesNames);
 
   return (
     <div className="page page--gray page--login">
@@ -84,8 +90,8 @@ export function Login() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="#" onClick={handleButtonClick}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to="#" onClick={handleButtonClick} data-city={randomCity} >
+                <span >{randomCity}</span>
               </Link>
             </div>
           </section>

@@ -23,3 +23,5 @@ export const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
     : {
       cursor: 'pointer',
     };
+
+export const getRandomValueFromArray = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
