@@ -7,7 +7,7 @@ import {
 } from './actions';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { AuthStatus } from '../const';
+import { AuthStatusValuesType, AuthStatus } from '../const';
 import { ReviewType } from '../components/types/review';
 
 export type InitialStateType = {
@@ -17,7 +17,7 @@ export type InitialStateType = {
   fullOffer: FullOfferType | null;
   activeId: string | null;
   activeSortType: string;
-  authorizationStatus: AuthorizationStatus;
+  authorizationStatus: AuthStatusValuesType;
   isOfferLoading: boolean;
   isOffersLoading: boolean;
   nearbyOffers: OfferType[] | null;

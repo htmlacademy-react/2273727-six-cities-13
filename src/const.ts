@@ -19,7 +19,9 @@ export const AuthStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
-export type AuthStatusType = typeof AuthStatus;
+type AuthStatusType = typeof AuthStatus;
+
+export type AuthStatusValuesType = AuthStatusType[keyof AuthStatusType];
 
 export const CitiesNames = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -40,5 +42,3 @@ export const SortType = {
   PriceToLow: 'Price: high to low',
   TopRated: 'Top rated first'
 } as const;
-
-export const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
