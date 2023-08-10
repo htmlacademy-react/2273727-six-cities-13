@@ -5,7 +5,7 @@ import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import {
-  loadOffers, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
+  loadOffers, loadOffersBackup, loadOffer, setOfferLoadStatus, setOffersLoadStatus,
   setNearbyOffersLoadStatus, loadNearbyOffers, setReviewsLoadStatus,
   loadReviews, setAuthorization, redirectToRoute, setCommentPostStatus
 } from './actions';
@@ -43,6 +43,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
     dispatch(setOffersLoadStatus(true));
     const { data } = await api.get<OfferType[]>(APIRoute.Offers);
     dispatch(loadOffers(data));
+    dispatch(loadOffersBackup(data));
     dispatch(setOffersLoadStatus(false));
   }
 );

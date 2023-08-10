@@ -3,25 +3,22 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/actions';
 import { useState } from 'react';
 import { MouseEvent } from 'react';
-import { OfferType } from '../types/offer';
 import { SortType } from '../../const';
 import { OPTIONS_NAMES } from '../../const';
 import * as selectors from '../../store/selectors';
+import { OfferType } from '../types/offer';
 
 export function SortOptions() {
   const [isOpened, setIsOpened] = useState(false);
   const activeSortType = useAppSelector(selectors.activeSortType);
   const dispatch = useAppDispatch();
-  const originalOffers = localStorage.getItem('offers');
+  const originalOffers = useAppSelector(selectors.offersBackup) as OfferType[];
 
   const handleClick = (item: string) => {
     switch (item) {
       case SortType.Popular:
-        if (originalOffers) {
-          const parsedOffers = JSON.parse(originalOffers) as OfferType[];
-          dispatch(setSortType(SortType.Popular));
-          dispatch(setOffers(parsedOffers));
-        }
+        dispatch(setSortType(SortType.Popular));
+        dispatch(setOffers(originalOffers));
         break;
       case SortType.PriceToHigh:
         dispatch(setSortType(SortType.PriceToHigh));

@@ -4,6 +4,8 @@ export const activeCity = (state: InitialStateType) => state.activeCity;
 
 export const offers = (state: InitialStateType) => state.offers;
 
+export const offersBackup = (state: InitialStateType) => state.offersBackup;
+
 export const fullOffer = (state: InitialStateType) => state.fullOffer;
 
 export const activeId = (state: InitialStateType) => state.activeId;

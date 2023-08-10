@@ -3,7 +3,7 @@ import {
   setActiveCity, setSortType, setOffers, loadOffers, loadOffer, setAuthorization,
   setActiveId, setOfferLoadStatus, setOffersLoadStatus, loadNearbyOffers,
   loadReviews, setNearbyOffersLoadStatus, setReviewsLoadStatus, sortOffersByHighPrice,
-  sortOffersByLowPrice, sortOffersByTopRated, setCommentPostStatus
+  sortOffersByLowPrice, sortOffersByTopRated, setCommentPostStatus, loadOffersBackup
 } from './actions';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
@@ -13,6 +13,7 @@ import { ReviewType } from '../components/types/review';
 export type InitialStateType = {
   activeCity: string;
   offers: OfferType[] | null;
+  offersBackup: OfferType[] | null;
   fullOffer: FullOfferType | null;
   activeId: string | null;
   activeSortType: string;
@@ -29,6 +30,7 @@ export type InitialStateType = {
 const initialState: InitialStateType = {
   activeCity: 'Paris',
   offers: null,
+  offersBackup: null,
   fullOffer: null,
   activeId: null,
   activeSortType: 'Popular',
@@ -58,6 +60,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(loadOffersBackup, (state, action) => {
+      state.offersBackup = action.payload;
     })
     .addCase(loadOffer, (state, action) => {
       state.fullOffer = action.payload;

@@ -14,6 +14,8 @@ export const setActiveId = createAction('setActiveId', (activeId: string | null)
 
 export const loadOffers = createAction('loadOffers', (offers: OfferType[]) => ({ payload: offers }));
 
+export const loadOffersBackup = createAction('loadOffersBackup', (offersBackup: OfferType[]) => ({ payload: offersBackup }));
+
 export const loadOffer = createAction('loadOffer', (offer: FullOfferType | null) => ({ payload: offer }));
 
 export const setAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
