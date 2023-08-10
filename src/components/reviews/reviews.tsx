@@ -3,7 +3,7 @@ import { ReviewType } from '../types/review';
 import { formatDateToHuman, formatDateToServer } from '../../utils';
 import * as selectors from '../../store/selectors';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
-import { AuthorizationStatus } from '../../const';
+import { AuthStatus } from '../../const';
 import { RATING_COEFFICIENT } from '../../const';
 
 type ReviewsProps = {
@@ -56,7 +56,7 @@ export function Reviews({ reviews }: ReviewsProps) {
         }
         )}
       </ul>
-      {authStatus === AuthorizationStatus.Auth && <CommentForm />}
+      {authStatus === AuthStatus.Auth && <CommentForm />}
     </section>
   );
 }

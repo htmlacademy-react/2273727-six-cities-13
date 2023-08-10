@@ -9,7 +9,7 @@ import {
   setNearbyOffersLoadStatus, loadNearbyOffers, setReviewsLoadStatus,
   loadReviews, setAuthorization, redirectToRoute, setCommentPostStatus
 } from './actions';
-import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
+import { APIRoute, AuthStatus, AppRoute } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
 
@@ -86,9 +86,9 @@ export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
   async (_arg, { dispatch, extra: api }) => {
     try {
       await api.get(APIRoute.Login);
-      dispatch(setAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthorization(AuthStatus.Auth));
     } catch {
-      dispatch(setAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(setAuthorization(AuthStatus.NoAuth));
     }
   }
 );
@@ -98,7 +98,7 @@ export const login = createAsyncThunk<void, AuthData, thunkObjType>(
   async ({ email, password }, { dispatch, extra: api }) => {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
-    dispatch(setAuthorization(AuthorizationStatus.Auth));
+    dispatch(setAuthorization(AuthStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Root));
   }
 );
@@ -108,7 +108,7 @@ export const logout = createAsyncThunk<void, undefined, thunkObjType>(
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(setAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(setAuthorization(AuthStatus.NoAuth));
   }
 );
 

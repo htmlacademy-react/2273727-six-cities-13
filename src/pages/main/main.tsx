@@ -10,7 +10,7 @@ import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
 import { createSelector } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../../const';
+import { AuthStatus } from '../../const';
 
 export function MainPage() {
   const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
@@ -22,7 +22,7 @@ export function MainPage() {
   const offersByCity = useAppSelector(filteredOffers) as OfferType[];
   const authStatus = useAppSelector(selectors.authorizationStatus);
 
-  if (isOffersLoading || authStatus === AuthorizationStatus.Unknown || offers === null) {
+  if (isOffersLoading || authStatus === AuthStatus.Unknown || offers === null) {
     return (
       <LoadingScreen />
     );

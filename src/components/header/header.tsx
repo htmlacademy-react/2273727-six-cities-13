@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import * as selectors from '../../store/selectors';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
-import { AuthorizationStatus } from '../../const';
+import { AuthStatus } from '../../const';
 import { getStyleForNavLink } from '../../utils';
 import { AuthElement } from '../auth-elements/auth-element/auth-element';
 import { NoAuthElement } from '../auth-elements/no-auth-element/no-auth-element';
@@ -25,7 +25,7 @@ export function Header() {
               />
             </NavLink>
           </div>
-          {authStatus === AuthorizationStatus.Auth ? <AuthElement /> : <NoAuthElement />}
+          {authStatus === AuthStatus.Auth ? <AuthElement /> : <NoAuthElement />}
 
         </div>
       </div>

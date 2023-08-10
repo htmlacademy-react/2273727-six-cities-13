@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthStatus } from '../../const';
 
 type PrivateRouteProps = {
   authorizationStatus: AuthorizationStatus;
@@ -7,11 +7,11 @@ type PrivateRouteProps = {
 }
 
 export function PrivateRouteForLogin({authorizationStatus, children}: PrivateRouteProps) {
-  if (authorizationStatus === AuthorizationStatus.Unknown) {
+  if (authorizationStatus === AuthStatus.Unknown) {
     return;
   }
   return (
-    authorizationStatus === AuthorizationStatus.NoAuth
+    authorizationStatus === AuthStatus.NoAuth
       ? children
       : <Navigate to={AppRoute.Root} />
   );

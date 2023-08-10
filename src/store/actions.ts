@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRouteType, AuthStatusType } from '../const';
 import { ReviewType } from '../components/types/review';
 
 export const setActiveCity = createAction('setActiveCity', (city: string) => ({ payload: city }));
@@ -18,7 +18,7 @@ export const loadOffersBackup = createAction('loadOffersBackup', (offersBackup: 
 
 export const loadOffer = createAction('loadOffer', (offer: FullOfferType | null) => ({ payload: offer }));
 
-export const setAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthorizationStatus) => ({ payload: authorizationStatus }));
+export const setAuthorization = createAction('requireAuthorization', (authorizationStatus: AuthStatusType) => ({ payload: authorizationStatus }));
 
 export const setOfferLoadStatus = createAction('setOfferLoadingStatus', (status: boolean) => ({ payload: status }));
 
@@ -38,6 +38,6 @@ export const sortOffersByHighPrice = createAction('sortOffersByHighPrice');
 
 export const sortOffersByTopRated = createAction('sortOffersByTopRated');
 
-export const redirectToRoute = createAction('redirectToRoute', (route: AppRoute | string) => ({payload: route}));
+export const redirectToRoute = createAction('redirectToRoute', (route: AppRouteType | string) => ({payload: route}));
 
 export const setCommentPostStatus = createAction('setCommentPostStatus', (status: boolean) => ({ payload: status }));
