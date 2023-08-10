@@ -12,8 +12,17 @@ import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import * as selectors from '../../store/selectors';
 import { HistoryRouter } from '../history-route/history-route';
 import { browserHistory } from '../../browser-history';
+import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { checkAuth, fetchOffers } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 export function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+    dispatch(fetchOffers());
+  }, [dispatch]);
+
   const authStatus = useAppSelector(selectors.authorizationStatus);
 
   return (
