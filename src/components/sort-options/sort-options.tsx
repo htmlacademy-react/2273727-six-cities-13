@@ -4,11 +4,11 @@ import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, so
 import { useState } from 'react';
 import { MouseEvent } from 'react';
 import { SortType } from '../../const';
-import { OPTIONS_NAMES } from '../../const';
 import * as selectors from '../../store/selectors';
 import { OfferType } from '../types/offer';
 
 export function SortOptions() {
+  const optionsNames = Object.values(SortType);
   const [isOpened, setIsOpened] = useState(false);
   const activeSortType = useAppSelector(selectors.activeSortType);
   const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ export function SortOptions() {
       </span>
       <ul className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : ''}`}>
         {
-          OPTIONS_NAMES.map((item) => (
+          optionsNames.map((item) => (
             <li className={`places__option ${item === activeSortType ? 'places__option--active' : ''}`}
               tabIndex={0}
               key={item}

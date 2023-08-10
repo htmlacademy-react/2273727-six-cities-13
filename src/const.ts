@@ -3,19 +3,23 @@ export const MAX_COMMENT_LENGTH = 140;
 
 export const RATING_COEFFICIENT = 20;
 
-export enum AppRoute {
-  Root = '/',
-  Favorites = '/favorites',
-  Login = '/login',
-  Offer = '/offer',
-  NotFound = '/404',
-}
+export const AppRoute = {
+  Root: '/',
+  Favorites: '/favorites',
+  Login: '/login',
+  Offer: '/offer',
+  NotFound: '/404',
+} as const;
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}
+export type AppRouteType = typeof APIRoute;
+
+export const AuthStatus = {
+  Auth: 'AUTH',
+  NoAuth: 'NO_AUTH',
+  Unknown: 'UNKNOWN',
+} as const;
+
+export type AuthStatusType = typeof AuthStatus;
 
 export const CitiesNames = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
