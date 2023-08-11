@@ -6,13 +6,17 @@ import { postComment } from '../../store/api-actions';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import * as selectors from '../../store/selectors';
 
-
 export function CommentForm() {
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
   const offerId = useAppSelector(selectors.activeId);
+  const isCommentPosting = useAppSelector(selectors.isCommentPosting);
 
+  const resetForm = () => {
+    setComment('');
+    setRating('');
+  };
 
   const ratingMap = {
     '5': 'perfect',
@@ -39,13 +43,15 @@ export function CommentForm() {
         comment: comment,
         rating: Number(rating),
       }));
+      resetForm();
     }
   };
 
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
-    rating !== '';
+    rating !== '' &&
+    !isCommentPosting;
 
   return (
     <form
@@ -103,7 +109,7 @@ export function CommentForm() {
           type="submit"
           disabled={!isValid}
         >
-          Submit
+          {isCommentPosting ? 'Posting...' : 'Submit'}
         </button>
       </div>
     </form>

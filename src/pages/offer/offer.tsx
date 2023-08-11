@@ -11,7 +11,7 @@ import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
+import { fetchNearbyOffers, fetchOffer } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
@@ -26,7 +26,6 @@ export function Offer() {
   const offers = useAppSelector(selectors.offers);
   const isOffersLoading = useAppSelector(selectors.isOffersLoading);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
-  const isCommentPosting = useAppSelector(selectors.isCommentPosting);
 
   useEffect(() => {
     if (!isIdExist) {
@@ -34,21 +33,18 @@ export function Offer() {
     }
     dispatch(fetchOffer({ id: offerId }));
     dispatch(fetchNearbyOffers({ id: offerId }));
-    dispatch(fetchReviews({ id: offerId }));
     dispatch(setActiveId(offerId));
-  }, [isIdExist, offerId, dispatch, isCommentPosting]
+  }, [isIdExist, offerId, dispatch]
   );
 
   const offer = useAppSelector(selectors.fullOffer);
   const nearbyOffers = useAppSelector(selectors.nearbyOffers);
-  const reviews = useAppSelector(selectors.reviews);
 
   const isOfferLoading = useAppSelector(selectors.isOfferLoading);
   const isNearbyOfferLoading = useAppSelector(selectors.isNearbyOffersLoading);
-  const isReviewsLoading = useAppSelector(selectors.isReviewsLoading);
 
-  const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
-  const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
+  const isPageLoading = isOfferLoading || isNearbyOfferLoading;
+  const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null;
 
   if (!isIdExist && !isOffersLoading) {
     return (
@@ -138,7 +134,7 @@ export function Offer() {
 
               <Host host={host} description={description} />
 
-              <Reviews reviews={reviews} />
+              <Reviews />
 
             </div>
           </div>
