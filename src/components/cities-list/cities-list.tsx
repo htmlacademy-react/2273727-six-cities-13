@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { CitiesNames } from '../../const';
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setActiveCity } from '../../store/actions';
 import * as selectors from '../../store/selectors';
 
-export function CititesList() {
+const CititesListComponent = () => {
   const cityName = useAppSelector(selectors.activeCity);
   const dispatch = useAppDispatch();
 
@@ -27,4 +27,6 @@ export function CititesList() {
       ))}
     </ul>
   );
-}
+};
+
+export const CititesList = memo(CititesListComponent);
