@@ -10,7 +10,7 @@ type MapProps = {
   isMain: boolean;
   city: CityType;
   offers: OfferType[];
-  selectedCard: OfferType | undefined;
+  selectedId: string | undefined;
 }
 
 const defaultIcon = new Icon({
@@ -31,7 +31,7 @@ const offersMapStyle = {
   margin: '0px auto 50px',
 };
 
-export function Map({ isMain, city, offers, selectedCard }: MapProps) {
+export const Map = ({ isMain, city, offers, selectedId }: MapProps) => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const cityLocation = city.location;
@@ -54,7 +54,7 @@ export function Map({ isMain, city, offers, selectedCard }: MapProps) {
 
         marker
           .setIcon(
-            selectedCard !== undefined && offer.id === selectedCard.id
+            selectedId !== undefined && offer.id === selectedId
               ? currentIcon
               : defaultIcon
           ).addTo(markerLayer);
@@ -64,7 +64,7 @@ export function Map({ isMain, city, offers, selectedCard }: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedCard]);
+  }, [map, offers, selectedId]);
 
   return (
     <section
@@ -74,4 +74,6 @@ export function Map({ isMain, city, offers, selectedCard }: MapProps) {
     >
     </section>
   );
-}
+};
+
+

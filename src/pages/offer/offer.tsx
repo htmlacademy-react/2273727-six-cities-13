@@ -139,7 +139,7 @@ export function Offer() {
             </div>
           </div>
 
-          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedCard={selectedCard} />
+          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedId={selectedCard} />
 
         </section>
         <div className="container">

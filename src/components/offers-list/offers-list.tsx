@@ -1,6 +1,6 @@
 import { OfferCard } from '../offer-card/offer-card';
 import { OfferType } from '../types/offer';
-import { MouseEvent } from 'react';
+import { MouseEvent, memo, useCallback } from 'react';
 
 type OffersListProps = {
   offers: OfferType[];
@@ -9,16 +9,16 @@ type OffersListProps = {
   cityName?: string;
 }
 
-export function OffersList({ offers, onCardHover, id, cityName }: OffersListProps) {
-  const handleCardEnter = (event: MouseEvent<HTMLLIElement>) => {
+const OffersListComponent = ({ offers, onCardHover, id, cityName }: OffersListProps) => {
+  const handleCardEnter = useCallback((event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     onCardHover(event.currentTarget.id);
-  };
+  }, [onCardHover]);
 
-  const handleCardLeave = (event: MouseEvent<HTMLLIElement>) => {
+  const handleCardLeave = useCallback((event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     onCardHover(undefined);
-  };
+  }, [onCardHover]);
 
   const filteredOffers = (cityName) ? offers.filter((offer) => offer.city.name === cityName && offer.id !== id) : offers;
 
@@ -45,4 +45,6 @@ export function OffersList({ offers, onCardHover, id, cityName }: OffersListProp
       )}
     </div>
   );
-}
+};
+
+export const OffersList = memo(OffersListComponent);

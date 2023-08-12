@@ -1,13 +1,12 @@
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/actions';
-import { useState } from 'react';
-import { MouseEvent } from 'react';
+import { useState, MouseEvent, memo } from 'react';
 import { SortType } from '../../const';
 import * as selectors from '../../store/selectors';
 import { OfferType } from '../types/offer';
 
-export function SortOptions() {
+const SortOptionsComponent = () => {
   const optionsNames = Object.values(SortType);
   const [isOpened, setIsOpened] = useState(false);
   const activeSortType = useAppSelector(selectors.activeSortType);
@@ -64,4 +63,7 @@ export function SortOptions() {
       </ul>
     </form>
   );
-}
+};
+
+export const SortOptions = memo(SortOptionsComponent);
+
