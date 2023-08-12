@@ -3,6 +3,8 @@ export const MAX_COMMENT_LENGTH = 300;
 
 export const RATING_COEFFICIENT = 20;
 
+export const NUMBER_OF_NEARBY_OFFERS = 3;
+
 export const AppRoute = {
   Root: '/',
   Favorites: '/favorites',

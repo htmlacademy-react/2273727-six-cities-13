@@ -14,8 +14,8 @@ type OfferCardProps = {
   rating: number;
   title: string;
   type: string;
-  handleCardEnter: (event: MouseEvent<HTMLLIElement>) => void;
-  handleCardLeave: (event: MouseEvent<HTMLLIElement>) => void;
+  handleCardEnter?: (event: MouseEvent<HTMLLIElement>) => void;
+  handleCardLeave?: (event: MouseEvent<HTMLLIElement>) => void;
 }
 
 const OfferCardComponent = (

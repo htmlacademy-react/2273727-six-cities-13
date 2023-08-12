@@ -4,23 +4,31 @@ import { MouseEvent, memo, useCallback } from 'react';
 
 type OffersListProps = {
   offers: OfferType[];
-  onCardHover: (id: string | undefined) => void;
+  onCardHover?: (id: string | undefined) => void;
   id?: string;
   cityName?: string;
 }
 
 const OffersListComponent = ({ offers, onCardHover, id, cityName }: OffersListProps) => {
   const handleCardEnter = useCallback((event: MouseEvent<HTMLLIElement>) => {
+    if (onCardHover === undefined) {
+      return;
+    }
     event.preventDefault();
     onCardHover(event.currentTarget.id);
   }, [onCardHover]);
 
   const handleCardLeave = useCallback((event: MouseEvent<HTMLLIElement>) => {
+    if (onCardHover === undefined) {
+      return;
+    }
     event.preventDefault();
     onCardHover(undefined);
   }, [onCardHover]);
 
-  const filteredOffers = (cityName) ? offers.filter((offer) => offer.city.name === cityName && offer.id !== id) : offers;
+  const filteredOffers = cityName
+    ? offers.filter((offer) => offer.id !== id)
+    : offers;
 
   const className = (cityName) ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content';
 
@@ -38,8 +46,7 @@ const OffersListComponent = ({ offers, onCardHover, id, cityName }: OffersListPr
           rating={offer.rating}
           title={offer.title}
           type={offer.type}
-          handleCardEnter={handleCardEnter}
-          handleCardLeave={handleCardLeave}
+          {...(!cityName && { handleCardEnter, handleCardLeave })}
         />
       )
       )}

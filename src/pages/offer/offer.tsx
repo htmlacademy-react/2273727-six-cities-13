@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
@@ -7,20 +7,20 @@ import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { OffersList } from '../../components/offers-list/offers-list';
-import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchNearbyOffers, fetchOffer } from '../../store/api-actions';
-import { useEffect } from 'react';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import * as selectors from '../../store/selectors';
 import { NotFound } from '../404/404';
 import { RATING_COEFFICIENT } from '../../const';
 import { setActiveId } from '../../store/actions';
+import { getRandomUniqueValuesFromArray } from '../../utils';
+import { NUMBER_OF_NEARBY_OFFERS } from '../../const';
+import { OfferType } from '../../components/types/offer';
 
 export function Offer() {
-  const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
   const dispatch = useAppDispatch();
   const offerId = useParams().id as string;
   const offers = useAppSelector(selectors.offers);
@@ -38,13 +38,14 @@ export function Offer() {
   );
 
   const offer = useAppSelector(selectors.fullOffer);
-  const nearbyOffers = useAppSelector(selectors.nearbyOffers);
+  const loadedNearbyOffers = useAppSelector(selectors.nearbyOffers);
+
 
   const isOfferLoading = useAppSelector(selectors.isOfferLoading);
   const isNearbyOfferLoading = useAppSelector(selectors.isNearbyOffersLoading);
 
   const isPageLoading = isOfferLoading || isNearbyOfferLoading;
-  const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null;
+  const isSomethingMissingFromServer = offer === null || offers === null || loadedNearbyOffers === null;
 
   if (!isIdExist && !isOffersLoading) {
     return (
@@ -66,15 +67,10 @@ export function Offer() {
     }
   };
 
-  const currentCity = nearbyOffers[0].city;
-
-  const handleCardHover = (ids: string | undefined) => {
-    if (!ids) {
-      setSelectedCard(undefined);
-    }
-    const currentCard = offers.find((item) => item.id === ids);
-    setSelectedCard(currentCard);
-  };
+  const currentCity = loadedNearbyOffers[0].city;
+  const currentOffer = offers.find((item) => item.id === offerId) as OfferType;
+  const nearbyOffers = getRandomUniqueValuesFromArray(loadedNearbyOffers, NUMBER_OF_NEARBY_OFFERS);
+  nearbyOffers.push(currentOffer);
 
   return (
     <div className="page">
@@ -139,7 +135,7 @@ export function Offer() {
             </div>
           </div>
 
-          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedId={selectedCard} />
+          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedId={offerId} />
 
         </section>
         <div className="container">
@@ -147,7 +143,7 @@ export function Offer() {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersList id={id} cityName={city.name} offers={nearbyOffers} onCardHover={handleCardHover} />
+            <OffersList id={id} cityName={city.name} offers={nearbyOffers} />
           </section>
         </div>
       </main>
