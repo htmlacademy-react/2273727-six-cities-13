@@ -12,6 +12,8 @@ import { setUserData } from './user-process.ts/user-process';
 import { APIRoute, AppRoute } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
+import { getRandomUniqueValuesFromArray } from '../utils';
+import { NUMBER_OF_NEARBY_OFFERS } from '../const';
 
 type thunkObjType = {
   dispatch: AppDispatch;
@@ -65,7 +67,8 @@ export const fetchNearbyOffers = createAsyncThunk<void, { id: string | undefined
     dispatch(setNearbyOffersLoadStatus(true));
     const url = id !== undefined ? `${APIRoute.Offers}/${id}/nearby` : '';
     const { data } = await api.get<OfferType[]>(url);
-    dispatch(setNearbyOffers(data));
+    const nearbyOffers = getRandomUniqueValuesFromArray(data, NUMBER_OF_NEARBY_OFFERS);
+    dispatch(setNearbyOffers(nearbyOffers));
     dispatch(setNearbyOffersLoadStatus(false));
   }
 );

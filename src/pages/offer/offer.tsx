@@ -13,10 +13,8 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchNearbyOffers, fetchFullOffer } from '../../store/api-actions';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import { NotFound } from '../404/404';
-import { RATING_COEFFICIENT } from '../../const';
 import { setActiveId } from '../../store/offers-process/offers-process';
-import { getRandomUniqueValuesFromArray } from '../../utils';
-import { NUMBER_OF_NEARBY_OFFERS } from '../../const';
+import { RATING_COEFFICIENT } from '../../const';
 import { OfferType } from '../../components/types/offer';
 import { getOffers, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
 import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
@@ -70,8 +68,7 @@ export function Offer() {
 
   const currentCity = loadedNearbyOffers[0].city;
   const currentOffer = offers.find((item) => item.id === offerId) as OfferType;
-  const nearbyOffers = getRandomUniqueValuesFromArray(loadedNearbyOffers, NUMBER_OF_NEARBY_OFFERS);
-  nearbyOffers.push(currentOffer);
+  const nearbyOffers = [...loadedNearbyOffers, currentOffer];
 
   return (
     <div className="page">
