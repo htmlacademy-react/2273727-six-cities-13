@@ -10,39 +10,40 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { fetchNearbyOffers, fetchOffer } from '../../store/api-actions';
+import { fetchNearbyOffers, fetchFullOffer } from '../../store/api-actions';
 import { LoadingScreen } from '../loading-screen/loading-screen';
-import * as selectors from '../../store/selectors';
 import { NotFound } from '../404/404';
 import { RATING_COEFFICIENT } from '../../const';
-import { setActiveId } from '../../store/actions';
+import { setActiveId } from '../../store/offers-process/offers-process';
 import { getRandomUniqueValuesFromArray } from '../../utils';
 import { NUMBER_OF_NEARBY_OFFERS } from '../../const';
 import { OfferType } from '../../components/types/offer';
+import { getOffers, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
+import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
 
 export function Offer() {
   const dispatch = useAppDispatch();
   const offerId = useParams().id as string;
-  const offers = useAppSelector(selectors.offers);
-  const isOffersLoading = useAppSelector(selectors.isOffersLoading);
+  const offers = useAppSelector(getOffers);
+  const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
 
   useEffect(() => {
     if (!isIdExist) {
       return;
     }
-    dispatch(fetchOffer({ id: offerId }));
+    dispatch(fetchFullOffer({ id: offerId }));
     dispatch(fetchNearbyOffers({ id: offerId }));
     dispatch(setActiveId(offerId));
   }, [isIdExist, offerId, dispatch]
   );
 
-  const offer = useAppSelector(selectors.fullOffer);
-  const loadedNearbyOffers = useAppSelector(selectors.nearbyOffers);
+  const offer = useAppSelector(getFullOffer);
+  const loadedNearbyOffers = useAppSelector(getNearbyOffers);
 
 
-  const isOfferLoading = useAppSelector(selectors.isOfferLoading);
-  const isNearbyOfferLoading = useAppSelector(selectors.isNearbyOffersLoading);
+  const isOfferLoading = useAppSelector(getFullOfferLoadStatus);
+  const isNearbyOfferLoading = useAppSelector(getNearbyOffersLoadStatus);
 
   const isPageLoading = isOfferLoading || isNearbyOfferLoading;
   const isSomethingMissingFromServer = offer === null || offers === null || loadedNearbyOffers === null;

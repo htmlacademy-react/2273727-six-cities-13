@@ -1,27 +1,29 @@
 import { CommentForm } from '../comment-form/comment-form';
 import { formatDateToHuman, formatDateToServer } from '../../utils';
-import * as selectors from '../../store/selectors';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { AuthStatus } from '../../const';
 import { useEffect } from 'react';
 import { RATING_COEFFICIENT } from '../../const';
 import { fetchReviews } from '../../store/api-actions';
+import { getActiveId, getOffersLoadStatus } from '../../store/offers-process/selectors';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
+import { getReviews, getCommentPostStatus } from '../../store/comments-process/selectors';
 
 
 export const Reviews = () => {
   const dispatch = useAppDispatch();
-  const offerId = useAppSelector(selectors.activeId) as string;
-  const authStatus = useAppSelector(selectors.authorizationStatus);
-  const isCommentPosting = useAppSelector(selectors.isCommentPosting);
-  const isOffersLoading = useAppSelector(selectors.isOffersLoading);
+  const offerId = useAppSelector(getActiveId) as string;
+  const authStatus = useAppSelector(getAuthStatus);
+  const isCommentPosting = useAppSelector(getCommentPostStatus);
+  const isOffersLoading = useAppSelector(getOffersLoadStatus);
 
   useEffect(() => {
     dispatch(fetchReviews({ id: offerId }));
   }, [offerId, dispatch, isCommentPosting, isOffersLoading]
   );
 
-  const reviews = useAppSelector(selectors.reviews);
+  const reviews = useAppSelector(getReviews);
 
   if (reviews !== null) {
     return (

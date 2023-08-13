@@ -7,7 +7,7 @@ import { login } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import { CitiesNames } from '../../const';
 import { getRandomValueFromArray } from '../../utils';
-import { setActiveCity } from '../../store/actions';
+import { setActiveCity } from '../../store/offers-process/offers-process';
 
 export function Login() {
   const loginRef = useRef<HTMLInputElement | null>(null);

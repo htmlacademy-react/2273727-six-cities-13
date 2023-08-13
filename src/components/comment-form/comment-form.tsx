@@ -4,14 +4,15 @@ import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { postComment } from '../../store/api-actions';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
-import * as selectors from '../../store/selectors';
+import { getActiveId } from '../../store/offers-process/selectors';
+import { getCommentPostStatus } from '../../store/comments-process/selectors';
 
 export function CommentForm() {
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
-  const offerId = useAppSelector(selectors.activeId);
-  const isCommentPosting = useAppSelector(selectors.isCommentPosting);
+  const offerId = useAppSelector(getActiveId);
+  const isCommentPosting = useAppSelector(getCommentPostStatus);
 
   const resetForm = () => {
     setComment('');

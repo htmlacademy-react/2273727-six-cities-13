@@ -44,3 +44,10 @@ export const SortType = {
   PriceToLow: 'Price: high to low',
   TopRated: 'Top rated first'
 } as const;
+
+export const NameSpace = {
+  Comments: 'COMMENTS',
+  NearbyOffers: 'NEARBY_OFFERS',
+  Offers: 'OFFERS',
+  User: 'USER',
+} as const;

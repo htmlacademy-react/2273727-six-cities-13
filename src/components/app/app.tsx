@@ -9,13 +9,13 @@ import { NotFound } from '../../pages/404/404';
 import { PrivateRouteForFavorites } from '../private-routes/private-route-for-favorites';
 import { PrivateRouteForLogin } from '../private-routes/private-route-for-login';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
-import * as selectors from '../../store/selectors';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
 import { HistoryRouter } from '../history-route/history-route';
 import { browserHistory } from '../../browser-history';
 
 export function App() {
 
-  const authStatus = useAppSelector(selectors.authorizationStatus);
+  const authStatus = useAppSelector(getAuthStatus);
 
   return (
     <HelmetProvider>

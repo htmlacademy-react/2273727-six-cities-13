@@ -3,11 +3,11 @@ import { CitiesNames } from '../../const';
 import { MouseEvent, memo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { setActiveCity } from '../../store/actions';
-import * as selectors from '../../store/selectors';
+import { setActiveCity } from '../../store/offers-process/offers-process';
+import { getActiveCity } from '../../store/offers-process/selectors';
 
 const CititesListComponent = () => {
-  const cityName = useAppSelector(selectors.activeCity);
+  const cityName = useAppSelector(getActiveCity);
   const dispatch = useAppDispatch();
 
   const handleCityClick = (evt: MouseEvent<HTMLLIElement>) => {
