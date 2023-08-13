@@ -141,7 +141,7 @@ export function Offer() {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersList id={id} cityName={city.name} offers={nearbyOffers} />
+            <OffersList id={id} cityName={city.name} offers={loadedNearbyOffers} />
           </section>
         </div>
       </main>
