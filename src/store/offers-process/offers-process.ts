@@ -8,7 +8,7 @@ type OffersProcessType = {
   activeId: string | null;
   activeSortType: string;
   currentOffer: OfferType | null;
-  offers: OfferType[] | null;
+  offers: OfferType[];
   offersBackup: OfferType[] | null;
   fullOffer: FullOfferType | null;
   isFullOfferLoading: boolean;
@@ -20,7 +20,7 @@ const initialState: OffersProcessType = {
   activeId: null,
   activeSortType: 'Popular',
   currentOffer: null,
-  offers: null,
+  offers: [],
   offersBackup: null,
   fullOffer: null,
   isFullOfferLoading: false,

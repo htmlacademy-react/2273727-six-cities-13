@@ -3,12 +3,12 @@ import { NameSpace } from '../../const';
 import { OfferType } from '../../components/types/offer';
 
 type NearbyOffersProcessType = {
-  nearbyOffers: OfferType[] | null;
+  nearbyOffers: OfferType[];
   isNearbyOffersLoading: boolean;
 };
 
 const initialState: NearbyOffersProcessType = {
-  nearbyOffers: null,
+  nearbyOffers: [],
   isNearbyOffersLoading: false,
 };
 

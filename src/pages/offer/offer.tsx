@@ -40,7 +40,7 @@ export const Offer = () => {
   const loadedNearbyOffers = useAppSelector(getNearbyOffers);
   const currentOffer = useAppSelector(getCurrentOffer);
   const nearbyOffers = useMemo(() => {
-    if (loadedNearbyOffers === null || currentOffer === null) {
+    if (currentOffer === null) {
       return;
     }
     return [...loadedNearbyOffers, currentOffer];
@@ -50,7 +50,6 @@ export const Offer = () => {
   const isNearbyOfferLoading = useAppSelector(getNearbyOffersLoadStatus);
 
   const isPageLoading = isOfferLoading || isNearbyOfferLoading;
-  const isSomethingMissingFromServer = offer === null || offers === null || loadedNearbyOffers === null;
 
   if (!isIdExist && !isOffersLoading) {
     return (
@@ -58,13 +57,11 @@ export const Offer = () => {
     );
   }
 
-  if (isPageLoading || isSomethingMissingFromServer || nearbyOffers === undefined) {
+  if (isPageLoading || offer === null || nearbyOffers === undefined) {
     return (
       <LoadingScreen />
     );
   }
-
-  const currentCity = loadedNearbyOffers[0].city;
 
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
 
@@ -137,7 +134,7 @@ export const Offer = () => {
             </div>
           </div>
 
-          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedId={offerId} />
+          <Map isMain={false} city={city} offers={nearbyOffers} selectedId={offerId} />
 
         </section>
         <div className="container">
