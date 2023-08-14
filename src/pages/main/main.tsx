@@ -2,7 +2,6 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
 import { SortOptions } from '../../components/sort-options/sort-options';
-import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useState, memo, useCallback } from 'react';
 import { CititesList } from '../../components/cities-list/cities-list';
@@ -25,7 +24,7 @@ function MainPageComponent() {
   const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const filteredOffers = createSelector(getOffers, (state) => state?.filter((offer) => offer.city.name === activeCityName));
 
-  const offersByCity = useAppSelector(filteredOffers) as OfferType[];
+  const offersByCity = useAppSelector(filteredOffers);
   const authStatus = useAppSelector(getAuthStatus);
 
   if (isOffersLoading || authStatus === AuthStatus.Unknown || offers === null) {
