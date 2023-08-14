@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
@@ -7,48 +7,49 @@ import { Goods } from '../../components/goods/goods';
 import { Host } from '../../components/host/host';
 import { Reviews } from '../../components/reviews/reviews';
 import { OffersList } from '../../components/offers-list/offers-list';
-import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
-import { useEffect } from 'react';
+import { fetchNearbyOffers, fetchFullOffer } from '../../store/api-actions';
 import { LoadingScreen } from '../loading-screen/loading-screen';
-import * as selectors from '../../store/selectors';
 import { NotFound } from '../404/404';
+import { setActiveId, setCurrentOffer } from '../../store/offers-process/offers-process';
 import { RATING_COEFFICIENT } from '../../const';
-import { setActiveId } from '../../store/actions';
+import { getOffers, getCurrentOffer, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
+import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
 
-export function Offer() {
-  const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+export const Offer = () => {
   const dispatch = useAppDispatch();
-  const offerId = useParams().id as string;
-  const offers = useAppSelector(selectors.offers);
-  const isOffersLoading = useAppSelector(selectors.isOffersLoading);
+  const offerId = useParams().id;
+  const offers = useAppSelector(getOffers);
+  const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
-  const isCommentPosting = useAppSelector(selectors.isCommentPosting);
 
   useEffect(() => {
-    if (!isIdExist) {
+    if (!isIdExist || offerId === undefined) {
       return;
     }
-    dispatch(fetchOffer({ id: offerId }));
+    dispatch(fetchFullOffer({ id: offerId }));
     dispatch(fetchNearbyOffers({ id: offerId }));
-    dispatch(fetchReviews({ id: offerId }));
     dispatch(setActiveId(offerId));
-  }, [isIdExist, offerId, dispatch, isCommentPosting]
+    dispatch(setCurrentOffer());
+  }, [isIdExist, offerId, dispatch]
   );
 
-  const offer = useAppSelector(selectors.fullOffer);
-  const nearbyOffers = useAppSelector(selectors.nearbyOffers);
-  const reviews = useAppSelector(selectors.reviews);
+  const offer = useAppSelector(getFullOffer);
+  const loadedNearbyOffers = useAppSelector(getNearbyOffers);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const nearbyOffers = useMemo(() => {
+    if (currentOffer === null) {
+      return;
+    }
+    return [...loadedNearbyOffers, currentOffer];
+  }, [loadedNearbyOffers, currentOffer]);
 
-  const isOfferLoading = useAppSelector(selectors.isOfferLoading);
-  const isNearbyOfferLoading = useAppSelector(selectors.isNearbyOffersLoading);
-  const isReviewsLoading = useAppSelector(selectors.isReviewsLoading);
+  const isOfferLoading = useAppSelector(getFullOfferLoadStatus);
+  const isNearbyOfferLoading = useAppSelector(getNearbyOffersLoadStatus);
 
-  const isPageLoading = isOfferLoading || isNearbyOfferLoading || isReviewsLoading;
-  const isSomethingMissingFromServer = offer === null || offers === null || nearbyOffers === null || reviews === null;
+  const isPageLoading = isOfferLoading || isNearbyOfferLoading;
 
   if (!isIdExist && !isOffersLoading) {
     return (
@@ -56,7 +57,7 @@ export function Offer() {
     );
   }
 
-  if (isPageLoading || isSomethingMissingFromServer) {
+  if (isPageLoading || offer === null || nearbyOffers === undefined) {
     return (
       <LoadingScreen />
     );
@@ -68,16 +69,6 @@ export function Offer() {
     if (isFav) {
       return { fill: '#4481c3', stroke: '#4481c3' };
     }
-  };
-
-  const currentCity = nearbyOffers[0].city;
-
-  const handleCardHover = (ids: string | undefined) => {
-    if (!ids) {
-      setSelectedCard(undefined);
-    }
-    const currentCard = offers.find((item) => item.id === ids);
-    setSelectedCard(currentCard);
   };
 
   return (
@@ -138,12 +129,12 @@ export function Offer() {
 
               <Host host={host} description={description} />
 
-              <Reviews reviews={reviews} />
+              <Reviews />
 
             </div>
           </div>
 
-          <Map isMain={false} city={currentCity} offers={nearbyOffers} selectedCard={selectedCard} />
+          <Map isMain={false} city={city} offers={nearbyOffers} selectedId={offerId} />
 
         </section>
         <div className="container">
@@ -151,10 +142,10 @@ export function Offer() {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OffersList id={id} cityName={city.name} offers={nearbyOffers} onCardHover={handleCardHover} />
+            <OffersList id={id} cityName={city.name} offers={loadedNearbyOffers} />
           </section>
         </div>
       </main>
     </div>
   );
-}
+};

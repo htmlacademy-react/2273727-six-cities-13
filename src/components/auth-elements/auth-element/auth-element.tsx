@@ -2,10 +2,13 @@ import { NavLink, Link } from 'react-router-dom';
 import { getStyleForNavLink } from '../../../utils';
 import { AppRoute } from '../../../const';
 import { useAppDispatch } from '../../../hooks/useAppDispatch/useAppDispatch';
+import { useAppSelector } from '../../../hooks/useAppSelector/useAppSelector';
 import { logout } from '../../../store/api-actions';
+import { getEmail } from '../../../store/user-process.ts/selectors';
 
-export function AuthElement() {
+export const AuthElement = () => {
   const dispatch = useAppDispatch();
+  const userEmail = useAppSelector(getEmail);
 
   return (
     <nav className="header__nav">
@@ -18,7 +21,7 @@ export function AuthElement() {
           >
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>
             <span className="header__user-name user__name">
-              egorpestov2012@yandex.ru
+              {userEmail}
             </span>
             <span className="header__favorite-count">3</span>
           </NavLink>
@@ -38,4 +41,4 @@ export function AuthElement() {
       </ul>
     </nav>
   );
-}
+};

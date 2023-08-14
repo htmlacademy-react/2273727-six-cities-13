@@ -4,14 +4,13 @@ import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../const';
 import { FavoritesList } from '../../components/favorites-list/favorites-list';
-import * as selectors from '../../store/selectors';
 import { createSelector } from '@reduxjs/toolkit';
-import { OfferType } from '../../components/types/offer';
+import { getOffers } from '../../store/offers-process/selectors';
 
 export function Favorites() {
 
-  const filteredOffers = createSelector(selectors.offers, (state) => state?.filter((offer) => offer.isFavorite));
-  const favorites = useAppSelector(filteredOffers) as OfferType[];
+  const filteredOffers = createSelector(getOffers, (state) => state?.filter((offer) => offer.isFavorite));
+  const favorites = useAppSelector(filteredOffers);
 
   return (
     <div className="page">

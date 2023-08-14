@@ -2,39 +2,36 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
 import { SortOptions } from '../../components/sort-options/sort-options';
-import { OfferType } from '../../components/types/offer';
 import { Map } from '../../components/map/map';
-import { useState } from 'react';
+import { useState, memo, useCallback } from 'react';
 import { CititesList } from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { LoadingScreen } from '../loading-screen/loading-screen';
-import * as selectors from '../../store/selectors';
 import { createSelector } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../../const';
+import { AuthStatus } from '../../const';
+import { getOffers, getOffersLoadStatus, getActiveCity } from '../../store/offers-process/selectors';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
 
-export function MainPage() {
-  const [selectedCard, setSelectedCard] = useState<OfferType | undefined>(undefined);
+function MainPageComponent() {
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
 
-  const activeCityName = useAppSelector(selectors.activeCity);
-  const offers = useAppSelector(selectors.offers);
-  const isOffersLoading = useAppSelector(selectors.isOfferLoading);
-  const filteredOffers = createSelector(selectors.offers, (state) => state?.filter((offer) => offer.city.name === activeCityName));
-  const offersByCity = useAppSelector(filteredOffers) as OfferType[];
-  const authStatus = useAppSelector(selectors.authorizationStatus);
+  const handleCardHover = useCallback((id: string | undefined) => {
+    setSelectedId(id);
+  }, []);
 
-  if (isOffersLoading || authStatus === AuthorizationStatus.Unknown || offers === null) {
+  const activeCityName = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
+  const isOffersLoading = useAppSelector(getOffersLoadStatus);
+  const filteredOffers = createSelector(getOffers, (state) => state?.filter((offer) => offer.city.name === activeCityName));
+
+  const offersByCity = useAppSelector(filteredOffers);
+  const authStatus = useAppSelector(getAuthStatus);
+
+  if (isOffersLoading || authStatus === AuthStatus.Unknown || offers === null) {
     return (
       <LoadingScreen />
     );
   }
-
-  const handleCardHover = (id: string | undefined) => {
-    if (!id) {
-      setSelectedCard(undefined);
-    }
-    const currentCard = offers.find((offer) => offer.id === id);
-    setSelectedCard(currentCard);
-  };
 
   const currentCity = offersByCity[0].city;
 
@@ -62,7 +59,7 @@ export function MainPage() {
               <OffersList offers={offersByCity} onCardHover={handleCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map isMain city={currentCity} offers={offersByCity} selectedCard={selectedCard} />
+              <Map isMain city={currentCity} offers={offersByCity} selectedId={selectedId} />
             </div>
           </div>
         </div>
@@ -70,3 +67,5 @@ export function MainPage() {
     </div>
   );
 }
+
+export const MainPage = memo(MainPageComponent);

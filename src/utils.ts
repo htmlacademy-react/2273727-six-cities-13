@@ -11,7 +11,7 @@ export function formatDateToServer(inputDate: string) {
 
 export const getFavoriteStyles = (isFav: boolean) => {
   if (isFav) {
-    return {fill: '#4481c3', stroke: '#4481c3'};
+    return { fill: '#4481c3', stroke: '#4481c3' };
   }
 };
 
@@ -25,3 +25,23 @@ export const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
     };
 
 export const getRandomValueFromArray = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
+export function getRandomUniqueValuesFromArray<T>(arr: T[], n: number): T[] {
+  if (arr.length <= n) {
+    return arr;
+  }
+
+  const shuffled = arr.slice();
+  const result: T[] = [];
+
+  while (result.length < n) {
+    const randomIndex = Math.floor(Math.random() * shuffled.length);
+    const value = shuffled[randomIndex];
+
+    if (!result.includes(value)) {
+      result.push(value);
+    }
+  }
+
+  return result;
+}

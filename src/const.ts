@@ -1,21 +1,31 @@
 export const MIN_COMMENT_LENGTH = 50;
-export const MAX_COMMENT_LENGTH = 140;
+export const MAX_COMMENT_LENGTH = 300;
 
 export const RATING_COEFFICIENT = 20;
 
-export enum AppRoute {
-  Root = '/',
-  Favorites = '/favorites',
-  Login = '/login',
-  Offer = '/offer',
-  NotFound = '/404',
-}
+export const NUMBER_OF_NEARBY_OFFERS = 3;
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}
+export const SHOWABLE_COMMENTS = -10;
+
+export const AppRoute = {
+  Root: '/',
+  Favorites: '/favorites',
+  Login: '/login',
+  Offer: '/offer',
+  NotFound: '/404',
+} as const;
+
+export type AppRouteType = typeof APIRoute;
+
+export const AuthStatus = {
+  Auth: 'AUTH',
+  NoAuth: 'NO_AUTH',
+  Unknown: 'UNKNOWN',
+} as const;
+
+type AuthStatusType = typeof AuthStatus;
+
+export type AuthStatusValuesType = AuthStatusType[keyof AuthStatusType];
 
 export const CitiesNames = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -37,4 +47,9 @@ export const SortType = {
   TopRated: 'Top rated first'
 } as const;
 
-export const OPTIONS_NAMES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+export const NameSpace = {
+  Comments: 'COMMENTS',
+  NearbyOffers: 'NEARBY_OFFERS',
+  Offers: 'OFFERS',
+  User: 'USER',
+} as const;

@@ -1,27 +1,23 @@
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/actions';
-import { useState } from 'react';
-import { MouseEvent } from 'react';
-import { OfferType } from '../types/offer';
+import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/offers-process/offers-process';
+import { useState, MouseEvent, memo } from 'react';
 import { SortType } from '../../const';
-import { OPTIONS_NAMES } from '../../const';
-import * as selectors from '../../store/selectors';
+import { OfferType } from '../types/offer';
+import { getActiveSortType, getOffersBackup } from '../../store/offers-process/selectors';
 
-export function SortOptions() {
+const SortOptionsComponent = () => {
+  const optionsNames = Object.values(SortType);
   const [isOpened, setIsOpened] = useState(false);
-  const activeSortType = useAppSelector(selectors.activeSortType);
+  const activeSortType = useAppSelector(getActiveSortType);
   const dispatch = useAppDispatch();
-  const originalOffers = localStorage.getItem('offers');
+  const originalOffers = useAppSelector(getOffersBackup) as OfferType[];
 
   const handleClick = (item: string) => {
     switch (item) {
       case SortType.Popular:
-        if (originalOffers) {
-          const parsedOffers = JSON.parse(originalOffers) as OfferType[];
-          dispatch(setSortType(SortType.Popular));
-          dispatch(setOffers(parsedOffers));
-        }
+        dispatch(setSortType(SortType.Popular));
+        dispatch(setOffers(originalOffers));
         break;
       case SortType.PriceToHigh:
         dispatch(setSortType(SortType.PriceToHigh));
@@ -54,7 +50,7 @@ export function SortOptions() {
       </span>
       <ul className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : ''}`}>
         {
-          OPTIONS_NAMES.map((item) => (
+          optionsNames.map((item) => (
             <li className={`places__option ${item === activeSortType ? 'places__option--active' : ''}`}
               tabIndex={0}
               key={item}
@@ -67,4 +63,7 @@ export function SortOptions() {
       </ul>
     </form>
   );
-}
+};
+
+export const SortOptions = memo(SortOptionsComponent);
+
