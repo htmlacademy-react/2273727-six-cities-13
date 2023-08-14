@@ -9,7 +9,7 @@ type OffersListProps = {
   cityName?: string;
 }
 
-const OffersListComponent = ({ offers, onCardHover, id, cityName }: OffersListProps) => {
+const OffersListComponent = ({ offers, onCardHover, cityName }: OffersListProps) => {
   const handleCardEnter = useCallback((event: MouseEvent<HTMLLIElement>) => {
     if (onCardHover === undefined) {
       return;
@@ -26,15 +26,11 @@ const OffersListComponent = ({ offers, onCardHover, id, cityName }: OffersListPr
     onCardHover(undefined);
   }, [onCardHover]);
 
-  const filteredOffers = cityName
-    ? offers.filter((offer) => offer.id !== id)
-    : offers;
-
   const className = (cityName) ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content';
 
   return (
     <div className={className}>
-      {filteredOffers.map((offer) => (
+      {offers.map((offer) => (
         <OfferCard
           key={offer.id}
           id={offer.id}

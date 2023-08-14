@@ -13,7 +13,7 @@ import { APIRoute, AppRoute } from '../const';
 import { ReviewType } from '../components/types/review';
 import { saveToken, dropToken } from '../services/token';
 import { getRandomUniqueValuesFromArray } from '../utils';
-import { NUMBER_OF_NEARBY_OFFERS } from '../const';
+import { NUMBER_OF_NEARBY_OFFERS, SHOWABLE_COMMENTS } from '../const';
 
 type thunkObjType = {
   dispatch: AppDispatch;
@@ -79,7 +79,8 @@ export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, t
     dispatch(setReviewsLoadStatus(true));
     const url = id !== undefined ? `${APIRoute.Comments}/${id}` : '';
     const { data } = await api.get<ReviewType[]>(url);
-    dispatch(setReviews(data));
+    const filteredReviews = data.slice(SHOWABLE_COMMENTS).reverse();
+    dispatch(setReviews(filteredReviews));
     dispatch(setReviewsLoadStatus(false));
   }
 );

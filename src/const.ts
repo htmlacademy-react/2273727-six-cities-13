@@ -5,6 +5,8 @@ export const RATING_COEFFICIENT = 20;
 
 export const NUMBER_OF_NEARBY_OFFERS = 3;
 
+export const SHOWABLE_COMMENTS = -10;
+
 export const AppRoute = {
   Root: '/',
   Favorites: '/favorites',
