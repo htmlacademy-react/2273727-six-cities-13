@@ -19,15 +19,15 @@ import { OfferType } from '../../components/types/offer';
 import { getOffers, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
 import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
 
-export function Offer() {
+export const Offer = () => {
   const dispatch = useAppDispatch();
-  const offerId = useParams().id as string;
+  const offerId = useParams().id;
   const offers = useAppSelector(getOffers);
   const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
 
   useEffect(() => {
-    if (!isIdExist) {
+    if (!isIdExist || offerId === undefined) {
       return;
     }
     dispatch(fetchFullOffer({ id: offerId }));
@@ -147,4 +147,4 @@ export function Offer() {
       </main>
     </div>
   );
-}
+};

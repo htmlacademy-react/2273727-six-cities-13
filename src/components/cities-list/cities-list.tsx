@@ -10,16 +10,15 @@ const CititesListComponent = () => {
   const cityName = useAppSelector(getActiveCity);
   const dispatch = useAppDispatch();
 
-  const handleCityClick = (evt: MouseEvent<HTMLLIElement>) => {
+  const handleCityClick = (city: string) => (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    const city = evt.currentTarget.dataset.city as string;
     dispatch(setActiveCity(city));
   };
 
   return (
     <ul className="locations__list tabs__list">
       {CitiesNames.map((city) => (
-        <li className="locations__item" key={city} data-city={city} onClick={handleCityClick}>
+        <li className="locations__item" key={city} onClick={handleCityClick(city)}>
           <Link className={`locations__item-link tabs__item ${city === cityName ? 'tabs__item--active' : ''}`} to="#">
             <span>{city}</span>
           </Link>

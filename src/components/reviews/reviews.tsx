@@ -13,13 +13,16 @@ import { getReviews, getCommentPostStatus } from '../../store/comments-process/s
 
 export const Reviews = () => {
   const dispatch = useAppDispatch();
-  const offerId = useAppSelector(getActiveId) as string;
+  const offerId = useAppSelector(getActiveId);
   const authStatus = useAppSelector(getAuthStatus);
   const isCommentPosting = useAppSelector(getCommentPostStatus);
   const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const reviewsTitleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
+    if (offerId === null) {
+      return;
+    }
     dispatch(fetchReviews({ id: offerId }));
   }, [offerId, dispatch, isCommentPosting, isOffersLoading]
   );
