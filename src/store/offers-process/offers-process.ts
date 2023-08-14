@@ -7,6 +7,7 @@ type OffersProcessType = {
   activeCity: string;
   activeId: string | null;
   activeSortType: string;
+  currentOffer: OfferType | null;
   offers: OfferType[] | null;
   offersBackup: OfferType[] | null;
   fullOffer: FullOfferType | null;
@@ -18,6 +19,7 @@ const initialState: OffersProcessType = {
   activeCity: 'Paris',
   activeId: null,
   activeSortType: 'Popular',
+  currentOffer: null,
   offers: null,
   offersBackup: null,
   fullOffer: null,
@@ -37,6 +39,12 @@ export const offersProcessSlice = createSlice({
     },
     setSortType: (state, action: PayloadAction<string>) => {
       state.activeSortType = action.payload;
+    },
+    setCurrentOffer: (state) => {
+      if (state.offers !== null) {
+        const foundOffer = state.offers.find((item) => item.id === state.activeId);
+        state.currentOffer = foundOffer !== undefined ? foundOffer : null;
+      }
     },
     setOffers: (state, action: PayloadAction<OfferType[]>) => {
       state.offers = action.payload;
@@ -74,7 +82,7 @@ export const offersProcessSlice = createSlice({
   }
 });
 
-export const {setActiveCity, setActiveId, setSortType, setOffers,
-  setOffersBackup, setOffersLoadStatus, setFullOffer,
+export const {setActiveCity, setActiveId, setSortType, setCurrentOffer,
+  setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer,
   setFullOfferLoadStatus, sortOffersByHighPrice,
   sortOffersByLowPrice, sortOffersByTopRated} = offersProcessSlice.actions;
