@@ -3,7 +3,7 @@ import { formatDateToHuman, formatDateToServer } from '../../utils';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { AuthStatus } from '../../const';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { RATING_COEFFICIENT } from '../../const';
 import { fetchReviews } from '../../store/api-actions';
 import { getActiveId, getOffersLoadStatus } from '../../store/offers-process/selectors';
@@ -17,6 +17,7 @@ export const Reviews = () => {
   const authStatus = useAppSelector(getAuthStatus);
   const isCommentPosting = useAppSelector(getCommentPostStatus);
   const isOffersLoading = useAppSelector(getOffersLoadStatus);
+  const reviewsTitleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     dispatch(fetchReviews({ id: offerId }));
@@ -25,10 +26,14 @@ export const Reviews = () => {
 
   const reviews = useAppSelector(getReviews);
 
+  const scrollToReviewsTitle = () => {
+    reviewsTitleRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   if (reviews !== null) {
     return (
       <section className="offer__reviews reviews">
-        <h2 className="reviews__title">
+        <h2 className="reviews__title" ref={reviewsTitleRef} >
           Reviews · <span className="reviews__amount">{reviews.length}</span>
         </h2>
         <ul className="reviews__list">
@@ -69,7 +74,7 @@ export const Reviews = () => {
           }
           )}
         </ul>
-        {authStatus === AuthStatus.Auth && <CommentForm />}
+        {authStatus === AuthStatus.Auth && <CommentForm scrollToReviewsTitle={scrollToReviewsTitle} />}
       </section>
     );
   }

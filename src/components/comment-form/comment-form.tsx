@@ -7,7 +7,11 @@ import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { getActiveId } from '../../store/offers-process/selectors';
 import { getCommentPostStatus } from '../../store/comments-process/selectors';
 
-export function CommentForm() {
+type CommentFormProps = {
+  scrollToReviewsTitle: () => void;
+}
+
+export function CommentForm({ scrollToReviewsTitle }: CommentFormProps) {
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
@@ -45,6 +49,13 @@ export function CommentForm() {
         rating: Number(rating),
       }));
       resetForm();
+      (async () => {
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        } finally {
+          scrollToReviewsTitle();
+        }
+      })();
     }
   };
 
