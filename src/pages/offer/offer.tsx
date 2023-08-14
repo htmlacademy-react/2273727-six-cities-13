@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
@@ -39,6 +39,12 @@ export const Offer = () => {
   const offer = useAppSelector(getFullOffer);
   const loadedNearbyOffers = useAppSelector(getNearbyOffers);
   const currentOffer = useAppSelector(getCurrentOffer);
+  const nearbyOffers = useMemo(() => {
+    if (loadedNearbyOffers === null || currentOffer === null) {
+      return;
+    }
+    return [...loadedNearbyOffers, currentOffer];
+  }, [loadedNearbyOffers, currentOffer]);
 
   const isOfferLoading = useAppSelector(getFullOfferLoadStatus);
   const isNearbyOfferLoading = useAppSelector(getNearbyOffersLoadStatus);
@@ -52,14 +58,13 @@ export const Offer = () => {
     );
   }
 
-  if (isPageLoading || isSomethingMissingFromServer || currentOffer === null) {
+  if (isPageLoading || isSomethingMissingFromServer || nearbyOffers === undefined) {
     return (
       <LoadingScreen />
     );
   }
 
   const currentCity = loadedNearbyOffers[0].city;
-  const nearbyOffers = [...loadedNearbyOffers, currentOffer];
 
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
 
