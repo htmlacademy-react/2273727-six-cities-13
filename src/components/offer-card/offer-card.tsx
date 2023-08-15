@@ -39,7 +39,7 @@ const OfferCardComponent = (
   const dispatch = useAppDispatch();
   const setFav = () => dispatch(changeFavStatus(
     {
-      id: id,
+      id,
       status: isFavorite ? 0 : 1,
     }));
 
