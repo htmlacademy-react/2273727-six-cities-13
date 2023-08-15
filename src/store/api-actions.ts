@@ -42,11 +42,15 @@ export type UserData = {
 export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
   'offers/fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersLoadStatus(true));
-    const { data } = await api.get<OfferType[]>(APIRoute.Offers);
-    dispatch(setOffers(data));
-    dispatch(setOffersBackup(data));
-    dispatch(setOffersLoadStatus(false));
+    try {
+      dispatch(setOffersLoadStatus(true));
+      const { data } = await api.get<OfferType[]>(APIRoute.Offers);
+      dispatch(setOffers(data));
+      dispatch(setOffersBackup(data));
+      dispatch(setOffersLoadStatus(false));
+    } catch {
+      dispatch(setOffersLoadStatus(false));
+    }
   }
 );
 
