@@ -13,6 +13,7 @@ type OffersProcessType = {
   fullOffer: FullOfferType | null;
   isFullOfferLoading: boolean;
   isOffersLoading: boolean;
+  numberOfFavOffers: number;
 }
 
 const initialState: OffersProcessType = {
@@ -25,6 +26,7 @@ const initialState: OffersProcessType = {
   fullOffer: null,
   isFullOfferLoading: false,
   isOffersLoading: false,
+  numberOfFavOffers: 0,
 };
 
 export const offersProcessSlice = createSlice({
@@ -41,10 +43,8 @@ export const offersProcessSlice = createSlice({
       state.activeSortType = action.payload;
     },
     setCurrentOffer: (state) => {
-      if (state.offers !== null) {
-        const foundOffer = state.offers.find((item) => item.id === state.activeId);
-        state.currentOffer = foundOffer !== undefined ? foundOffer : null;
-      }
+      const foundOffer = state.offers.find((item) => item.id === state.activeId);
+      state.currentOffer = foundOffer !== undefined ? foundOffer : null;
     },
     setOffers: (state, action: PayloadAction<OfferType[]>) => {
       state.offers = action.payload;
@@ -60,6 +60,9 @@ export const offersProcessSlice = createSlice({
     },
     setFullOfferLoadStatus: (state, action: PayloadAction<boolean>) => {
       state.isFullOfferLoading = action.payload;
+    },
+    setFavOffersNumber: (state) => {
+      state.numberOfFavOffers = state.offers.filter((item) => item.isFavorite === true).length;
     },
     sortOffersByLowPrice: (state) => {
       if (state.offers === null) {
@@ -82,7 +85,7 @@ export const offersProcessSlice = createSlice({
   }
 });
 
-export const {setActiveCity, setActiveId, setSortType, setCurrentOffer,
+export const { setActiveCity, setActiveId, setSortType, setCurrentOffer,
   setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer,
-  setFullOfferLoadStatus, sortOffersByHighPrice,
-  sortOffersByLowPrice, sortOffersByTopRated} = offersProcessSlice.actions;
+  setFullOfferLoadStatus, setFavOffersNumber, sortOffersByHighPrice,
+  sortOffersByLowPrice, sortOffersByTopRated } = offersProcessSlice.actions;

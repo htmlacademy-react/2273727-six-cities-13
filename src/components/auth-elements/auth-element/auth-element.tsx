@@ -4,11 +4,13 @@ import { AppRoute } from '../../../const';
 import { useAppDispatch } from '../../../hooks/useAppDispatch/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector/useAppSelector';
 import { logout } from '../../../store/api-actions';
+import { getFavOffersNumber } from '../../../store/offers-process/selectors';
 import { getEmail } from '../../../store/user-process.ts/selectors';
 
 export const AuthElement = () => {
   const dispatch = useAppDispatch();
   const userEmail = useAppSelector(getEmail);
+  const favOffersNumber = useAppSelector(getFavOffersNumber);
 
   return (
     <nav className="header__nav">
@@ -23,7 +25,7 @@ export const AuthElement = () => {
             <span className="header__user-name user__name">
               {userEmail}
             </span>
-            <span className="header__favorite-count">3</span>
+            <span className="header__favorite-count">{favOffersNumber}</span>
           </NavLink>
         </li>
         <li className="header__nav-item">
