@@ -9,12 +9,6 @@ export function formatDateToServer(inputDate: string) {
   return dateObj.toISOString().slice(0, 10);
 }
 
-export const getFavoriteStyles = (isFav: boolean) => {
-  if (isFav) {
-    return { fill: '#4481c3', stroke: '#4481c3' };
-  }
-};
-
 export const getStyleForNavLink = ({ isActive }: { isActive: boolean }) =>
   isActive
     ? {

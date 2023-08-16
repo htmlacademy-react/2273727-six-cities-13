@@ -2,14 +2,25 @@ import { OfferType } from '../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { RATING_COEFFICIENT } from '../../const';
+import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { changeFavStatus } from '../../store/api-actions';
 
 type FavoritePlaceCardType = {
   cardByCity: OfferType;
 }
 
-
 export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
-  const { id, isPremium, previewImage, price, rating, title, type } = cardByCity;
+  const { id, isFavorite, isPremium, previewImage, price, rating, title, type } = cardByCity;
+  const dispatch = useAppDispatch();
+  const setUnfav = () => dispatch(changeFavStatus(
+    {
+      id,
+      status: 0,
+    }));
+
+  const onButtonClick = () => {
+    setUnfav();
+  };
   return (
     <article className="favorites__card place-card">
       {isPremium ? (
@@ -27,7 +38,7 @@ export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button" onClick={onButtonClick}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

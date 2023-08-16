@@ -3,7 +3,6 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setOffers, setSortType, sortOffersByHighPrice, sortOffersByLowPrice, sortOffersByTopRated } from '../../store/offers-process/offers-process';
 import { useState, MouseEvent, memo } from 'react';
 import { SortType } from '../../const';
-import { OfferType } from '../types/offer';
 import { getActiveSortType, getOffersBackup } from '../../store/offers-process/selectors';
 
 const SortOptionsComponent = () => {
@@ -11,7 +10,7 @@ const SortOptionsComponent = () => {
   const [isOpened, setIsOpened] = useState(false);
   const activeSortType = useAppSelector(getActiveSortType);
   const dispatch = useAppDispatch();
-  const originalOffers = useAppSelector(getOffersBackup) as OfferType[];
+  const originalOffers = useAppSelector(getOffersBackup);
 
   const handleClick = (item: string) => {
     switch (item) {
