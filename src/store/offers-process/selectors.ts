@@ -14,3 +14,4 @@ export const getOffersLoadStatus = (state: State): boolean => state[NameSpace.Of
 export const getFullOfferLoadStatus = (state: State): boolean => state[NameSpace.Offers].isFullOfferLoading;
 export const getFavOffers = (state: State): OfferType[] => state[NameSpace.Offers].favOffers;
 export const getFavOffersNumber = (state: State): number => state[NameSpace.Offers].offers.filter((item) => item.isFavorite === true).length;
+export const getFavOffersLoadStatus = (state: State): boolean => state[NameSpace.Offers].isFavOffersLoading;

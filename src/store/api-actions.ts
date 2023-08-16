@@ -5,7 +5,7 @@ import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { redirectToRoute } from './actions';
-import { setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer, setFullOfferLoadStatus, setFavOffers, sortOffers } from './offers-process/offers-process';
+import { setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer, setFullOfferLoadStatus, setFavOffers, setFavOffersLoadStatus, sortOffers } from './offers-process/offers-process';
 import { setNearbyOffers, setNearbyOffersLoadStatus } from './nearby-offers-process/nearby-offers-process';
 import { setReviews, setReviewsLoadStatus, setCommentPostStatus } from './comments-process/comments-process';
 import { setUserData } from './user-process.ts/user-process';
@@ -145,7 +145,9 @@ export const changeFavStatus = createAsyncThunk<void, FavData, thunkObjType>(
 export const fetchFavOffers = createAsyncThunk<void, undefined, thunkObjType>(
   'offers/fetchFavOffers',
   async (_arg, { dispatch, extra: api }) => {
+    dispatch(setFavOffersLoadStatus(true));
     const { data: favoriteOffers } = await api.get<OfferType[]>(APIRoute.Favorite);
     dispatch(setFavOffers(favoriteOffers));
+    dispatch(setFavOffersLoadStatus(false));
   }
 );
