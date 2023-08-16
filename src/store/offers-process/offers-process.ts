@@ -26,9 +26,9 @@ const initialState: OffersProcessType = {
   offersBackup: [],
   fullOffer: null,
   isFullOfferLoading: false,
-  isOffersLoading: false,
+  isOffersLoading: true,
   favOffers: [],
-  isFavOffersLoading: false,
+  isFavOffersLoading: true,
 };
 
 export const offersProcessSlice = createSlice({

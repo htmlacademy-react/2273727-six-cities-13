@@ -21,6 +21,8 @@ export function Favorites() {
 
   if (isFavOffersLoading) {
     return <LoadingScreen />;
+  } else if (favorites.length === 0 && !isFavOffersLoading) {
+    return <FavoritesEmpty />;
   }
 
   return (
@@ -31,18 +33,16 @@ export function Favorites() {
 
       <Header />
 
-      {favorites.length === 0 && !isFavOffersLoading ?
-        <FavoritesEmpty /> :
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                <FavoritesList favorites={favorites} />
-              </ul>
-            </section>
-          </div>
-        </main>}
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              <FavoritesList favorites={favorites} />
+            </ul>
+          </section>
+        </div>
+      </main>
 
       <footer className="footer container">
         <Link className="footer__logo-link" to={AppRoute.Root}>
