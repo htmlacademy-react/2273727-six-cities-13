@@ -4,6 +4,7 @@ import { AppRoute } from '../../const';
 import { RATING_COEFFICIENT } from '../../const';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { changeFavStatus } from '../../store/api-actions';
+import { fetchFavOffers } from '../../store/api-actions';
 
 type FavoritePlaceCardType = {
   cardByCity: OfferType;
@@ -12,11 +13,13 @@ type FavoritePlaceCardType = {
 export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
   const { id, isFavorite, isPremium, previewImage, price, rating, title, type } = cardByCity;
   const dispatch = useAppDispatch();
-  const setUnfav = () => dispatch(changeFavStatus(
-    {
-      id,
-      status: 0,
-    }));
+  const setUnfav = () => {
+    dispatch(changeFavStatus(
+      {
+        id,
+        status: 0,
+      })).then(() => dispatch(fetchFavOffers()));
+  };
 
   const onButtonClick = () => {
     setUnfav();

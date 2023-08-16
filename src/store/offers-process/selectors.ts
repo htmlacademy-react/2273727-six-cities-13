@@ -12,5 +12,5 @@ export const getOffersBackup = (state: State): OfferType[] => state[NameSpace.Of
 export const getFullOffer = (state: State): FullOfferType | null => state[NameSpace.Offers].fullOffer;
 export const getOffersLoadStatus = (state: State): boolean => state[NameSpace.Offers].isOffersLoading;
 export const getFullOfferLoadStatus = (state: State): boolean => state[NameSpace.Offers].isFullOfferLoading;
-export const getFavOffersNumber = (state: State): number => state[NameSpace.Offers].numberOfFavOffers;
-export const getFavOffers = (state: State): OfferType[] => state[NameSpace.Offers].offers.filter((offer) => offer.isFavorite);
+export const getFavOffers = (state: State): OfferType[] => state[NameSpace.Offers].favOffers;
+export const getFavOffersNumber = (state: State): number => state[NameSpace.Offers].offers.filter((item) => item.isFavorite === true).length;

@@ -13,7 +13,7 @@ type OffersProcessType = {
   fullOffer: FullOfferType | null;
   isFullOfferLoading: boolean;
   isOffersLoading: boolean;
-  numberOfFavOffers: number;
+  favOffers: OfferType[];
 }
 
 const initialState: OffersProcessType = {
@@ -26,7 +26,7 @@ const initialState: OffersProcessType = {
   fullOffer: null,
   isFullOfferLoading: false,
   isOffersLoading: false,
-  numberOfFavOffers: 0,
+  favOffers: [],
 };
 
 export const offersProcessSlice = createSlice({
@@ -58,8 +58,8 @@ export const offersProcessSlice = createSlice({
     setFullOfferLoadStatus: (state, action: PayloadAction<boolean>) => {
       state.isFullOfferLoading = action.payload;
     },
-    setFavOffersNumber: (state) => {
-      state.numberOfFavOffers = state.offers.filter((item) => item.isFavorite === true).length;
+    setFavOffers: (state, action: PayloadAction<OfferType[]>) => {
+      state.favOffers = action.payload;
     },
     sortOffers: (state, action: PayloadAction<SortTypeValues>) => {
       state.activeSortType = action.payload;
@@ -83,4 +83,4 @@ export const offersProcessSlice = createSlice({
 
 export const { setActiveCity, setActiveId, setCurrentOffer,
   setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer,
-  setFullOfferLoadStatus, setFavOffersNumber, sortOffers } = offersProcessSlice.actions;
+  setFullOfferLoadStatus, setFavOffers, sortOffers } = offersProcessSlice.actions;
