@@ -72,6 +72,7 @@ export const Offer = () => {
         status: isFavorite ? 0 : 1,
       })).then(() => {
       dispatch(fetchFullOffer({ id: offerId }));
+      dispatch(fetchNearbyOffers({ id: offerId }));
     });
   };
 

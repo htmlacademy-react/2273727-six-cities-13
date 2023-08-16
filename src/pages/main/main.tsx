@@ -6,11 +6,8 @@ import { Map } from '../../components/map/map';
 import { useState, memo, useCallback } from 'react';
 import { CititesList } from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
-import { LoadingScreen } from '../loading-screen/loading-screen';
 import { createSelector } from '@reduxjs/toolkit';
-import { AuthStatus } from '../../const';
-import { getOffers, getOffersLoadStatus, getActiveCity } from '../../store/offers-process/selectors';
-import { getAuthStatus } from '../../store/user-process.ts/selectors';
+import { getOffers, getActiveCity } from '../../store/offers-process/selectors';
 import { MainEmpty } from './main-empty';
 
 function MainPageComponent() {
@@ -21,16 +18,13 @@ function MainPageComponent() {
   }, []);
 
   const activeCityName = useAppSelector(getActiveCity);
-  const isOffersLoading = useAppSelector(getOffersLoadStatus);
 
   const filteredOffers = createSelector(getOffers, (state) => state?.filter((offer) => offer.city.name === activeCityName));
 
   const offersByCity = useAppSelector(filteredOffers);
-  const authStatus = useAppSelector(getAuthStatus);
 
-  if (authStatus === AuthStatus.Unknown || isOffersLoading) {
-    return <LoadingScreen />;
-  } else if (offersByCity.length === 0) {
+
+  if (offersByCity.length === 0) {
     return <MainEmpty />;
   } else {
     const currentCity = offersByCity[0].city;
