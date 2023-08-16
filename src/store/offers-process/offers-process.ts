@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, SortType, SortTypeValues } from '../../const';
 import { OfferType } from '../../components/types/offer';
 import { FullOfferType } from '../../components/types/full-offer';
 
 type OffersProcessType = {
   activeCity: string;
   activeId: string | null;
-  activeSortType: string;
+  activeSortType: SortTypeValues;
   currentOffer: OfferType | null;
   offers: OfferType[];
   offersBackup: OfferType[];
@@ -39,9 +39,6 @@ export const offersProcessSlice = createSlice({
     setActiveId: (state, action: PayloadAction<string | null>) => {
       state.activeId = action.payload;
     },
-    setSortType: (state, action: PayloadAction<string>) => {
-      state.activeSortType = action.payload;
-    },
     setCurrentOffer: (state) => {
       const foundOffer = state.offers.find((item) => item.id === state.activeId);
       state.currentOffer = foundOffer !== undefined ? foundOffer : null;
@@ -64,28 +61,26 @@ export const offersProcessSlice = createSlice({
     setFavOffersNumber: (state) => {
       state.numberOfFavOffers = state.offers.filter((item) => item.isFavorite === true).length;
     },
-    sortOffersByLowPrice: (state) => {
-      if (state.offers === null) {
-        return;
+    sortOffers: (state, action: PayloadAction<SortTypeValues>) => {
+      state.activeSortType = action.payload;
+      switch (state.activeSortType) {
+        case SortType.Popular:
+          state.offers = state.offersBackup;
+          break;
+        case SortType.PriceToHigh:
+          state.offers = state.offers.sort((a, b) => a.price - b.price);
+          break;
+        case SortType.PriceToLow:
+          state.offers = state.offers.sort((a, b) => b.price - a.price);
+          break;
+        case SortType.TopRated:
+          state.offers = state.offers.sort((a, b) => b.rating - a.rating);
+          break;
       }
-      state.offers = state.offers.sort((a, b) => a.price - b.price);
     },
-    sortOffersByHighPrice: (state) => {
-      if (state.offers === null) {
-        return;
-      }
-      state.offers = state.offers.sort((a, b) => b.price - a.price);
-    },
-    sortOffersByTopRated: (state) => {
-      if (state.offers === null) {
-        return;
-      }
-      state.offers = state.offers.sort((a, b) => b.rating - a.rating);
-    }
   }
 });
 
-export const { setActiveCity, setActiveId, setSortType, setCurrentOffer,
+export const { setActiveCity, setActiveId, setCurrentOffer,
   setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer,
-  setFullOfferLoadStatus, setFavOffersNumber, sortOffersByHighPrice,
-  sortOffersByLowPrice, sortOffersByTopRated } = offersProcessSlice.actions;
+  setFullOfferLoadStatus, setFavOffersNumber, sortOffers } = offersProcessSlice.actions;

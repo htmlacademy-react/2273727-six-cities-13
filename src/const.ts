@@ -48,6 +48,8 @@ export const SortType = {
   TopRated: 'Top rated first'
 } as const;
 
+export type SortTypeValues = typeof SortType[keyof typeof SortType];
+
 export const NameSpace = {
   Comments: 'COMMENTS',
   NearbyOffers: 'NEARBY_OFFERS',

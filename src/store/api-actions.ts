@@ -5,7 +5,7 @@ import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { redirectToRoute } from './actions';
-import { setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer, setFullOfferLoadStatus, setFavOffersNumber } from './offers-process/offers-process';
+import { setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer, setFullOfferLoadStatus, setFavOffersNumber, sortOffers } from './offers-process/offers-process';
 import { setNearbyOffers, setNearbyOffersLoadStatus } from './nearby-offers-process/nearby-offers-process';
 import { setReviews, setReviewsLoadStatus, setCommentPostStatus } from './comments-process/comments-process';
 import { setUserData } from './user-process.ts/user-process';
@@ -45,12 +45,14 @@ export type UserData = {
 
 export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
   'offers/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { dispatch, getState, extra: api }) => {
     try {
       dispatch(setOffersLoadStatus(true));
       const { data } = await api.get<OfferType[]>(APIRoute.Offers);
       dispatch(setOffers(data));
       dispatch(setOffersBackup(data));
+      const sortType = getState().OFFERS.activeSortType;
+      dispatch(sortOffers(sortType));
       dispatch(setFavOffersNumber());
       dispatch(setOffersLoadStatus(false));
     } catch {
