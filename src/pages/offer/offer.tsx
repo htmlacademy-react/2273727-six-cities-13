@@ -10,7 +10,7 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { Map } from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { fetchNearbyOffers, fetchFullOffer } from '../../store/api-actions';
+import { fetchNearbyOffers, fetchFullOffer, changeFavStatus } from '../../store/api-actions';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import { NotFound } from '../404/404';
 import { setActiveId, setCurrentOffer } from '../../store/offers-process/offers-process';
@@ -65,10 +65,19 @@ export const Offer = () => {
 
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
 
-  const getFavoriteStyles = (isFav: boolean) => {
-    if (isFav) {
-      return { fill: '#4481c3', stroke: '#4481c3' };
-    }
+  const setFav = () => {
+    dispatch(changeFavStatus(
+      {
+        id,
+        status: isFavorite ? 0 : 1,
+      })).then(() => {
+      dispatch(fetchFullOffer({ id: offerId }));
+      dispatch(fetchNearbyOffers({ id: offerId }));
+    });
+  };
+
+  const onButtonClick = () => {
+    setFav();
   };
 
   return (
@@ -76,9 +85,7 @@ export const Offer = () => {
       <Helmet>
         <title>Offer</title>
       </Helmet>
-
       <Header />
-
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -92,13 +99,12 @@ export const Offer = () => {
                 <div className="offer__mark" >
                   <span>Premium</span>
                 </div>) : null}
-
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33} style={getFavoriteStyles(isFavorite)}>
+                <button className={`offer__bookmark-button ${isFavorite ? 'offer__bookmark-button--active' : ''}  button`} type="button" onClick={onButtonClick} >
+                  <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -124,18 +130,12 @@ export const Offer = () => {
                 <b className="offer__price-value">€{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-
               <Goods goods={goods} />
-
               <Host host={host} description={description} />
-
               <Reviews />
-
             </div>
           </div>
-
           <Map isMain={false} city={city} offers={nearbyOffers} selectedId={offerId} />
-
         </section>
         <div className="container">
           <section className="near-places places">

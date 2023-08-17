@@ -38,6 +38,7 @@ export const APIRoute = {
   Comments: '/comments',
   Login: '/login',
   Logout: '/logout',
+  Favorite: '/favorite',
 } as const;
 
 export const SortType = {
@@ -46,6 +47,8 @@ export const SortType = {
   PriceToLow: 'Price: high to low',
   TopRated: 'Top rated first'
 } as const;
+
+export type SortTypeValues = typeof SortType[keyof typeof SortType];
 
 export const NameSpace = {
   Comments: 'COMMENTS',
