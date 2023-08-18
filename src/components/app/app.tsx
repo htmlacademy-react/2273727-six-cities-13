@@ -15,6 +15,8 @@ import { fetchOffers, checkAuth } from '../../store/api-actions';
 import { getAuthStatus } from '../../store/user-process.ts/selectors';
 import { HistoryRouter } from '../history-route/history-route';
 import { browserHistory } from '../../browser-history';
+import { hasError } from '../../store/offers-process/selectors';
+import { ErrorScreen } from '../error-screen/error-screen';
 
 export function App() {
   const dispatch = useAppDispatch();
@@ -25,6 +27,12 @@ export function App() {
   }, [dispatch]);
 
   const authStatus = useAppSelector(getAuthStatus);
+  const isError = useAppSelector(hasError);
+
+  if (isError) {
+    return (
+      <ErrorScreen />);
+  }
 
   return (
     <HelmetProvider>

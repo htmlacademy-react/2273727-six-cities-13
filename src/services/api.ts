@@ -11,7 +11,9 @@ type DetailMessageType = {
 const StatusCodeMap: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
+  [StatusCodes.NOT_FOUND]: true,
+  [StatusCodes.INTERNAL_SERVER_ERROR]: true,
+  [StatusCodes.GATEWAY_TIMEOUT]: true,
 };
 
 const shouldDisplayError = (responce: AxiosResponse) => !!StatusCodeMap[responce.status];

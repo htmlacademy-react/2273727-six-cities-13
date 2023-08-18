@@ -1,5 +1,6 @@
-import { offersProcessSlice } from './offers-process';
+import { offersProcessSlice, OffersProcessType } from './offers-process';
 import { initialState } from './offers-process';
+import { offers } from '../mocks/offers';
 
 describe('Offers Process Slice', () => {
   it('should return initial state with empty action', () => {
@@ -45,15 +46,12 @@ describe('Offers Process Slice', () => {
   });
 
   it('should set current offer', () => {
-    const initialState = {
+    const startState: OffersProcessType = {
       activeCity: 'Paris',
       activeId: 'abc123',
       activeSortType: 'Popular',
       currentOffer: null,
-      offers: [
-        { id: 'abc123', /* ... */ },
-        { id: 'def456', /* ... */ },
-      ],
+      offers: offers,
       offersBackup: [],
       fullOffer: null,
       isFullOfferLoading: false,
@@ -63,7 +61,7 @@ describe('Offers Process Slice', () => {
     };
     const action = offersProcessSlice.actions.setCurrentOffer();
 
-    const result = offersProcessSlice.reducer(initialState, action);
+    const result = offersProcessSlice.reducer(startState, action);
 
     const expectedState = {
       ...initialState,
@@ -74,10 +72,7 @@ describe('Offers Process Slice', () => {
   });
 
   it('should set offers', () => {
-    const newOffers = [
-      { id: 'abc123', /* ... */ },
-      { id: 'def456', /* ... */ },
-    ];
+    const newOffers = offers;
     const action = offersProcessSlice.actions.setOffers(newOffers);
 
     const result = offersProcessSlice.reducer(initialState, action);
@@ -92,10 +87,7 @@ describe('Offers Process Slice', () => {
 
   it('should set offers backup', () => {
 
-    const newOffersBackup = [
-      { id: 'abc123', /* ... */ },
-      { id: 'def456', /* ... */ },
-    ];
+    const newOffersBackup = offers;
     const action = offersProcessSlice.actions.setOffersBackup(newOffersBackup);
 
     const result = offersProcessSlice.reducer(initialState, action);

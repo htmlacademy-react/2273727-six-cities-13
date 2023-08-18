@@ -5,7 +5,8 @@ import { State } from '../hooks/useAppSelector/useAppSelector';
 import { OfferType } from '../components/types/offer';
 import { FullOfferType } from '../components/types/full-offer';
 import { redirectToRoute } from './actions';
-import { setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer, setFullOfferLoadStatus, setFavOffers, setFavOffersLoadStatus, sortOffers } from './offers-process/offers-process';
+import { setOffers, setOffersBackup, setOffersLoadStatus, setFullOffer,
+  setFullOfferLoadStatus, setFavOffers, setFavOffersLoadStatus, sortOffers, setError } from './offers-process/offers-process';
 import { setNearbyOffers, setNearbyOffersLoadStatus } from './nearby-offers-process/nearby-offers-process';
 import { setReviews, setReviewsLoadStatus, setCommentPostStatus } from './comments-process/comments-process';
 import { setUserData } from './user-process.ts/user-process';
@@ -55,8 +56,10 @@ export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
       const sortType = getState().OFFERS.activeSortType;
       dispatch(sortOffers(sortType));
       dispatch(setOffersLoadStatus(false));
+      dispatch(setError(false));
     } catch {
       dispatch(setOffersLoadStatus(false));
+      dispatch(setError(true));
     }
   }
 );
