@@ -38,9 +38,10 @@ export type FavData = {
 };
 
 export type UserData = {
-  password: string;
+  avatarUrl: string;
   email: string;
   token: string;
+  password: string;
 };
 
 export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
