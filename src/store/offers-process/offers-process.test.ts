@@ -1,5 +1,4 @@
-import { offersProcessSlice, OffersProcessType } from './offers-process';
-import { initialState } from './offers-process';
+import { offersProcessSlice, OffersProcessType, initialState } from './offers-process';
 import { mockOffers } from '../mocks/offers';
 
 
@@ -65,14 +64,13 @@ describe('Offers Process Slice', () => {
   });
 
   it('should set offers', () => {
-    const newOffers = mockOffers;
-    const action = offersProcessSlice.actions.setOffers(newOffers);
+    const action = offersProcessSlice.actions.setOffers(mockOffers);
 
     const result = offersProcessSlice.reducer(initialState, action);
 
     const expectedState = {
       ...initialState,
-      offers: newOffers,
+      offers: mockOffers,
     };
 
     expect(result).toEqual(expectedState);
