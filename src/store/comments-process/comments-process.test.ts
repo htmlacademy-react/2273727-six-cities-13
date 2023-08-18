@@ -1,4 +1,5 @@
 import { commentsProcessSlice, initialState } from './comments-process';
+import { mockReviews } from '../mocks/reviews';
 
 describe('Comments Process Slice', () => {
   it('should return initial state with empty action', () => {
@@ -17,19 +18,44 @@ describe('Comments Process Slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should set nearby offers', () => {
-    const action = commentsProcessSlice.actions.setReviews();
+  it('should set reviews', () => {
+    const action = commentsProcessSlice.actions.setReviews(mockReviews);
 
     const result = commentsProcessSlice.reducer(initialState, action);
 
     const expectedState = {
       ...initialState,
-      nearbyOffers: mockOffers,
+      reviews: mockReviews,
     };
 
     expect(result).toEqual(expectedState);
   });
 
+  it('should set reviews load status', () => {
+    const action = commentsProcessSlice.actions.setReviewsLoadStatus(true);
+
+    const result = commentsProcessSlice.reducer(initialState, action);
+
+    const expectedState = {
+      ...initialState,
+      isReviewsLoading: true,
+    };
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should set comment posting status', () => {
+    const action = commentsProcessSlice.actions.setCommentPostStatus(true);
+
+    const result = commentsProcessSlice.reducer(initialState, action);
+
+    const expectedState = {
+      ...initialState,
+      isCommentPosting: true,
+    };
+
+    expect(result).toEqual(expectedState);
+  });
 
 });
 
