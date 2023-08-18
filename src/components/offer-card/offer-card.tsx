@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { MouseEvent, memo, useState } from 'react';
 import { RATING_COEFFICIENT } from '../../const';
 import { changeFavStatus } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
+import { AuthStatus, AppRoute } from '../../const';
+import { redirectToRoute } from '../../store/actions';
 
 type OfferCardProps = {
   id: string;
@@ -35,9 +38,14 @@ const OfferCardComponent = (
   }: OfferCardProps) => {
 
   const [isFav, setIsFav] = useState(isFavorite);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const dispatch = useAppDispatch();
   const setFav = () => {
+    if (authStatus !== AuthStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+      return;
+    }
     dispatch(changeFavStatus(
       {
         id,

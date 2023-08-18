@@ -17,11 +17,15 @@ import { setActiveId, setCurrentOffer } from '../../store/offers-process/offers-
 import { RATING_COEFFICIENT } from '../../const';
 import { getOffers, getCurrentOffer, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
 import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
+import { AuthStatus, AppRoute } from '../../const';
+import { redirectToRoute } from '../../store/actions';
 
 export const Offer = () => {
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
   const offers = useAppSelector(getOffers);
+  const authStatus = useAppSelector(getAuthStatus);
   const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
 
@@ -66,6 +70,10 @@ export const Offer = () => {
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
 
   const setFav = () => {
+    if (authStatus !== AuthStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+      return;
+    }
     dispatch(changeFavStatus(
       {
         id,
