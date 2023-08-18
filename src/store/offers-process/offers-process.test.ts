@@ -58,6 +58,7 @@ describe('Offers Process Slice', () => {
       isOffersLoading: true,
       favOffers: [],
       isFavOffersLoading: true,
+      hasError: false,
     };
     const action = offersProcessSlice.actions.setCurrentOffer();
 
@@ -192,6 +193,7 @@ describe('Offers Process Slice', () => {
       isOffersLoading: true,
       favOffers: [],
       isFavOffersLoading: true,
+      hasError: false,
     };
     const action = offersProcessSlice.actions.sortOffers('Popular');
 
@@ -225,6 +227,7 @@ describe('Offers Process Slice', () => {
       isOffersLoading: true,
       favOffers: [],
       isFavOffersLoading: true,
+      hasError: false,
     };
     const action = offersProcessSlice.actions.sortOffers('PriceToHigh');
 
@@ -259,6 +262,7 @@ describe('Offers Process Slice', () => {
       isOffersLoading: true,
       favOffers: [],
       isFavOffersLoading: true,
+      hasError: false,
     };
     const action = offersProcessSlice.actions.sortOffers('PriceToLow');
 
@@ -293,6 +297,7 @@ describe('Offers Process Slice', () => {
       isOffersLoading: true,
       favOffers: [],
       isFavOffersLoading: true,
+      hasError: false,
     };
     const action = offersProcessSlice.actions.sortOffers('TopRated');
 
