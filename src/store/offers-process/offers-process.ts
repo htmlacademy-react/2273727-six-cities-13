@@ -17,7 +17,7 @@ type OffersProcessType = {
   isFavOffersLoading: boolean;
 }
 
-const initialState: OffersProcessType = {
+export const initialState: OffersProcessType = {
   activeCity: 'Paris',
   activeId: null,
   activeSortType: 'Popular',
