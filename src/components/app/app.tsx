@@ -8,6 +8,7 @@ import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
 import { PrivateRouteForFavorites } from '../private-routes/private-route-for-favorites';
+import { PrivateRouteForLogin } from '../private-routes/private-route-for-login';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchOffers, checkAuth } from '../../store/api-actions';
@@ -54,7 +55,9 @@ export function App() {
           <Route
             path={AppRoute.Login}
             element={
-              <Login />
+              <PrivateRouteForLogin authorizationStatus={authStatus}>
+                <Login />
+              </PrivateRouteForLogin>
             }
           />
           <Route

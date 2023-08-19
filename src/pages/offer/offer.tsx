@@ -37,7 +37,7 @@ export const Offer = () => {
     dispatch(fetchNearbyOffers({ id: offerId }));
     dispatch(setActiveId(offerId));
     dispatch(setCurrentOffer());
-  }, [isIdExist, offerId, dispatch]
+  }, [isIdExist, offerId, dispatch, authStatus]
   );
 
   const offer = useAppSelector(getFullOffer);
@@ -120,7 +120,7 @@ export const Offer = () => {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${rating * RATING_COEFFICIENT}%` }} />
+                  <span style={{ width: `${Math.ceil(rating) * RATING_COEFFICIENT}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>
