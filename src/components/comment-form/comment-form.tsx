@@ -41,22 +41,17 @@ export function CommentForm({ scrollToReviewsTitle }: CommentFormProps) {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (offerId !== null) {
-      dispatch(postComment({
-        id: offerId,
-        comment: comment,
-        rating: Number(rating),
-      }));
-      resetForm();
-      (async () => {
-        try {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        } finally {
-          scrollToReviewsTitle();
-        }
-      })();
-    }
+    (async () => {
+      if (offerId !== null) {
+        await dispatch(postComment({
+          id: offerId,
+          comment: comment,
+          rating: Number(rating),
+        }));
+        resetForm();
+        scrollToReviewsTitle();
+      }
+    })();
   };
 
   const isValid =
