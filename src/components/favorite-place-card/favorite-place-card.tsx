@@ -14,11 +14,17 @@ export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
   const { id, isFavorite, isPremium, previewImage, price, rating, title, type } = cardByCity;
   const dispatch = useAppDispatch();
   const setUnfav = () => {
-    dispatch(changeFavStatus(
-      {
-        id,
-        status: 0,
-      })).then(() => dispatch(fetchFavOffers()));
+    (async () => {
+      try {
+        await dispatch(changeFavStatus(
+          {
+            id,
+            status: 0,
+          }));
+      } finally {
+        await dispatch(fetchFavOffers());
+      }
+    })();
   };
 
   const onButtonClick = () => {

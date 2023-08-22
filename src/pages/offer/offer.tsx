@@ -74,14 +74,19 @@ export const Offer = () => {
       dispatch(redirectToRoute(AppRoute.Login));
       return;
     }
-    dispatch(changeFavStatus(
-      {
-        id,
-        status: isFavorite ? 0 : 1,
-      })).then(() => {
-      dispatch(fetchFullOffer({ id: offerId }));
-      dispatch(fetchNearbyOffers({ id: offerId }));
-    });
+
+    (async () => {
+      try {
+        await dispatch(changeFavStatus(
+          {
+            id,
+            status: isFavorite ? 0 : 1,
+          }));
+      } finally {
+        await dispatch(fetchFullOffer({ id: offerId }));
+        await dispatch(fetchNearbyOffers({ id: offerId }));
+      }
+    })();
   };
 
   const onButtonClick = () => {

@@ -41,20 +41,26 @@ const OfferCardComponent = (
   const authStatus = useAppSelector(getAuthStatus);
 
   const dispatch = useAppDispatch();
-  const setFav = () => {
+  const setFavStatus = () => {
     if (authStatus !== AuthStatus.Auth) {
       dispatch(redirectToRoute(AppRoute.Login));
       return;
     }
-    dispatch(changeFavStatus(
-      {
-        id,
-        status: isFav ? 0 : 1,
-      })).then(() => setIsFav(!isFav));
+    (async () => {
+      try {
+        await dispatch(changeFavStatus(
+          {
+            id,
+            status: isFav ? 0 : 1,
+          }));
+      } finally {
+        setIsFav(!isFav);
+      }
+    })();
   };
 
   const onButtonClick = () => {
-    setFav();
+    setFavStatus();
   };
 
   return (
