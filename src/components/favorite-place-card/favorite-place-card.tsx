@@ -11,7 +11,7 @@ type FavoritePlaceCardType = {
 export const FavoritePlaceCard = ({ cardByCity }: FavoritePlaceCardType) => {
   const { id, isFavorite, isPremium, previewImage, price, rating, title, type } = cardByCity;
   const dispatch = useAppDispatch();
-  const setUnfav = () => {
+  const deleteFavStatus = () => {
     (async () => {
       try {
         await dispatch(changeFavStatus(
@@ -26,8 +26,9 @@ export const FavoritePlaceCard = ({ cardByCity }: FavoritePlaceCardType) => {
   };
 
   const onButtonClick = () => {
-    setUnfav();
+    deleteFavStatus();
   };
+
   return (
     <article className="favorites__card place-card">
       {isPremium ? (

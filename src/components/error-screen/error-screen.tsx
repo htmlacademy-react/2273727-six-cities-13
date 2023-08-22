@@ -4,9 +4,7 @@ import { fetchOffers } from '../../store/api-actions';
 export const ErrorScreen = () => {
   const dispatch = useAppDispatch();
   const handleClick = () => {
-    (async () => {
-      await dispatch(fetchOffers());
-    })();
+    dispatch(fetchOffers());
   };
 
   return (
