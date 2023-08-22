@@ -5,10 +5,11 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector/useAppSelector';
 import { logout } from '../../../store/api-actions';
 import { getFavOffersNumber } from '../../../store/offers-process/selectors';
-import { getEmail } from '../../../store/user-process.ts/selectors';
+import { getAvatar, getEmail } from '../../../store/user-process.ts/selectors';
 
 export const AuthElement = () => {
   const dispatch = useAppDispatch();
+  const userAvatar = useAppSelector(getAvatar);
   const userEmail = useAppSelector(getEmail);
   const favOffersNumber = useAppSelector(getFavOffersNumber);
 
@@ -21,7 +22,9 @@ export const AuthElement = () => {
             to={AppRoute.Favorites}
             style={getStyleForNavLink}
           >
-            <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+            <div className="header__avatar-wrapper user__avatar-wrapper">
+              <img src={userAvatar} alt='avatar' style={{ borderRadius: '50%' }} />
+            </div>
             <span className="header__user-name user__name">
               {userEmail}
             </span>

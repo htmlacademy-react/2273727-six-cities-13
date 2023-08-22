@@ -7,7 +7,7 @@ type FavoritesListType = {
   favorites: OfferType[];
 }
 
-export function FavoritesList({ favorites }: FavoritesListType) {
+export const FavoritesList = ({ favorites }: FavoritesListType) => {
   const favoriteCities = favorites.reduce<string[]>((acc, item) => {
     const cityName = item.city.name;
     if (!acc.includes(cityName)) {
@@ -36,4 +36,4 @@ export function FavoritesList({ favorites }: FavoritesListType) {
       ))}
     </>
   );
-}
+};

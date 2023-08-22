@@ -11,7 +11,7 @@ import { fetchFavOffers } from '../../store/api-actions';
 import { FavoritesEmpty } from './favorites-empty';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 
-export function Favorites() {
+export const Favorites = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchFavOffers());
@@ -51,4 +51,4 @@ export function Favorites() {
       </footer>
     </div>
   );
-}
+};

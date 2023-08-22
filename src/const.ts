@@ -56,3 +56,5 @@ export const NameSpace = {
   Offers: 'OFFERS',
   User: 'USER',
 } as const;
+
+export type NameSpaceType = typeof NameSpace;

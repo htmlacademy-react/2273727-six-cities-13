@@ -1,13 +1,13 @@
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { getStyleForNavLink } from '../../utils';
 import { AuthElement } from '../auth-elements/auth-element/auth-element';
 import { NoAuthElement } from '../auth-elements/no-auth-element/no-auth-element';
-import { memo } from 'react';
 import { getAuthStatus } from '../../store/user-process.ts/selectors';
 
-function HeaderComponent() {
+const HeaderComponent = () => {
   const authStatus = useAppSelector(getAuthStatus);
 
   return (
@@ -31,6 +31,6 @@ function HeaderComponent() {
       </div>
     </header>
   );
-}
+};
 
 export const Header = memo(HeaderComponent);

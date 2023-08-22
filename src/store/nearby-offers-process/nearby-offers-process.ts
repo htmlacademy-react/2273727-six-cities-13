@@ -7,7 +7,7 @@ type NearbyOffersProcessType = {
   isNearbyOffersLoading: boolean;
 };
 
-const initialState: NearbyOffersProcessType = {
+export const initialState: NearbyOffersProcessType = {
   nearbyOffers: [],
   isNearbyOffersLoading: false,
 };

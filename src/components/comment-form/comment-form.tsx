@@ -1,5 +1,4 @@
-import { useState, Fragment } from 'react';
-import { ChangeEvent, FormEvent } from 'react';
+import { useState, Fragment, ChangeEvent, FormEvent } from 'react';
 import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { postComment } from '../../store/api-actions';
@@ -11,7 +10,7 @@ type CommentFormProps = {
   scrollToReviewsTitle: () => void;
 }
 
-export function CommentForm({ scrollToReviewsTitle }: CommentFormProps) {
+export const CommentForm = ({ scrollToReviewsTitle }: CommentFormProps) => {
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
@@ -41,22 +40,17 @@ export function CommentForm({ scrollToReviewsTitle }: CommentFormProps) {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (offerId !== null) {
-      dispatch(postComment({
-        id: offerId,
-        comment: comment,
-        rating: Number(rating),
-      }));
-      resetForm();
-      (async () => {
-        try {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        } finally {
-          scrollToReviewsTitle();
-        }
-      })();
-    }
+    (async () => {
+      if (offerId !== null) {
+        await dispatch(postComment({
+          id: offerId,
+          comment: comment,
+          rating: Number(rating),
+        }));
+        resetForm();
+        scrollToReviewsTitle();
+      }
+    })();
   };
 
   const isValid =
@@ -126,4 +120,4 @@ export function CommentForm({ scrollToReviewsTitle }: CommentFormProps) {
       </div>
     </form>
   );
-}
+};

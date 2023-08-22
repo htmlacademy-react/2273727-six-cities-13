@@ -14,14 +14,17 @@ import { fetchNearbyOffers, fetchFullOffer, changeFavStatus } from '../../store/
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import { NotFound } from '../404/404';
 import { setActiveId, setCurrentOffer } from '../../store/offers-process/offers-process';
-import { RATING_COEFFICIENT } from '../../const';
 import { getOffers, getCurrentOffer, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
 import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
+import { AuthStatus, AppRoute, RATING_COEFFICIENT } from '../../const';
+import { redirectToRoute } from '../../store/actions';
 
 export const Offer = () => {
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
   const offers = useAppSelector(getOffers);
+  const authStatus = useAppSelector(getAuthStatus);
   const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const isIdExist = offers?.some((offer) => offer.id === offerId);
 
@@ -33,7 +36,7 @@ export const Offer = () => {
     dispatch(fetchNearbyOffers({ id: offerId }));
     dispatch(setActiveId(offerId));
     dispatch(setCurrentOffer());
-  }, [isIdExist, offerId, dispatch]
+  }, [isIdExist, offerId, dispatch, authStatus]
   );
 
   const offer = useAppSelector(getFullOffer);
@@ -66,14 +69,23 @@ export const Offer = () => {
   const { bedrooms, city, description, goods, id, host, images, isFavorite, isPremium, maxAdults, price, rating, title, type } = offer;
 
   const setFav = () => {
-    dispatch(changeFavStatus(
-      {
-        id,
-        status: isFavorite ? 0 : 1,
-      })).then(() => {
-      dispatch(fetchFullOffer({ id: offerId }));
-      dispatch(fetchNearbyOffers({ id: offerId }));
-    });
+    if (authStatus !== AuthStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+      return;
+    }
+
+    (async () => {
+      try {
+        await dispatch(changeFavStatus(
+          {
+            id,
+            status: isFavorite ? 0 : 1,
+          }));
+      } finally {
+        await dispatch(fetchFullOffer({ id: offerId }));
+        await dispatch(fetchNearbyOffers({ id: offerId }));
+      }
+    })();
   };
 
   const onButtonClick = () => {
@@ -112,7 +124,7 @@ export const Offer = () => {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${rating * RATING_COEFFICIENT}%` }} />
+                  <span style={{ width: `${Math.ceil(rating) * RATING_COEFFICIENT}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>

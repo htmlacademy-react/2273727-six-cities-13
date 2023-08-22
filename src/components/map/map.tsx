@@ -75,5 +75,3 @@ export const Map = ({ isMain, city, offers, selectedId }: MapProps) => {
     </section>
   );
 };
-
-

@@ -13,7 +13,7 @@ import { getOffers, getOffersLoadStatus, getActiveCity } from '../../store/offer
 import { getAuthStatus } from '../../store/user-process.ts/selectors';
 import { MainEmpty } from './main-empty';
 
-function MainPageComponent() {
+const MainPageComponent = () => {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
 
   const handleCardHover = useCallback((id: string | undefined) => {
@@ -64,6 +64,6 @@ function MainPageComponent() {
       </div>
     );
   }
-}
+};
 
 export const MainPage = memo(MainPageComponent);

@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { MouseEvent, memo, useState } from 'react';
-import { RATING_COEFFICIENT } from '../../const';
 import { changeFavStatus } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
+import { getAuthStatus } from '../../store/user-process.ts/selectors';
+import { AuthStatus, AppRoute, RATING_COEFFICIENT } from '../../const';
+import { redirectToRoute } from '../../store/actions';
 
 type OfferCardProps = {
   id: string;
@@ -35,18 +37,29 @@ const OfferCardComponent = (
   }: OfferCardProps) => {
 
   const [isFav, setIsFav] = useState(isFavorite);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const dispatch = useAppDispatch();
-  const setFav = () => {
-    dispatch(changeFavStatus(
-      {
-        id,
-        status: isFav ? 0 : 1,
-      })).then(() => setIsFav(!isFav));
+  const setFavStatus = () => {
+    if (authStatus !== AuthStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+      return;
+    }
+    (async () => {
+      try {
+        await dispatch(changeFavStatus(
+          {
+            id,
+            status: isFav ? 0 : 1,
+          }));
+      } finally {
+        setIsFav(!isFav);
+      }
+    })();
   };
 
   const onButtonClick = () => {
-    setFav();
+    setFavStatus();
   };
 
   return (
@@ -65,7 +78,7 @@ const OfferCardComponent = (
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${isFav ? 'place-card__bookmark-button--active' : ''}  button`} type="button" onClick={onButtonClick}>
+          <button className={`place-card__bookmark-button ${authStatus === AuthStatus.Auth && isFav ? 'place-card__bookmark-button--active' : ''}  button`} type="button" onClick={onButtonClick}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -74,7 +87,7 @@ const OfferCardComponent = (
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * RATING_COEFFICIENT}%` }}></span>
+            <span style={{ width: `${Math.ceil(rating) * RATING_COEFFICIENT}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

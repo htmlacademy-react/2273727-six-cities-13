@@ -5,7 +5,7 @@ type HostProps = {
   description: string;
 }
 
-export function Host({ host, description }: HostProps) {
+export const Host = ({ host, description }: HostProps) => {
   const { avatarUrl, isPro, name } = host;
   return (
     <div className="offer__host">
@@ -30,4 +30,4 @@ export function Host({ host, description }: HostProps) {
       </div>
     </div>
   );
-}
+};

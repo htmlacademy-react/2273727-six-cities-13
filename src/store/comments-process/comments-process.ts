@@ -8,7 +8,7 @@ type CommentsProcessType = {
   isCommentPosting: boolean;
 };
 
-const initialState: CommentsProcessType = {
+export const initialState: CommentsProcessType = {
   reviews: null,
   isReviewsLoading: false,
   isCommentPosting: false,

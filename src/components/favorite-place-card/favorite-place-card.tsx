@@ -1,24 +1,28 @@
 import { OfferType } from '../types/offer';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { RATING_COEFFICIENT } from '../../const';
+import { AppRoute, RATING_COEFFICIENT } from '../../const';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
-import { changeFavStatus } from '../../store/api-actions';
-import { fetchFavOffers } from '../../store/api-actions';
+import { changeFavStatus, fetchFavOffers } from '../../store/api-actions';
 
 type FavoritePlaceCardType = {
   cardByCity: OfferType;
 }
 
-export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
+export const FavoritePlaceCard = ({ cardByCity }: FavoritePlaceCardType) => {
   const { id, isFavorite, isPremium, previewImage, price, rating, title, type } = cardByCity;
   const dispatch = useAppDispatch();
   const setUnfav = () => {
-    dispatch(changeFavStatus(
-      {
-        id,
-        status: 0,
-      })).then(() => dispatch(fetchFavOffers()));
+    (async () => {
+      try {
+        await dispatch(changeFavStatus(
+          {
+            id,
+            status: 0,
+          }));
+      } finally {
+        await dispatch(fetchFavOffers());
+      }
+    })();
   };
 
   const onButtonClick = () => {
@@ -50,7 +54,7 @@ export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * RATING_COEFFICIENT}%` }}></span>
+            <span style={{ width: `${Math.ceil(rating) * RATING_COEFFICIENT}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -63,4 +67,4 @@ export function FavoritePlaceCard({ cardByCity }: FavoritePlaceCardType) {
       </div>
     </article>
   );
-}
+};
