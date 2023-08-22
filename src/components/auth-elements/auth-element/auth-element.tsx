@@ -23,7 +23,7 @@ export const AuthElement = () => {
             style={getStyleForNavLink}
           >
             <div className="header__avatar-wrapper user__avatar-wrapper">
-              <img src={userAvatar} alt='avatar' style={{borderRadius: '50%'}} />
+              <img src={userAvatar} alt='avatar' style={{ borderRadius: '50%' }} />
             </div>
             <span className="header__user-name user__name">
               {userEmail}

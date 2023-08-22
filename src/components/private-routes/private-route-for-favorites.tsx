@@ -7,7 +7,7 @@ type PrivateRouteProps = {
   children: JSX.Element;
 }
 
-export function PrivateRouteForFavorites({ authorizationStatus, children }: PrivateRouteProps) {
+export const PrivateRouteForFavorites = ({ authorizationStatus, children }: PrivateRouteProps) => {
   if (authorizationStatus === AuthStatus.Unknown) {
     return <LoadingScreen />;
   }
@@ -16,4 +16,4 @@ export function PrivateRouteForFavorites({ authorizationStatus, children }: Priv
       ? children
       : <Navigate to={AppRoute.Login} />
   );
-}
+};

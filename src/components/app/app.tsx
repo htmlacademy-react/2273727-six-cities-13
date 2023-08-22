@@ -18,7 +18,7 @@ import { browserHistory } from '../../browser-history';
 import { hasError } from '../../store/offers-process/selectors';
 import { ErrorScreen } from '../error-screen/error-screen';
 
-export function App() {
+export const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -72,4 +72,4 @@ export function App() {
       </HistoryRouter>
     </HelmetProvider>
   );
-}
+};

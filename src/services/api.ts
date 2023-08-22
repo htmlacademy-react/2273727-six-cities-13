@@ -12,6 +12,7 @@ const StatusCodeMap: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
   [StatusCodes.NOT_FOUND]: true,
+  [StatusCodes.INTERNAL_SERVER_ERROR]: true,
 };
 
 const shouldDisplayError = (responce: AxiosResponse) => !!StatusCodeMap[responce.status];

@@ -6,7 +6,7 @@ type PrivateRouteProps = {
   children: JSX.Element;
 }
 
-export function PrivateRouteForLogin({authorizationStatus, children}: PrivateRouteProps) {
+export const PrivateRouteForLogin = ({authorizationStatus, children}: PrivateRouteProps) => {
   if (authorizationStatus === AuthStatus.Unknown) {
     return;
   }
@@ -15,4 +15,4 @@ export function PrivateRouteForLogin({authorizationStatus, children}: PrivateRou
       ? children
       : <Navigate to={AppRoute.Root} />
   );
-}
+};

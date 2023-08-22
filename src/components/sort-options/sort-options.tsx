@@ -2,9 +2,8 @@ import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { sortOffers } from '../../store/offers-process/offers-process';
 import { useState, MouseEvent, memo } from 'react';
-import { SortType } from '../../const';
+import { SortType, SortTypeValues } from '../../const';
 import { getActiveSortType } from '../../store/offers-process/selectors';
-import { SortTypeValues } from '../../const';
 
 const SortOptionsComponent = () => {
   const optionsNames = Object.values(SortType);

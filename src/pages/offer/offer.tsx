@@ -14,11 +14,10 @@ import { fetchNearbyOffers, fetchFullOffer, changeFavStatus } from '../../store/
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import { NotFound } from '../404/404';
 import { setActiveId, setCurrentOffer } from '../../store/offers-process/offers-process';
-import { RATING_COEFFICIENT } from '../../const';
 import { getOffers, getCurrentOffer, getOffersLoadStatus, getFullOffer, getFullOfferLoadStatus } from '../../store/offers-process/selectors';
 import { getNearbyOffers, getNearbyOffersLoadStatus } from '../../store/nearby-offers-process/selectors';
 import { getAuthStatus } from '../../store/user-process.ts/selectors';
-import { AuthStatus, AppRoute } from '../../const';
+import { AuthStatus, AppRoute, RATING_COEFFICIENT } from '../../const';
 import { redirectToRoute } from '../../store/actions';
 
 export const Offer = () => {

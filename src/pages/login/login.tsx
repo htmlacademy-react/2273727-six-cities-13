@@ -1,17 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { FormEvent, MouseEvent, useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useState, ChangeEvent } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { login } from '../../store/api-actions';
-import { AppRoute, CitiesNames } from '../../const';
-import { getRandomValueFromArray } from '../../utils';
-import { setActiveCity } from '../../store/offers-process/offers-process';
+import { RandomCity } from '../../components/random-city-button/random-city-button';
 
-export function Login() {
+export const Login = () => {
   const [AuthInfo, setAuthInfo] = useState({ login: '', password: '' });
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]+$/;
   const isValidPassword = passwordRegex.test(AuthInfo.password);
@@ -33,18 +29,6 @@ export function Login() {
       password: AuthInfo.password,
     }));
   };
-
-  const handleButtonClick = (evt: MouseEvent<HTMLAnchorElement>) => {
-    evt.preventDefault();
-    const city = evt.currentTarget.dataset.city;
-    if (city === undefined) {
-      return;
-    }
-    dispatch(setActiveCity(city));
-    navigate(AppRoute.Root);
-  };
-
-  const randomCity = getRandomValueFromArray(CitiesNames);
 
   return (
     <div className="page page--gray page--login">
@@ -112,14 +96,10 @@ export function Login() {
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <Link className="locations__item-link" to="#" onClick={handleButtonClick} data-city={randomCity} >
-                <span>{randomCity}</span>
-              </Link>
-            </div>
+            <RandomCity />
           </section>
         </div>
       </main>
     </div>
   );
-}
+};
