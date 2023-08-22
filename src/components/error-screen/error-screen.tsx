@@ -6,14 +6,14 @@ export const ErrorScreen = () => {
 
   return (
     <>
-      <p>Сервер недоступен</p>
+      <p>Server is no available</p>
       <button
         onClick={() => {
           dispatch(fetchOffers());
         }}
         type="button"
       >
-        Попробовать ещё раз
+        Try again
       </button>
     </>
   );

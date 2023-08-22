@@ -6,7 +6,7 @@ import { AuthStatus } from '../../const';
 import { useEffect, useRef } from 'react';
 import { RATING_COEFFICIENT } from '../../const';
 import { fetchReviews } from '../../store/api-actions';
-import { getActiveId, getOffersLoadStatus } from '../../store/offers-process/selectors';
+import { getActiveId } from '../../store/offers-process/selectors';
 import { getAuthStatus } from '../../store/user-process.ts/selectors';
 import { getReviews, getCommentPostStatus } from '../../store/comments-process/selectors';
 
@@ -16,7 +16,6 @@ export const Reviews = () => {
   const offerId = useAppSelector(getActiveId);
   const authStatus = useAppSelector(getAuthStatus);
   const isCommentPosting = useAppSelector(getCommentPostStatus);
-  const isOffersLoading = useAppSelector(getOffersLoadStatus);
   const reviewsTitleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export const Reviews = () => {
       return;
     }
     dispatch(fetchReviews({ id: offerId }));
-  }, [offerId, dispatch, isCommentPosting, isOffersLoading]
+  }, [offerId, dispatch, isCommentPosting]
   );
 
   const reviews = useAppSelector(getReviews);
