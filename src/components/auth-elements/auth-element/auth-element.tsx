@@ -6,12 +6,18 @@ import { useAppSelector } from '../../../hooks/useAppSelector/useAppSelector';
 import { logout } from '../../../store/api-actions';
 import { getFavOffersNumber } from '../../../store/offers-process/selectors';
 import { getAvatar, getEmail } from '../../../store/user-process.ts/selectors';
+import { MouseEvent } from 'react';
 
 export const AuthElement = () => {
   const dispatch = useAppDispatch();
   const userAvatar = useAppSelector(getAvatar);
   const userEmail = useAppSelector(getEmail);
   const favOffersNumber = useAppSelector(getFavOffersNumber);
+  const handleClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(logout());
+  };
+
 
   return (
     <nav className="header__nav">
@@ -35,10 +41,7 @@ export const AuthElement = () => {
           <Link
             className="header__nav-link"
             to={AppRoute.Root}
-            onClick={(evt) => {
-              evt.preventDefault();
-              dispatch(logout());
-            }}
+            onClick={handleClick}
           >
             <span className="header__signout">Sign out</span>
           </Link>

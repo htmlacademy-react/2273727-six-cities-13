@@ -45,17 +45,16 @@ const OfferCardComponent = (
       dispatch(redirectToRoute(AppRoute.Login));
       return;
     }
-    (async () => {
-      try {
-        await dispatch(changeFavStatus(
-          {
-            id,
-            status: isFav ? 0 : 1,
-          }));
-      } finally {
-        setIsFav(!isFav);
-      }
-    })();
+
+    try {
+      dispatch(changeFavStatus(
+        {
+          id,
+          status: isFav ? 0 : 1,
+        }));
+    } finally {
+      setIsFav(!isFav);
+    }
   };
 
   const onButtonClick = () => {
