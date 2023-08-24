@@ -30,7 +30,7 @@ export const FavoritePlaceCard = ({ cardByCity }: FavoritePlaceCardType) => {
   };
 
   return (
-    <article className="favorites__card place-card">
+    <article className="favorites__card place-card" data-testid="fav-place-card">
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
