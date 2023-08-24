@@ -17,7 +17,7 @@ const StatusCodeMap: Record<number, boolean> = {
 
 const shouldDisplayError = (responce: AxiosResponse) => !!StatusCodeMap[responce.status];
 
-const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
+export const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
 export const createAPI = (): AxiosInstance => {

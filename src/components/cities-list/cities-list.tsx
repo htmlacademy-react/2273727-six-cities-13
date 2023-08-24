@@ -16,7 +16,7 @@ const CititesListComponent = () => {
   };
 
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid="cities-list">
       {CitiesNames.map((city) => (
         <li className="locations__item" key={city} onClick={handleCityClick(city)}>
           <Link className={`locations__item-link tabs__item ${city === cityName ? 'tabs__item--active' : ''}`} to="#">

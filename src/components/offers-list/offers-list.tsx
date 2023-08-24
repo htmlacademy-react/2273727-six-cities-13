@@ -29,7 +29,7 @@ const OffersListComponent = ({ offers, onCardHover, cityName }: OffersListProps)
   const className = (cityName) ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content';
 
   return (
-    <div className={className}>
+    <div className={className} data-testid="offers-list">
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}

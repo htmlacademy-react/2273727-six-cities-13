@@ -17,7 +17,7 @@ export const FavoritesList = ({ favorites }: FavoritesListType) => {
   }, []);
 
   return (
-    <>
+    <div data-testid="favorites-list">
       {favoriteCities.map((cityName, i) => (
         <li className="favorites__locations-items" key={favorites[i].id}>
           <div className="favorites__locations locations locations--current">
@@ -34,6 +34,6 @@ export const FavoritesList = ({ favorites }: FavoritesListType) => {
           </div>
         </li>
       ))}
-    </>
+    </div>
   );
 };
