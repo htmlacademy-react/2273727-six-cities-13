@@ -7,8 +7,8 @@ import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
 import { Offer } from '../../pages/offer/offer';
 import { NotFound } from '../../pages/404/404';
-import { PrivateRouteForFavorites } from '../private-routes/private-route-for-favorites';
-import { PrivateRouteForLogin } from '../private-routes/private-route-for-login';
+import { PrivateFavRoute } from '../private-routes/private-fav-route/private-fav-route';
+import { PrivateLoginRoute } from '../private-routes/private-login-route/private-login-route';
 import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchOffers, checkAuth } from '../../store/api-actions';
@@ -47,17 +47,17 @@ export const App = () => {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRouteForFavorites authorizationStatus={authStatus}>
+              <PrivateFavRoute authorizationStatus={authStatus}>
                 <Favorites />
-              </PrivateRouteForFavorites>
+              </PrivateFavRoute>
             }
           />
           <Route
             path={AppRoute.Login}
             element={
-              <PrivateRouteForLogin authorizationStatus={authStatus}>
+              <PrivateLoginRoute authorizationStatus={authStatus}>
                 <Login />
-              </PrivateRouteForLogin>
+              </PrivateLoginRoute>
             }
           />
           <Route

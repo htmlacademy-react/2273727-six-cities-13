@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute, AuthStatus, AuthStatusValuesType } from '../../const';
-import { LoadingScreen } from '../../pages/loading-screen/loading-screen';
+import { AppRoute, AuthStatus, AuthStatusValuesType } from '../../../const';
+import { LoadingScreen } from '../../../pages/loading-screen/loading-screen';
 
 type PrivateRouteProps = {
   authorizationStatus: AuthStatusValuesType;
   children: JSX.Element;
 }
 
-export const PrivateRouteForFavorites = ({ authorizationStatus, children }: PrivateRouteProps) => {
+export const PrivateFavRoute = ({ authorizationStatus, children }: PrivateRouteProps) => {
   if (authorizationStatus === AuthStatus.Unknown) {
     return <LoadingScreen />;
   }
