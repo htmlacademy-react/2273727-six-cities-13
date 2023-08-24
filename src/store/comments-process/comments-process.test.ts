@@ -1,5 +1,5 @@
 import { commentsProcessSlice, initialState } from './comments-process';
-import { mockReviews } from '../mocks/reviews';
+import { mockReviews } from '../mocks/mock-reviews';
 
 describe('Comments Process Slice', () => {
   it('should return initial state with empty action', () => {

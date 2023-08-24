@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { AuthStatus } from '../../const';
 import { CommentForm } from './comment-form';
 import { withHistory, withStore } from '../../store/mocks/mock-component';
-import { mockReviews } from '../../store/mocks/reviews';
+import { mockReviews } from '../../store/mocks/mock-reviews';
 
 describe('Component: Comment Form', () => {
   it('should render comment form when AuthStatus is Auth', () => {

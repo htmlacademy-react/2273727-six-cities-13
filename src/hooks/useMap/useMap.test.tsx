@@ -1,6 +1,6 @@
 import { screen, render } from '@testing-library/react';
 import { useMap } from './useMap';
-import { mockOffers } from '../../store/mocks/offers';
+import { mockOffers } from '../../store/mocks/mock-offers';
 
 describe('useMap', () => {
   it('returns a Map instance when called', () => {

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../store/mocks/mock-component';
 import { AuthStatus } from '../../const';
 import { OfferCard } from './offer-card';
-import { mockOffers } from '../../store/mocks/offers';
+import { mockOffers } from '../../store/mocks/mock-offers';
 
 const mockOffer = mockOffers[0];
 

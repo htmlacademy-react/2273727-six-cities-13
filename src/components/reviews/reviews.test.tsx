@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { AuthStatus } from '../../const';
 import { Reviews } from './reviews';
 import { withHistory, withStore } from '../../store/mocks/mock-component';
-import { mockReviews } from '../../store/mocks/reviews';
+import { mockReviews } from '../../store/mocks/mock-reviews';
 
 describe('Component: Reviews', () => {
   it('should render correctly', () => {

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { AuthStatus } from '../../const';
 import { FavoritesList } from './favorites-list';
 import { withHistory, withStore } from '../../store/mocks/mock-component';
-import { mockOffers } from '../../store/mocks/offers';
+import { mockOffers } from '../../store/mocks/mock-offers';
 
 describe('Component: Favorites List', () => {
   it('should render correctly', () => {

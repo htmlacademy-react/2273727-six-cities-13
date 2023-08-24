@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { AuthStatus } from '../../const';
 import { OffersList } from './offers-list';
 import { withHistory, withStore } from '../../store/mocks/mock-component';
-import { mockOffers } from '../../store/mocks/offers';
+import { mockOffers } from '../../store/mocks/mock-offers';
 
 
 describe('Component: Offer List', () => {

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Goods } from './goods';
 import { withHistory, withStore } from '../../store/mocks/mock-component';
-import { mockFullOffer } from '../../store/mocks/full-offer';
+import { mockFullOffer } from '../../store/mocks/mock-full-offer';
 
 
 describe('Component: Offer List', () => {
