@@ -13,8 +13,6 @@ import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { fetchOffers, checkAuth } from '../../store/api-actions';
 import { getAuthStatus } from '../../store/user-process.ts/selectors';
-import { HistoryRouter } from '../history-route/history-route';
-import { browserHistory } from '../../browser-history';
 import { hasError } from '../../store/offers-process/selectors';
 import { ErrorScreen } from '../error-screen/error-screen';
 
@@ -36,40 +34,38 @@ export const App = () => {
 
   return (
     <HelmetProvider>
-      <HistoryRouter history={browserHistory}>
-        <Routes>
-          <Route
-            path={AppRoute.Root}
-            element={
-              <MainPage />
-            }
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateFavRoute authorizationStatus={authStatus}>
-                <Favorites />
-              </PrivateFavRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Login}
-            element={
-              <PrivateLoginRoute authorizationStatus={authStatus}>
-                <Login />
-              </PrivateLoginRoute>
-            }
-          />
-          <Route
-            path={`${AppRoute.Offer}/:id`}
-            element={<Offer />}
-          />
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
-        </Routes>
-      </HistoryRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Root}
+          element={
+            <MainPage />
+          }
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateFavRoute authorizationStatus={authStatus}>
+              <Favorites />
+            </PrivateFavRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={
+            <PrivateLoginRoute authorizationStatus={authStatus}>
+              <Login />
+            </PrivateLoginRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.Offer}/:id`}
+          element={<Offer />}
+        />
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+      </Routes>
     </HelmetProvider>
   );
 };
