@@ -93,7 +93,7 @@ export const Offer = () => {
   };
 
   return (
-    <div className="page">
+    <div className="page" data-testid="offer">
       <Helmet>
         <title>Offer</title>
       </Helmet>
@@ -101,9 +101,7 @@ export const Offer = () => {
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              <ImgContainer images={images} />
-            </div>
+            <ImgContainer images={images} />
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">

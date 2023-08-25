@@ -71,6 +71,7 @@ export const Map = ({ isMain, city, offers, selectedId }: MapProps) => {
       className={isMain ? 'cities__map map' : 'offer__map map'}
       ref={mapRef}
       style={isMain ? {} : offersMapStyle}
+      data-testid="map"
     >
     </section>
   );

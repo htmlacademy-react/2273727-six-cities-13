@@ -5,7 +5,7 @@ type ImgContainerProps = {
 }
 
 export const ImgContainer = ({ images }: ImgContainerProps) => (
-  <>
+  <div className="offer__gallery" data-testid="img-container">
     {Array.from({ length: IMAGES_COUNT }, (_, i) => (
       <div className="offer__image-wrapper" key={i}>
         <img
@@ -15,5 +15,5 @@ export const ImgContainer = ({ images }: ImgContainerProps) => (
         />
       </div>
     ))}
-  </>
+  </div>
 );

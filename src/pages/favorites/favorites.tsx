@@ -26,7 +26,7 @@ export const Favorites = () => {
   }
 
   return (
-    <div className="page">
+    <div className="page" data-testid="favorites" >
       <Helmet>
         <title>Favorites</title>
       </Helmet>

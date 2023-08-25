@@ -40,9 +40,9 @@ describe('Component: Header', () => {
         offersBackup: [],
         fullOffer: null,
         isFullOfferLoading: false,
-        isOffersLoading: true,
+        isOffersLoading: false,
         favOffers: [],
-        isFavOffersLoading: true,
+        isFavOffersLoading: false,
         hasError: false,
       },
     });
