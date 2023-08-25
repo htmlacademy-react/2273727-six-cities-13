@@ -8,7 +8,7 @@ export const MainEmpty = () => {
   const activeCity = useAppSelector(getActiveCity);
 
   return (
-    <div className="page page--gray page--main">
+    <div className="page page--gray page--main" data-testid="main-empty">
       <Helmet>
         <title>6 cities</title>
       </Helmet>

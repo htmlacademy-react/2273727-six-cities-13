@@ -38,7 +38,7 @@ export type CommentData = {
 
 export type FavData = {
   id: string;
-  status: 0 | 1;
+  status: number;
 };
 
 export type UserData = {
@@ -49,7 +49,7 @@ export type UserData = {
 };
 
 export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
-  'offers/fetchOffers',
+  'OFFERS/fetchOffers',
   async (_arg, { dispatch, getState, extra: api }) => {
     try {
       dispatch(setOffersLoadStatus(true));
@@ -61,6 +61,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
       dispatch(setError(false));
     } catch {
       dispatch(setError(true));
+      throw new Error;
     } finally {
       dispatch(setOffersLoadStatus(false));
     }
@@ -68,7 +69,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, thunkObjType>(
 );
 
 export const fetchFullOffer = createAsyncThunk<void, { id: string | undefined }, thunkObjType>(
-  'offers/fetchOffer',
+  'OFFERS/fetchOffer',
   async ({ id }, { dispatch, extra: api }) => {
     try {
       dispatch(setFullOfferLoadStatus(true));
@@ -78,12 +79,29 @@ export const fetchFullOffer = createAsyncThunk<void, { id: string | undefined },
       dispatch(setFullOfferLoadStatus(false));
     } catch {
       toast.error('Offer is not available, please try again');
+      throw new Error;
+    }
+  }
+);
+
+export const fetchFavOffers = createAsyncThunk<void, undefined, thunkObjType>(
+  'OFFERS/fetchFavOffers',
+  async (_arg, { dispatch, extra: api }) => {
+    try {
+      dispatch(setFavOffersLoadStatus(true));
+      const { data: favoriteOffers } = await api.get<OfferType[]>(APIRoute.Favorite);
+      dispatch(setFavOffers(favoriteOffers));
+    } catch {
+      toast.error('Favorite places are not available, please try again later');
+      throw new Error;
+    } finally {
+      dispatch(setFavOffersLoadStatus(false));
     }
   }
 );
 
 export const fetchNearbyOffers = createAsyncThunk<void, { id: string | undefined }, thunkObjType>(
-  'offers/fetchNearbyOffers',
+  'OFFERS/fetchNearbyOffers',
   async ({ id }, { dispatch, extra: api }) => {
     try {
       dispatch(setNearbyOffersLoadStatus(true));
@@ -94,12 +112,28 @@ export const fetchNearbyOffers = createAsyncThunk<void, { id: string | undefined
       dispatch(setNearbyOffersLoadStatus(false));
     } catch {
       toast.error('Nearby offers are not available, please try again');
+      throw new Error;
+    }
+  }
+);
+
+export const changeFavStatus = createAsyncThunk<void, FavData, thunkObjType>(
+  'OFFERS/changeFavStatus',
+  async ({ id, status }, { dispatch, extra: api }) => {
+    try {
+      const url = `${APIRoute.Favorite}/${id}/${status}`;
+      await api.post(url);
+    } catch {
+      toast.error('You can\'t change status now, please try again later');
+      throw new Error;
+    } finally {
+      dispatch(fetchOffers());
     }
   }
 );
 
 export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, thunkObjType>(
-  'comments/fetchReviews',
+  'COMMENTS/fetchReviews',
   async ({ id }, { dispatch, extra: api }) => {
     try {
       dispatch(setReviewsLoadStatus(true));
@@ -114,8 +148,23 @@ export const fetchReviews = createAsyncThunk<void, { id: string | undefined }, t
   }
 );
 
+export const postComment = createAsyncThunk<void, CommentData, thunkObjType>(
+  'COMMENTS/postComment',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    try {
+      dispatch(setCommentPostStatus(true));
+      const url = `${APIRoute.Comments}/${id}`;
+      await api.post<CommentData>(url, { comment, rating });
+    } catch {
+      throw new Error;
+    } finally {
+      dispatch(setCommentPostStatus(false));
+    }
+  }
+);
+
 export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
-  'user/checkAuth',
+  'USER/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<UserData>(APIRoute.Login);
     dispatch(setUserData(data));
@@ -123,7 +172,7 @@ export const checkAuth = createAsyncThunk<void, undefined, thunkObjType>(
 );
 
 export const login = createAsyncThunk<void, AuthData, thunkObjType>(
-  'user/login',
+  'USER/login',
   async ({ email, password }, { dispatch, extra: api }) => {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
@@ -134,52 +183,9 @@ export const login = createAsyncThunk<void, AuthData, thunkObjType>(
 );
 
 export const logout = createAsyncThunk<void, undefined, thunkObjType>(
-  'user/logout',
+  'USER/logout',
   async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-  }
-);
-
-export const postComment = createAsyncThunk<void, CommentData, thunkObjType>(
-  'comments/postComment',
-  async ({ id, comment, rating }, { dispatch, extra: api }) => {
-    try {
-      dispatch(setCommentPostStatus(true));
-      const url = `${APIRoute.Comments}/${id}`;
-      await api.post<CommentData>(url, { comment, rating });
-    } catch {
-      toast.error('You can\'t post comment now, please try again later');
-    } finally {
-      dispatch(setCommentPostStatus(false));
-    }
-  }
-);
-
-export const changeFavStatus = createAsyncThunk<void, FavData, thunkObjType>(
-  'offers/changeFavStatus',
-  async ({ id, status }, { dispatch, extra: api }) => {
-    try {
-      const url = `${APIRoute.Favorite}/${id}/${status}`;
-      await api.post(url);
-      dispatch(fetchOffers());
-    } catch {
-      toast.error('You can\'t change status now, please try again later');
-    }
-  }
-);
-
-export const fetchFavOffers = createAsyncThunk<void, undefined, thunkObjType>(
-  'offers/fetchFavOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      dispatch(setFavOffersLoadStatus(true));
-      const { data: favoriteOffers } = await api.get<OfferType[]>(APIRoute.Favorite);
-      dispatch(setFavOffers(favoriteOffers));
-    } catch {
-      toast.error('Favorite places are not available, please try again later');
-    } finally {
-      dispatch(setFavOffersLoadStatus(false));
-    }
   }
 );

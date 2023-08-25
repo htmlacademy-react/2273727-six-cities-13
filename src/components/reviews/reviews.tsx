@@ -33,7 +33,7 @@ export const Reviews = () => {
 
   if (reviews !== null) {
     return (
-      <section className="offer__reviews reviews">
+      <section className="offer__reviews reviews" data-testid="reviews">
         <h2 className="reviews__title" ref={reviewsTitleRef} >
           Reviews · <span className="reviews__amount">{reviews.length}</span>
         </h2>

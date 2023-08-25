@@ -34,6 +34,7 @@ const SortOptionsComponent = () => {
           optionsNames.map((item) => (
             <li className={`places__option ${item === activeSortType ? 'places__option--active' : ''}`}
               tabIndex={0}
+              data-testid={item}
               key={item}
               onClick={() => handleClick(item)}
             >

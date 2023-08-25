@@ -62,7 +62,7 @@ const OfferCardComponent = (
   };
 
   return (
-    <article className={isMain ? 'cities__card place-card' : 'near-places__card place-card'} id={id} onMouseEnter={handleCardEnter} onMouseLeave={handleCardLeave}>
+    <article className={isMain ? 'cities__card place-card' : 'near-places__card place-card'} id={id} onMouseEnter={handleCardEnter} onMouseLeave={handleCardLeave} data-testid="offer-card" >
       <div className={`place-card__mark ${isPremium ? '' : 'visually-hidden'}`}>
         <span>Premium</span>
       </div>

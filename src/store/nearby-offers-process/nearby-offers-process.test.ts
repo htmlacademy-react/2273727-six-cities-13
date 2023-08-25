@@ -1,5 +1,5 @@
 import { nearbyOffersProcessSlice, initialState } from './nearby-offers-process';
-import { mockOffers } from '../mocks/offers';
+import { mockOffers } from '../mocks/mock-offers';
 
 describe('Nearby Offers Process Slice', () => {
   it('should return initial state with empty action', () => {

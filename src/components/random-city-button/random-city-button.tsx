@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { setActiveCity } from '../../store/offers-process/offers-process';
 import { memo } from 'react';
 
-const RandomCityButton = () => {
+const RandomCityComponent = () => {
   const dispatch = useAppDispatch();
   const randomCity = getRandomValueFromArray(CitiesNames);
 
@@ -15,7 +15,7 @@ const RandomCityButton = () => {
   };
 
   return (
-    <div className="locations__item">
+    <div className="locations__item" data-testid="random-city-button">
       <Link className="locations__item-link" to={AppRoute.Root} onClick={handleButtonClick}>
         <span>{randomCity}</span>
       </Link>
@@ -23,4 +23,4 @@ const RandomCityButton = () => {
   );
 };
 
-export const RandomCity = memo(RandomCityButton);
+export const RandomCityButton = memo(RandomCityComponent);

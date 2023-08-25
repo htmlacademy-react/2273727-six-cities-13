@@ -3,7 +3,7 @@ import { Header } from '../../components/header/header';
 import { AppRoute } from '../../const';
 
 export const FavoritesEmpty = () => (
-  <div className="page page--favorites-empty">
+  <div className="page page--favorites-empty" data-testid="favorites-empty">
 
     <Header />
 

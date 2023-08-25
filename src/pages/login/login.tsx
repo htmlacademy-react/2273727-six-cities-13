@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FormEvent, useState, ChangeEvent } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch/useAppDispatch';
 import { login } from '../../store/api-actions';
-import { RandomCity } from '../../components/random-city-button/random-city-button';
+import { RandomCityButton } from '../../components/random-city-button/random-city-button';
 
 export const Login = () => {
   const [AuthInfo, setAuthInfo] = useState({ login: '', password: '' });
@@ -31,7 +31,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="page page--gray page--login">
+    <div className="page page--gray page--login" data-testid="login">
       <Helmet>
         <title>Authorization</title>
       </Helmet>
@@ -96,7 +96,7 @@ export const Login = () => {
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <RandomCity />
+            <RandomCityButton />
           </section>
         </div>
       </main>

@@ -35,7 +35,7 @@ const MainPageComponent = () => {
   } else {
     const currentCity = offersByCity[0].city;
     return (
-      <div className="page page--gray page--main">
+      <div className="page page--gray page--main" data-testid="main">
         <Helmet>
           <title>6 cities</title>
         </Helmet>

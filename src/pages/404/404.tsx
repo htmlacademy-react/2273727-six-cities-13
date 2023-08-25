@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 export const NotFound = () => (
-  <>
+  <div data-testid="not-found-page">
     <Helmet>
       <title>404: Not found</title>
     </Helmet>
@@ -12,5 +12,5 @@ export const NotFound = () => (
       <small>Page not found</small>
     </h1>
     <Link to="/">Go to main page</Link>
-  </>
+  </div>
 );

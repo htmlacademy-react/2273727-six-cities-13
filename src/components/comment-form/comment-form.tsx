@@ -65,6 +65,7 @@ export const CommentForm = ({ scrollToReviewsTitle }: CommentFormProps) => {
       action="#"
       method="post"
       onSubmit={handleSubmit}
+      data-testid="comment-form"
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review

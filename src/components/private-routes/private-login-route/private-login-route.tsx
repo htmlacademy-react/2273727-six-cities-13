@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute, AuthStatus, AuthStatusValuesType} from '../../const';
+import { AppRoute, AuthStatus, AuthStatusValuesType} from '../../../const';
 
 type PrivateRouteProps = {
   authorizationStatus: AuthStatusValuesType;
   children: JSX.Element;
 }
 
-export const PrivateRouteForLogin = ({authorizationStatus, children}: PrivateRouteProps) => {
+export const PrivateLoginRoute = ({authorizationStatus, children}: PrivateRouteProps) => {
   if (authorizationStatus === AuthStatus.Unknown) {
     return;
   }

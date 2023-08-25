@@ -1,5 +1,5 @@
 import { offersProcessSlice, OffersProcessType, initialState } from './offers-process';
-import { mockOffers } from '../mocks/offers';
+import { mockOffers } from '../mocks/mock-offers';
 
 
 describe('Offers Process Slice', () => {
